@@ -65,16 +65,6 @@ const routes = [
     component: () => import('@/views/ServiceManagement.vue'),
     props: route => ({ companyName: route.query.companyName })
   },
-  // {
-  //   path: '/service-management/:companyId',
-  //   name: 'ServiceManagement',
-  //   component: () => import('@/views/ServiceManagement.vue'),
-  //   props: route => ({
-  //     companyId: route.params.companyId,
-  //     companyName: route.query.companyName,
-  //   }),
-  // }
-
 ]
 
 const router = createRouter({
