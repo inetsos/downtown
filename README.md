@@ -1,5 +1,28 @@
 ### 프로젝트가 진행되면서 계속 수정됩니다.
+
+설명이 별로 없이 코드 위주로 진행됩니다.
+댓글로 질문을 남겨 주시면 대답해 드립니다.
+개발에 아이디어를 주시면 적용하겠습니다.
+
 https://inetsos.tistory.com/
+
+1. 동네 (예약) 포털 - Vue3 + Vuetify + Firebase
+2. 동네 (예약) 포털 - Vue 3 + Vite + Vuetify 3 + JS 프로젝트
+3. 동네 (예약) 포털 (Vue 3 + Firebase) - 회원 등록, 로그인
+4. 동네 (예약) 포털 (Vue 3 + Firebase) - 비밀번호 변경, 비밀번호 리셋
+5. 동네 (예약) 포털 (Vue 3 + Firebase) - 구글 계정으로 로그인
+6. 동네 (예약) 포털 (Vue 3 + Firebase) - 회원의 업체 관리
+7. 동네 (예약) 포털 (Vue 3 + Firebase) - 등록 업체 보기(홈)
+8. 동네 (예약) 포털 (Vue 3 + Firebase) - 예약하기
+9. 동네 (예약) 포털 (Vue 3 + Firebase) - 회원 예약 보기, 예약 기능 개선
+10. 동네 (예약) 포털 (Vue 3 + Firebase) - 업체 예약 관리
+11. 동네 (예약) 포털 (Vue 3 + Firebase) - 주소 api 연동 선택
+12. 동네 (예약) 포털 (Vue 3 + Firebase) - 업체 주소 등록
+13. 동네 (예약) 포털 (Vue 3 + Firebase) - 네이버 지도 sdk 연동 가이드
+14. 동네 (예약) 포털 (Vue 3 + Firebase) - 네이버 지도에 업체 위치 보기
+15. 동네 (예약) 포털 (Vue 3 + Firebase) - 네이버 지도 상점 위치 보기 개선
+16. 동네 (예약) 포털 (Vue 3 + Firebase) - 미용실 예약 커스터마이징
+
 
 ## 🔗 예약 포털 시스템 (Vue + Vuetify + Firebase)
 
