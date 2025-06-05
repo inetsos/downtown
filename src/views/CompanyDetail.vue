@@ -52,6 +52,14 @@
         </v-card-text>
 
         <v-card-actions class="justify-end">
+          <!-- 🔹 서비스 목록 버튼 추가 -->
+          <v-btn 
+            v-if="company.category === '서비스업'"
+            color="secondary"
+            @click="goToServiceList(company.id, company.name)">
+            서비스 보기
+          </v-btn>
+
           <v-btn
             v-if="authStore.user"
             color="primary"
@@ -135,6 +143,14 @@ const goToMap = (company) => {
       address: company.address,
       name: company.name,
     },
+  })
+}
+
+const goToServiceList = (id, name) => {
+    router.push({
+    name: 'ServiceList',
+    params: { companyId: id },
+    query: { companyName: name }
   })
 }
 

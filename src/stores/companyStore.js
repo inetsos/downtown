@@ -19,22 +19,20 @@ import { useAuthStore } from './authStore'
 export const useCompanyStore = defineStore('company', () => {
   const companies = ref([])
   const company = ref(null)
+  const adminMap = ref({}) // 🔸 companyId별 관리자 여부 캐시
 
   // 🔹 업체 등록
   const addCompany = async (company) => {
-    //console.log(openTime, closeTime);
     const authStore = useAuthStore()
     const user = authStore.user
-    if (!user?.uid) 
-      throw new Error('로그인이 필요합니다.')
+    if (!user?.uid) throw new Error('로그인이 필요합니다.')
 
-    company.ownerId = user.uid,
+    company.ownerId = user.uid
     company.createdAt = serverTimestamp()
-    console.log(company)
     await addDoc(collection(db, 'companies'), company)
   }
 
-  // 🔹 companyId로로 등록 업체 조회
+  // 🔹 companyId로 등록 업체 조회
   const fetchCompany = async (companyId) => {
     try {
       const docRef = doc(db, 'companies', companyId)
@@ -67,13 +65,13 @@ export const useCompanyStore = defineStore('company', () => {
       ...doc.data()
     })) 
   }
- 
+
   // 🔹 업체 수정
   const updateCompany = async (id, updatedData) => {
     const ref = doc(db, 'companies', id)
     await updateDoc(ref, {
-        ...updatedData,
-        updatedAt: serverTimestamp()
+      ...updatedData,
+      updatedAt: serverTimestamp()
     })
   }
 
@@ -81,30 +79,48 @@ export const useCompanyStore = defineStore('company', () => {
   const fetchAllCompanies = async () => {
     const snapshot = await getDocs(collection(db, 'companies'))
     companies.value = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
+      id: doc.id,
+      ...doc.data()
     }))
   }
 
   // 🔹 업체 삭제
   const deleteCompany = async (id) => {
     await deleteDoc(doc(db, 'companies', id))
-
     if (Array.isArray(companies.value)) {
-        companies.value = companies.value.filter(c => c.id !== id)
+      companies.value = companies.value.filter(c => c.id !== id)
     } else {
-        companies.value = []
+      companies.value = []
     }
+  }
+
+  // 🔹 관리자 여부 확인
+  const checkAdmin = async (companyId) => {
+    const authStore = useAuthStore()
+    const user = authStore.user
+    if (!user?.uid || !companyId) return false
+
+    if (adminMap.value[companyId] !== undefined) {
+      return adminMap.value[companyId]
+    }
+
+    const companyRef = doc(db, 'companies', companyId)
+    const snapshot = await getDoc(companyRef)
+    const isAdmin = snapshot.exists() && snapshot.data().ownerId === user.uid
+
+    adminMap.value[companyId] = isAdmin
+    return isAdmin
   }
 
   return {
     companies,
     company,
     addCompany,
-    fetchCompany,    
+    fetchCompany,
     fetchMyCompanies,
     updateCompany,
     fetchAllCompanies,
-    deleteCompany
+    deleteCompany,
+    checkAdmin // ✅ 추가됨
   }
 })

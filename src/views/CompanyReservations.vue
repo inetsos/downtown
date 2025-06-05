@@ -29,7 +29,7 @@
       예약 내역이 없습니다.
     </v-alert>
 
-    <<v-row dense>
+    <v-row dense>
       <v-col
         v-for="res in reservations"
         :key="res.id"

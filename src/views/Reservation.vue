@@ -225,8 +225,6 @@ const submitReservation = async () => {
 
     reservationResult.value = res
     dialog.value = true
-    console.log('Dialog should open:', dialog.value, reservationResult.value)
-
   } catch (err) {
     alert('예약 실패: ' + (err.response?.data?.message || err.message))
   }

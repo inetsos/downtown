@@ -47,7 +47,7 @@ export function useServiceManagement(companyId, serviceId = null) {
   const loadingServices = ref(true)
 
   const servicesRef = collection(db, `companies/${companyId}/services`)
-  const q = query(servicesRef, orderBy('createdAt', 'desc'))
+  const q = query(servicesRef, orderBy('createdAt', 'asc'))
 
   const unsubscribe = onSnapshot(
     q,
