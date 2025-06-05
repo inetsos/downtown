@@ -1,4 +1,5 @@
 ### 프로젝트가 진행되면서 계속 수정됩니다.
+https://inetsos.tistory.com/
 
 ## 🔗 예약 포털 시스템 (Vue + Vuetify + Firebase)
 
