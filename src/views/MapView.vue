@@ -1,3 +1,4 @@
+<!-- src/views/MapView.vue -->
 <template>
   <v-container>
     <h3>{{ name }} 위치</h3>
