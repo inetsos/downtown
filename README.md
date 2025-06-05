@@ -106,7 +106,7 @@ reservations
 └─ serviceName "남성컷" (문자열)  
 └─ status "대기중" (문자열)  
 └─ timeSlots (배열)  
-   0 "09:30~10:00" (문자열)  
+    0 "09:30~10:00" (문자열)  
 └─ userId "fofKvBAMxpeuwQT3RtnZckoSHxG2" (문자열)  
 └─ userName "예약포털 개발자" (문자열)  
 
