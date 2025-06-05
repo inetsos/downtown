@@ -94,6 +94,4 @@ onMounted(() => {
     initMap()
   }
 })
-
-// 지도의 내용을 개선하력 합니다.
 </script>
