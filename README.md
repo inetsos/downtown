@@ -1,8 +1,8 @@
 ### 프로젝트가 진행되면서 계속 수정됩니다.
 
-설명이 별로 없이 코드 위주로 진행됩니다.
-댓글로 질문을 남겨 주시면 대답해 드립니다.
-개발에 아이디어를 주시면 적용하겠습니다.
+- 설명이 별로 없이 코드 위주로 진행됩니다.
+- 댓글로 질문을 남겨 주시면 대답해 드립니다.
+- 개발에 아이디어를 주시면 적용하겠습니다.
 
 https://inetsos.tistory.com/
 
@@ -67,20 +67,48 @@ Vue 3, Vuetify 3, Firebase를 기반으로 제작된 **다중 업체 예약 관�
 
 ---
 
-### 🗂️ Firestore 구조 예시
+### 🗂️ Firestore 구조
 
-users (고객)
-└─ uid
-└─ name, email, role: 'customer'
+profiles
+└─ uid "fofKvBAMxpeuwQT3RtnZckoSHxG2"
+└─ email "portal@email.com" (문자열)
+└─ name "예약포털 개발자" (문자열)
+└─ aboutMe "예약 시스템이 필요한 업체는 누구나 업체를 등록하면 무료로 예약 시스템을 사용할 수 있습니다. " (문자열)
+└─ createdAt 2025년 5월 29일 오후 7시 35분 57초 UTC+9 (타임스탬프)
 
-vendors (업체)
-└─ vendorId
-└─ name, category, email, timeSlots[], ownerUid, createdAt
+companies
+└─ category "서비스업" (문자열)
+└─ name "영헤어" (문자열)
+└─ description "우리 동네 미용실입니다. 편한 시간에 미리 예약하시고 오시면 됩니다. " (문자열)
+└─ openTime "10:30" (문자열)
+└─ closeTime "20:00" (문자열)
+└─ address "대구 수성구 달구벌대로669길 40" (문자열)
+└─ detailAddress "영헤어" (문자열)
+└─ zipcode "42273" (문자열)
+└─ ownerId "fofKvBAMxpeuwQT3RtnZckoSHxG2" (문자열)
+└─ createdAt 2025년 6월 1일 오후 3시 42분 13초 UTC+9 (타임스탬프)
+└─ updatedAt 2025년 6월 3일 오후 6시 12분 6초 UTC+9 (타임스탬프)
+└─ services (서브컬렉션)
+   └─ category "염색" (문자열)
+   └─ name "전체염색" (문자열)
+   └─ description "" (문자열)
+   └─ price "60000" (문자열)
+   └─ createdAt 2025년 6월 5일 오후 5시 18분 48초 UTC+9 (타임스탬프)
 
-bookings
-└─ bookingId
-└─ vendorId, customerUid, date, time, status: 'pending'|'confirmed'|'canceled'
-
+reservations
+└─ companyId "nIBne1CmWHRjUWWYAKSV" (문자열)
+└─ companyName "영헤어" (문자열)
+└─ createdAt 2025년 6월 5일 오후 5시 56분 30초 UTC+9 (타임스탬프)
+└─ date "2025-06-05" (문자열)
+└─ memo "" (문자열)
+└─ reservationNumber 27 (번호)
+└─ serviceId "x8Ai3SGs62jM4QRVrSRd" (문자열)
+└─ serviceName "남성컷" (문자열)
+└─ status "대기중" (문자열)
+└─ timeSlots (배열)
+   0 "09:30~10:00" (문자열)
+└─ userId "fofKvBAMxpeuwQT3RtnZckoSHxG2" (문자열)
+└─ userName "예약포털 개발자" (문자열)
 
 ---
 
