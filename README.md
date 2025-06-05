@@ -89,11 +89,11 @@ companies
 └─ createdAt 2025년 6월 1일 오후 3시 42분 13초 UTC+9 (타임스탬프)  
 └─ updatedAt 2025년 6월 3일 오후 6시 12분 6초 UTC+9 (타임스탬프)  
 └─ services (서브컬렉션)  
-   └─ category "염색" (문자열)  
-   └─ name "전체염색" (문자열)  
-   └─ description "" (문자열)  
-   └─ price "60000" (문자열)  
-   └─ createdAt 2025년 6월 5일 오후 5시 18분 48초 UTC+9 (타임스탬프)  
+&nbsp;&nbsp;&nbsp;└─ category "염색" (문자열)  
+&nbsp;&nbsp;&nbsp;└─ name "전체염색" (문자열)  
+&nbsp;&nbsp;&nbsp;└─ description "" (문자열)  
+&nbsp;&nbsp;&nbsp;└─ price "60000" (문자열)  
+&nbsp;&nbsp;&nbsp;└─ createdAt 2025년 6월 5일 오후 5시 18분 48초 UTC+9 (타임스탬프)  
    
 reservations  
 └─ companyId "nIBne1CmWHRjUWWYAKSV" (문자열)  
@@ -106,7 +106,7 @@ reservations
 └─ serviceName "남성컷" (문자열)  
 └─ status "대기중" (문자열)  
 └─ timeSlots (배열)  
-    0 "09:30~10:00" (문자열)  
+&nbsp;&nbsp;&nbsp;&nbsp;0 "09:30~10:00" (문자열)  
 └─ userId "fofKvBAMxpeuwQT3RtnZckoSHxG2" (문자열)  
 └─ userName "예약포털 개발자" (문자열)  
 
