@@ -69,13 +69,13 @@ Vue 3, Vuetify 3, Firebase를 기반으로 제작된 **다중 업체 예약 관�
 
 ### 🗂️ Firestore 구조
 
-profiles
-└─ uid "fofKvBAMxpeuwQT3RtnZckoSHxG2" 
-└─ email "portal@email.com" (문자열) 
-└─ name "예약포털 개발자" (문자열) 
-└─ aboutMe "예약 시스템이 필요한 업체는 누구나 업체를 등록하면 무료로 예약 시스템을 사용할 수 있습니다. " (문자열)  
-└─ createdAt 2025년 5월 29일 오후 7시 35분 57초 UTC+9 (타임스탬프)  
-  
+profiles  
+└─ uid "fofKvBAMxpeuwQT3RtnZckoSHxG2"   
+└─ email "portal@email.com" (문자열)   
+└─ name "예약포털 개발자" (문자열)   
+└─ aboutMe "예약 시스템이 필요한 업체는 누구나 업체를 등록하면 무료로 예약 시스템을 사용할 수 있습니다. " (문자열)    
+└─ createdAt 2025년 5월 29일 오후 7시 35분 57초 UTC+9 (타임스탬프)    
+    
 companies  
 └─ category "서비스업" (문자열)  
 └─ name "영헤어" (문자열)  
@@ -94,7 +94,7 @@ companies
    └─ description "" (문자열)  
    └─ price "60000" (문자열)  
    └─ createdAt 2025년 6월 5일 오후 5시 18분 48초 UTC+9 (타임스탬프)  
-
+   
 reservations  
 └─ companyId "nIBne1CmWHRjUWWYAKSV" (문자열)  
 └─ companyName "영헤어" (문자열)  
@@ -109,6 +109,7 @@ reservations
    0 "09:30~10:00" (문자열)  
 └─ userId "fofKvBAMxpeuwQT3RtnZckoSHxG2" (문자열)  
 └─ userName "예약포털 개발자" (문자열)  
+
 ---
 
 ### 🛠️ 개발 로드맵
