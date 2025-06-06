@@ -1,14 +1,46 @@
+## 🔗 예약 포털 시스템 (Vue + Vuetify + Firebase)
+
+Vue 3, Vuetify 3, Firebase를 기반으로 제작된 **다중 업체 예약 관리 포털**입니다.  
+고객, 업체, 관리자가 각각의 역할에 따라 예약을 생성하고 관리할 수 있는 실시간 웹 서비스입니다.
+
+---
+
+### 🧰 기술 스택
+
+- **Frontend**: Vue 3, Vuetify 3, Vite, Pinia, Vue Router  
+- **Backend/DB**: Firebase (Authentication, Firestore, Storage, Cloud Functions)
+
+---
+
 ### 프로젝트가 진행되면서 계속 수정됩니다.
 
 - 설명이 별로 없이 코드 위주로 진행됩니다.
 - 댓글로 질문을 남겨 주시면 대답해 드립니다.
 - 개발에 아이디어를 주시면 적용하겠습니다.
 
+---
+
 https://inetsos.tistory.com/
 
 1. 동네 (예약) 포털 - Vue3 + Vuetify + Firebase
+여러 업체가 함께 사용하는 예약 포털을 Vue, Vuetify, Firebase를 활용해 개발합니다.  
+이 조합은 빠른 개발, 실시간 기능, 확장성에 매우 적합합니다.  
+아래는 시스템 아키텍처와 주요 기능을 고려한 설계 및 개발 로드맵입니다.  
+
 2. 동네 (예약) 포털 - Vue 3 + Vite + Vuetify 3 + JS 프로젝트
+ - 프로젝트  
+&nbsp;&nbsp;&nbsp; npm create vite@latest booking-portal -- --template vue
+&nbsp;&nbsp;&nbsp; cd booking-portal
+&nbsp;&nbsp;&nbsp; npm install vuetify@^3 @mdi/font sass vite-plugin-vuetify
+
 3. 동네 (예약) 포털 (Vue 3 + Firebase) - 회원 등록, 로그인
+Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비밀번호 회원등록 및 로그인 기능을 구현합니다.
+- createUserWithEmailAndPassword  
+&nbsp;&nbsp;&nbsp; Firebase Authentication에서 이메일과 비밀번호를 사용해 새 사용자를 생성할 때 사용하는 메서드입니다. 주로 웹 앱이나 모바일 앱에서 사용자 회원가입 기능을 구현할 때 사용됩니다.
+  
+- signInWithEmailAndPassword  
+&nbsp;&nbsp;&nbsp; Firebase Authentication에서 이메일과 비밀번호를 사용해 기존 사용자를 로그인시키는 메서드입니다. 로그인 기능이 필요한 앱에서 자주 사용됩니다.
+
 4. 동네 (예약) 포털 (Vue 3 + Firebase) - 비밀번호 변경, 비밀번호 리셋
 5. 동네 (예약) 포털 (Vue 3 + Firebase) - 구글 계정으로 로그인
 6. 동네 (예약) 포털 (Vue 3 + Firebase) - 회원의 업체 관리
@@ -22,19 +54,6 @@ https://inetsos.tistory.com/
 14. 동네 (예약) 포털 (Vue 3 + Firebase) - 네이버 지도에 업체 위치 보기
 15. 동네 (예약) 포털 (Vue 3 + Firebase) - 네이버 지도 상점 위치 보기 개선
 16. 동네 (예약) 포털 (Vue 3 + Firebase) - 미용실 예약 커스터마이징
-
-
-## 🔗 예약 포털 시스템 (Vue + Vuetify + Firebase)
-
-Vue 3, Vuetify 3, Firebase를 기반으로 제작된 **다중 업체 예약 관리 포털**입니다.  
-고객, 업체, 관리자가 각각의 역할에 따라 예약을 생성하고 관리할 수 있는 실시간 웹 서비스입니다.
-
----
-
-### 🧰 기술 스택
-
-- **Frontend**: Vue 3, Vuetify 3, Vite, Pinia, Vue Router  
-- **Backend/DB**: Firebase (Authentication, Firestore, Storage, Cloud Functions)
 
 ---
 
