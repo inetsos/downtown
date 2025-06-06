@@ -274,16 +274,21 @@ reservations
 
 ### 🖥️ 주요 페이지
 
-| 경로 | 설명 |
-|------|------|
-| `/login` | 로그인 / 회원가입 |
-| `/dashboard` | 사용자 유형에 따라 자동 리디렉션 |
-| `/vendor/home` | 업체 대시보드 |
-| `/vendor/schedule` | 예약 슬롯 등록 및 관리 |
-| `/vendor/bookings` | 예약 승인/거절 |
-| `/customer/vendors` | 업체 검색 및 예약 신청 |
-| `/customer/bookings` | 내 예약 확인 및 취소 |
-
+'/', name: 'home',  홈  
+'/register', name: 'register', 회원가입  
+'/profile', name: 'profile', 회원 프로필  
+'/login', 로그인  
+'/register-company',  name: 'RegisterCompany' 상점 등록  
+'/my-companies', name: 'MyCompanies'  등록한 내 상점  
+'/edit-company/:id', name: 'EditCompany' 상점 정보 수정  
+'/company/:id', name: 'CompanyDetai'  상점 상세 보기  
+'/reservation', name: 'Reservation'  예약 하기  
+'/my-reservations', name: 'MyReservations'  회원의 내 예약  
+'/company-reservations/:companyId', name: 'CompanyReservations'  상점의 예약   
+'/map', name: 'MapView'  네이버 지도에서 상점 위치 보기  
+'/companies/:companyId/services', name: 'ServiceList'  서비스 업종의 등록한 서비스 목록  
+'/companies/:companyId/services/:serviceId?', name: 'ServiceManagement'  서버스업종의 서비스 등록, 수정, 삭제  
+  
 ---
 
 ### 🔧 Firebase Hosting 배포
