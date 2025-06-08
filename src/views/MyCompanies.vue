@@ -53,8 +53,19 @@
                 class="mt-1"
                 @click="goToRegisterService(company.id, company.name)"
               >
-                서비스(메뉴) 관리
+                서비스 관리
               </v-btn>
+
+              <v-btn
+                v-if="company.category === '카페'"
+                size="small"
+                color="secondary"
+                class="mt-1"
+                @click="goToMenuManagement(company.id, company.name)"
+              >
+                메뉴 관리
+              </v-btn>
+
               <v-btn
                 size="small"
                 color="secondary"
@@ -86,6 +97,14 @@ const goToEdit = (id) => {
 const goToRegisterService = (id, name) => {
   router.push({
     name: 'ServiceList',
+    params: { companyId: id },
+    query: { companyName: name }
+  })
+}
+
+const goToMenuManagement = (id, name) => {
+  router.push({
+    name: 'MenuList',
     params: { companyId: id },
     query: { companyName: name }
   })
