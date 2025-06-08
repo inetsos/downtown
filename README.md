@@ -183,8 +183,36 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; 상점의 관리자는 company.ownerId가 현재 로그인한 user.uid와 같으면 상점의 관리자입니다.  
   
 &nbsp; 서비서업인 경우 상점 상세 보기에서도 ‘서비스 보기’로 등록된 서비스를 볼 수 있습니다.  
-&nbsp;  관리자는 예약 관리에서 예약 시간과 함께 고객의 서비스도 확인할 수 있습니다.  
+&nbsp; 관리자는 예약 관리에서 예약 시간과 함께 고객의 서비스도 확인할 수 있습니다.  
   
+#### 17. 동네 포털 - v-expansion-panels, v-data-table, vuedraggable
+
+- v-expansion-panels는 Vuetify에서 제공하는 UI 컴포넌트로, 여러 개의 내용을 아코디언(accordion) 방식으로 펼치고 접을 수 있게 해주는 구성 요소입니다.  
+- v-data-table은 Vuetify에서 제공하는 강력한 표 형식의 데이터 표시 컴포넌트입니다.   
+- vuedraggable는 Vue.js에서 드래그 앤 드롭(Drag & Drop) 기능을 쉽게 구현할 수 있게 해주는 인기 라이브러리입니다.   
+  
+#### 18. 동네 포털 (Vue 3 + Vuetify + Firebase) - 메뉴 카테고리 관리    
+
+&nbsp; 테이크아웃 커피점의 메뉴 관리를 생각해 봅니다.
+  
+&nbsp; 음료의 종류가 생각보다 많습니다.
+&nbsp; 음료 외에 토핑, 사이드 메뉴까지 있습니다.
+
+&nbsp; 우선 메뉴 관리를 위하여 
+&nbsp; 카테고리를 등록하여 
+&nbsp; 카테고리 별로 메뉴를 볼 수 있도록 하겠습니다.
+
+&nbsp; 카테고리를 등록하면 
+&nbsp; 등록한 카테고리는 리스트에 나타납니다.
+
+&nbsp; 카테고리 리스트의 카테고리 옆 삭제 아이콘을 누르면 카테고리가 삭제 됩니다.
+
+&nbsp; 카테고리의 순서는 메뉴를 나타낼 때 카테고리 순서로 나타내기 위해 필요합니다.
+&nbsp; 카테고리 리스트에서 카테고리를 드래그하면 순서를 변경할 수 있습니다.
+
+![카테고리 관리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbquPwg%2FbtsOtiEaEp8%2FAPbV3yV2AU7mDW3PAe6IcK%2Fimg.png)
+  
+
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할
