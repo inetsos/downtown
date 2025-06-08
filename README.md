@@ -212,7 +212,32 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
   
 ![카테고리 관리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbquPwg%2FbtsOtiEaEp8%2FAPbV3yV2AU7mDW3PAe6IcK%2Fimg.png)
   
+#### 19. 동네 포털 (Vue 3 + Vuetify + Firebase) - 토핑 관리 
   
+&nbsp; 커피에 크림(휘핑 크림, 비낙농 크림 등)이나 시럽, 초콜릿 등을 추가하여   
+&nbsp; 커피 위에 장식하는 것을 '토핑'이라고 합니다.   
+&nbsp; 토핑은 커피의 맛과 외관을 더욱 다양하고 즐겁게 만들어주는 역할을 합니다.  
+   
+&nbsp; 음료와 토핑이 하나의 완성된 메뉴를 만들기 때문에   
+&nbsp; 메뉴를 구성할 때 음료와 토핑을 묶을 수 있어야 합니다.  
+&nbsp; 각 음료에는 일부 토핑만 가능할 수 있으므로   
+&nbsp; 각 음료에 대해 가능한 토핑을 음료와 연동하여야 합니다.    
+  
+&nbsp; 토핑을 음료에 추가하는 것으로   
+&nbsp; 음료에 추가하여 제공됩니다.   
+&nbsp; 그러므로 토핑만으로는 별도의 메뉴를 구성하지 않도록 합니다.   
+  
+&nbsp; 토핑은 가격이 있으므로   
+&nbsp; 토핑의 이름과 가격을 등록하면  
+&nbsp; 토핑 리스트로 나타나고  
+&nbsp; 리스트에서 토핑을 선택하여 드래그로 순서를 변경할 수 있습니다.  
+  
+&nbsp; 토핑 리스트의 토핑 옆 삭제 아이콘을 누르면   
+&nbsp; 등록된 토핑을 삭제할 수 있습니다.  
+  
+![토핑 관리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb85JaE%2FbtsOrByy2tn%2F6rqNqxcITpaVY6aPiFWddk%2Fimg.png)
+
+
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할
