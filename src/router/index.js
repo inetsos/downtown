@@ -65,6 +65,37 @@ const routes = [
     component: () => import('@/views/ServiceManagement.vue'),
     props: route => ({ companyName: route.query.companyName })
   },
+  {
+    path: '/companies/:companyId/menus',
+    name: 'MenuList',
+    component: () => import('@/views/MenuList.vue'),
+    props: route => ({
+      companyId: route.params.companyId,
+      companyName: route.query.companyName || '',
+    }),
+  },
+  {
+    path: '/companies/:companyId/menus/:menuId?',
+    name: 'MenuManagement',
+    component: () => import('@/views/MenuManagement.vue'),
+    props: route => ({ companyName: route.query.companyName })
+  },
+  {
+    path: '/companies/:companyId/toppings/:toppingId?',
+    name: 'ToppingManagement',
+    component: () => import('@/views/ToppingManagement.vue'),
+    props: route => ({ companyName: route.query.companyName })
+  },
+  {
+    path: '/company/:companyId/category',
+    name: 'CategoryManagement',
+    component: () => import('@/views/CategoryManagement.vue'),
+    props: route => ({
+      companyId: route.params.companyId,
+      companyName: route.query.companyName || '',
+    }),
+  }
+
 ]
 
 const router = createRouter({
