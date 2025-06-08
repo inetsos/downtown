@@ -194,7 +194,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 #### 18. 동네 포털 (Vue 3 + Vuetify + Firebase) - 메뉴 카테고리 관리    
 
 &nbsp; 테이크아웃 커피점의 메뉴 관리를 생각해 봅니다.  
-    
+  
 &nbsp; 음료의 종류가 생각보다 많습니다.  
 &nbsp; 음료 외에 토핑, 사이드 메뉴까지 있습니다.  
   
@@ -209,7 +209,9 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
   
 &nbsp; 카테고리의 순서는 메뉴를 나타낼 때 카테고리 순서로 나타내기 위해 필요합니다.  
 &nbsp; 카테고리 리스트에서 카테고리를 드래그하면 순서를 변경할 수 있습니다.  
-
+  
+![카테고리 관리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbquPwg%2FbtsOtiEaEp8%2FAPbV3yV2AU7mDW3PAe6IcK%2Fimg.png)
+  
   
 ---
 
