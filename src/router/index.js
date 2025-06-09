@@ -94,6 +94,15 @@ const routes = [
       companyId: route.params.companyId,
       companyName: route.query.companyName || '',
     }),
+  },
+  {
+    path: '/company/:companyId/icehot',
+    name: 'IceHotManagement',
+    component: () => import('@/views/IceHotManagement.vue'),
+    props: route => ({
+      companyId: route.params.companyId,
+      companyName: route.query.companyName || '',
+    }),
   }
 
 ]

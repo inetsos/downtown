@@ -237,6 +237,18 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
   
 ![토핑 관리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb85JaE%2FbtsOrByy2tn%2F6rqNqxcITpaVY6aPiFWddk%2Fimg.png)
 
+#### 20. 동네 포털 (Vue 3 + Vuetify + Firebase) - 음료 Ice/Hot 옵션 관리
+
+&nbsp; 대부분의 음료는 아이스(Ice), 핫(Hot)을 선택할 수 있습니다.  
+&nbsp; 그러나 일부 음료의 경우 아이스만, 또는 핫만 가능할 수 있습니다.  
+&nbsp; 그러므로 음료를 주문할 때 아이스 또는 핫을 선택할 수 있도록 메뉴를 구성해야 합니다.  
+  
+&nbsp; 아이스, 핫 선택 또는 아이스만, 또는 핫만 등록할 수 있습니다.  
+&nbsp; 등록된 옵션은 리스에 나타나고   
+&nbsp; 등록된 아이스/핫 옵션의 순서는 드래그로 변경할 수 있습니다.  
+&nbsp; 옵션 옆에 있는 삭제 아이콘을 눌러 삭제할 수 있습니다.  
+    
+![옵션 관리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FePj6l5%2FbtsOsVW17FN%2F2FEif2mkWqzNgd2UVBKIE1%2Fimg.png)
 
 ---
 

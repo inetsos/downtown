@@ -1,19 +1,19 @@
-<!-- src/views/CategoryManagement.vue -->
+<!-- src/views/IceHotManagement.vue -->
 <template>
   <v-container>
     <v-card class="pa-4 mx-auto" style="max-width: 600px;">
       <v-card-title class="d-flex justify-space-between align-center">
-        <span>{{ companyName }} - 카테고리 관리 (드래그로 순서 변경)</span>
+        <span>{{ companyName }} - 옵션 관리 (드래그로 순서 변경)</span>
         <v-spacer />
         <v-btn variant="text" class="mt-4" color="primary" @click="goToMenu">
           메뉴로 가기
         </v-btn>        
       </v-card-title>
 
-      <v-form @submit.prevent="addCategory">
+      <v-form @submit.prevent="addOption">
         <v-row class="align-center">
           <v-col cols="12" md="6">
-            <v-text-field v-model="newCategoryName" label="카테고리 이름" />
+            <v-text-field v-model="newOptionName" label="옵션 이름 (예: Ice, Hot)" />
           </v-col>
           <v-col cols="12" md="6" class="d-flex justify-end">
             <v-btn color="primary" type="submit" class="mt-2 mt-md-0">
@@ -30,7 +30,7 @@
         <thead>
           <tr>
             <th style="width: 40px;"></th>
-            <th>카테고리명</th>
+            <th>옵션명</th>
             <th class="text-end" style="width: 80px;">순서</th>
             <th style="width: 40px;"></th>
           </tr>
@@ -38,7 +38,7 @@
 
         <draggable
           tag="tbody"
-          v-model="categories"
+          v-model="options"
           item-key="id"
           handle=".drag-handle"
           @end="saveOrder"
@@ -72,8 +72,8 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useCategoryManager } from '@/composables/useCategoryManager'
 import draggable from 'vuedraggable'
+import { useIceHotManager } from '@/composables/useIceHotManager'
 
 const router = useRouter()
 const route = useRoute()
@@ -82,23 +82,23 @@ const companyId = route.params.companyId
 const companyName = route.query.companyName || ''
 
 const {
-  categories,
-  newCategoryName,
-  fetchCategories,
-  addCategory,
-  deleteCategory,
+  options,
+  newOptionName,
+  fetchOptions,
+  addOption,
+  deleteOption,
   saveOrder,
-} = useCategoryManager(companyId)
+} = useIceHotManager(companyId)
 
 const goToMenu = () => {
   router.push({ name: 'MenuList', params: { companyId }, query: { companyName } })
 }
 
-onMounted(fetchCategories)
+onMounted(fetchOptions)
 
 function confirmDelete(id) {
   if (window.confirm('정말 삭제하시겠습니까?')) {
-    deleteCategory(id)
+    deleteOption(id)
   }
 }
 </script>

@@ -12,6 +12,9 @@
           <v-btn class="mr-2" color="secondary" @click="goToToppingManagement">
             토핑 관리
           </v-btn>
+          <v-btn class="mr-2" color="secondary" @click="goToIceHotManagement">
+            옵션 관리
+          </v-btn>
           <v-btn color="primary" @click="goToAddMenu">
             메뉴 등록
           </v-btn>
@@ -159,6 +162,14 @@ function goToCategoryManagement() {
 function goToToppingManagement() {
   router.push({
     name: 'ToppingManagement',
+    params: { companyId },
+    query: { companyName },
+  })
+}
+
+function goToIceHotManagement() {
+  router.push({
+    name: 'IceHotManagement',
     params: { companyId },
     query: { companyName },
   })
