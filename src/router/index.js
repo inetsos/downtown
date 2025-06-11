@@ -75,10 +75,13 @@ const routes = [
     }),
   },
   {
-    path: '/companies/:companyId/menus/:menuId?',
+    path: '/companies/:companyId/menus',
     name: 'MenuManagement',
     component: () => import('@/views/MenuManagement.vue'),
-    props: route => ({ companyName: route.query.companyName })
+    props: route => ({
+      companyId: route.params.companyId,
+      companyName: route.query.companyName || '',
+    })
   },
   {
     path: '/companies/:companyId/toppings/:toppingId?',

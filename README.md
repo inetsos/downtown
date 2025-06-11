@@ -260,7 +260,28 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; Firebase Cloud Storage는 Google Cloud Storage 기반으로 동작하며,   
 &nbsp; Firebase에서 제공하는 파일 저장 서비스입니다.  
 &nbsp; 주로 앱에서 이미지, 오디오, 비디오, PDF 같은 대용량 파일을 안전하게 저장하고, 필요할 때 불러오는 데 사용됩니다.  
+
+#### 22. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페 메뉴 관리
+
+&nbsp; 메뉴는 카테고리, 이름, 설명, 가격, 가능한 토핑, 옵션의 항목을 가지고 있습니다.  
+&nbsp; 또한 각 메뉴는 이미지도 가지고 있습니다.  
   
+&nbsp; 메뉴를 등록하기 위하여  
+&nbsp; 카테고리, 토핑, 옵션은 별도로 등록하였습니다.  
+&nbsp; 그리고 메뉴 이미지도 준비 하였습니다.  
+   
+&nbsp; 메뉴 등록 화면의 상단에는 메뉴를 등록하기 위한 폼이 있고  
+&nbsp; 하단에는 등록된 메뉴의 리스트를 보여줍니다.  
+  
+&nbsp; 메뉴 리스트는 카테고리별로 관리되며  
+&nbsp; 메뉴 리스트에서 드래그하여 메뉴의 순서를 변경할 수 있습니다.  
+   
+![메뉴 관리 1](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F8rVAJ%2FbtsOw3NRWM5%2FhJwM5eWANgoOJRvyccMH1K%2Fimg.png)
+
+![메뉴 관리 2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FPqqJe%2FbtsOuEIB6ro%2FzZAZOT6IVnc9PWBIkOrBK1%2Fimg.png)
+
+![메뉴 관리 3](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcP5xp9%2FbtsOxq9VEW0%2FU7ELuxfCC8cAlH0rrBmpbk%2Fimg.png)
+
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할
