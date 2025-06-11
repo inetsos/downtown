@@ -258,7 +258,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; 웹에서 메뉴의 이미지는 보면 firebase storage에 업로드된 이미지를 보여줍니다.  
   
 &nbsp; Firebase Cloud Storage는 Google Cloud Storage 기반으로 동작하며,   
-&nbsp; Firebase에서 제공하는 파일 저장 서비스입니다. 
+&nbsp; Firebase에서 제공하는 파일 저장 서비스입니다.  
 &nbsp; 주로 앱에서 이미지, 오디오, 비디오, PDF 같은 대용량 파일을 안전하게 저장하고, 필요할 때 불러오는 데 사용됩니다.  
   
 ---
