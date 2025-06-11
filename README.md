@@ -250,6 +250,17 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
     
 ![옵션 관리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FePj6l5%2FbtsOsVW17FN%2F2FEif2mkWqzNgd2UVBKIE1%2Fimg.png)
 
+#### 21. 동네 포털 (Vue 3 + Vuetify) - Firebase Storage (메뉴 이미지 저장)
+
+&nbsp; 메뉴에는 이미지가 있습니다.  
+&nbsp; 메뉴를 등록할 때 로컬 PC에서 이미지를 선택하면  
+&nbsp; 선택된 이미지를 firebase storage에 업로드합니다.  
+&nbsp; 웹에서 메뉴의 이미지는 보면 firebase storage에 업로드된 이미지를 보여줍니다.  
+  
+&nbsp; Firebase Cloud Storage는 Google Cloud Storage 기반으로 동작하며,   
+&nbsp; Firebase에서 제공하는 파일 저장 서비스입니다. 
+&nbsp; 주로 앱에서 이미지, 오디오, 비디오, PDF 같은 대용량 파일을 안전하게 저장하고, 필요할 때 불러오는 데 사용됩니다.  
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할
