@@ -1,3 +1,4 @@
+<!-- src/views/MenuList.vue -->
 <template>
   <v-container>
     <v-card class="pa-4 mx-auto" style="max-width: 700px;">
@@ -157,18 +158,6 @@ const {
   getOptions,
   fetchMenus
 } = useMenus(companyId)
-
-// const groupedMenus = computed(() => {
-//   const groups = {}
-//   for (const menu of menus.value) {
-//     const category = getCategoryName(menu.categoryId) || '기타'
-//     if (!groups[category]) {
-//       groups[category] = []
-//     }
-//     groups[category].push(menu)
-//   }
-//   return groups
-// })
 
 const groupedMenus = computed(() => {
   const result = {}

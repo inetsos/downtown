@@ -38,6 +38,16 @@ const routes = [
     component: () => import('@/views/Reservation.vue')
   }, 
   {
+    path: '/order',
+    name: 'OrderPage',
+    component: () => import('@/views/OrderPage.vue')
+  }, 
+  {
+    path: '/cart',
+    name: 'CartPage',
+    component: () => import('@/views/CartPage.vue')
+  }, 
+  {
     path: '/my-reservations',
     name: 'MyReservations',
     component: () => import('@/views/MyReservations.vue'),

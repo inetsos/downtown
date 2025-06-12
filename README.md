@@ -281,7 +281,43 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 ![메뉴 관리 2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FPqqJe%2FbtsOuEIB6ro%2FzZAZOT6IVnc9PWBIkOrBK1%2Fimg.png)
 
 ![메뉴 관리 3](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcP5xp9%2FbtsOxq9VEW0%2FU7ELuxfCC8cAlH0rrBmpbk%2Fimg.png)
+  
+  
+#### 24. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페 온라인 주문
 
+- 카페 온라인 주문  
+
+온라인 주문을 하기 위한 메뉴를 보여줍니다.  
+메뉴는 이미지, 이름, 설명, 가격과  
+가능한 토핑 리스트, 옵션 리스트를 한 화면 보여줍니다.  
+  
+토핑 리스트는 메뉴 등록에서 등록한 음료에 추가가 가능한 토핑을 나열하고  
+체크 박스로 여러 개를 선택할 수 있도록 합니다.  
+  
+옵션도 마찬가지로 메뉴에 등록한 선택 가능한 옵션만 나타내고  
+옵션이 하나인 경우는 자동으로 기본 옵션이 선택되고  
+옵션이 둘 이상의 경우는 사용자가 옵션을 선택해야 주문이 되도록 하였습니다.  
+  
+메뉴 주문에서 카테고리 태그 리스트가 화면을 넘치는 경우 좌우 스크롤합니다.  
+  
+![카페 온라인 주문 1](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FnxJtt%2FbtsOwDoUfJv%2FAIv81UawAWvMPFikldqPB1%2Fimg.png)
+![카페 온라인 주문 2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FLZtxr%2FbtsOyWmXFKh%2FrDhqyfi0ajdj1zbghlrgbK%2Fimg.png)
+  
+- 장비구니  
+  
+담기 버튼을 클릭하면 장바구니에 담습니다.  
+장바구니 버튼을 클릭하면 주문한 메뉴들을 확인할 수 있고,  
+장바구니 창에서 주문을 할 수 있습니다.  
+   
+장바구니에서 주문 메뉴의 수량을 조정할 수 있습니다.  
+수량을 조절하면 주문 품목의 가격과 합계 금액도 재계산 되어야  합니다.  
+  
+수량 조절과 별개로  삭제 버튼이 있어 이것을 누르면 주문 메뉴를 삭제할 수 있습니다.  
+품목이 삭제되면 합계 금액도 재계산되어야 합니다.  
+  
+![카페 온라인 주문 장바구니 1](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb8BBwc%2FbtsOwb7tA8U%2FBM9YyyHzEXwkHLOIYeQqZK%2Fimg.png)
+![카페 온라인 주문 장바구니 2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FrNt6o%2FbtsOx8nSOJU%2FcekNI1rnkLMbsvarB08hB0%2Fimg.png)
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할

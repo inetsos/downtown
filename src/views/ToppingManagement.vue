@@ -1,4 +1,4 @@
-<!-- src/views/ToppingManagement -->
+<!-- src/views/ToppingManagement.vue -->
 <template>
   <v-container>
     <!-- 토핑 등록/수정 카드 -->

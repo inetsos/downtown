@@ -31,11 +31,7 @@
         cols="12"
         md="4"
       >
-        <v-card
-          class="pa-2 mb-2"
-          style="height: 100%; cursor: pointer;"
-          @click="goToDetail(company.id)"
-        >
+        <v-card class="pa-2 mb-2" style="height: 100%;">
           <v-card-title class="d-flex align-center">
             <v-icon color="primary" class="mr-2">mdi-storefront</v-icon>
             <div>
@@ -77,17 +73,44 @@
               <strong>상세주소:</strong> {{ company.detailAddress || '--' }}
             </div>
 
-            <div v-if="authStore.user">
+            <div class="d-flex flex-wrap gap-2">
+
               <v-btn
+                v-if="company.category === '카페'"
                 color="primary"
                 size="small"
-                @click.stop="goToReservation(company.id)"
+                @click.stop="handleOrder(company)"
+                :disabled="!isOpenNow(company)"
+                :style="{ pointerEvents: isOpenNow(company) ? 'auto' : 'none' }"
+              >
+                온라인 주문
+              </v-btn>
+
+              <v-btn
+                v-else
+                color="primary"
+                size="small"
+                @click.stop="handleReservation(company)"
+                :disabled="!isOpenNow(company)"
+                :style="{ pointerEvents: isOpenNow(company) ? 'auto' : 'none' }"
               >
                 예약하기
+              </v-btn>
+
+              <!-- ✅ 새로 추가된 상세보기 버튼 -->
+              <v-btn
+                color="grey"
+                size="small"
+                variant="outlined"
+                class="ml-2"
+                @click="goToDetail(company.id)"
+              >
+                상세보기
               </v-btn>
             </div>
           </v-card-text>
         </v-card>
+
       </v-col>
     </v-row>
 
@@ -126,7 +149,6 @@ const goToDetail = (id) => {
 }
 
 const goToReservation = (companyId) => { 
-  //console.log(companyId, authStore.profile.name);
   router.push({
     path: '/reservation',
     query: {
@@ -135,6 +157,27 @@ const goToReservation = (companyId) => {
     }
   })
 }
+
+const goToOrder = (companyId, companyName) => { 
+  router.push({
+    path: '/order',
+    query: {
+      companyId,
+      companyName,
+      username: authStore.profile.name
+    }
+  })
+}
+
+const handleOrder = (company) => {
+  if (!isOpenNow(company)) return;
+  goToOrder(company.id, company.name);
+};
+
+const handleReservation = (company) => {;
+  if (!isOpenNow(company)) return;
+  goToReservation(company.id);
+};
 
 // 카테고리 필터링된 목록
 const filteredCompanies = computed(() => {
