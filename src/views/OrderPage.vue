@@ -1,3 +1,4 @@
+<!-- src/views/OrderPage.vue -->
 <template>
   <v-container fluid>
     <v-card flat>

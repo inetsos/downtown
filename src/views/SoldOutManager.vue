@@ -1,3 +1,4 @@
+<!-- src/views/SoldOutManager.vue -->
 <template>
   <v-container>
     <!-- 카테고리 탭 -->
@@ -15,7 +16,7 @@
 
     <!-- 메뉴 카드 목록 -->
     <v-card>
-      <v-card-title class="text-h6">메뉴 매진 상태 관리</v-card-title>
+      <v-card-title class="text-h6">메뉴 품절 상태 관리</v-card-title>
       <v-divider />
       <v-card-text>
         <v-row>
@@ -43,7 +44,7 @@
 
                   <v-switch
                     v-model="menu.isSoldOut"
-                    label="매진 상태"
+                    label="품절 상태"
                     color="red"
                     inset
                     @change="() => updateMenu(menu.id, menu)"

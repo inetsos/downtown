@@ -1,3 +1,4 @@
+<!-- src/views/Reservation.vue -->
 <template>
   <v-container max-width="800" class="mx-auto">
     <!-- ... 기존 코드 ... -->

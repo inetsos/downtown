@@ -338,6 +338,16 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
   
 ![카페 운영자 대시보드](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHsRhx%2FbtsOzgtZNfd%2F8JtE7MzaV1xGJROHDdxmyK%2Fimg.png)
   
+#### 26. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페 메뉴 품절 상태 관리
+
+메뉴가 품절인 경우에 대한 처리를 생각해 봅시다.  
+   
+품절이 확인 되면 관리자가 우선 메뉴의 품절 상태를 설정합니다.  
+그러면 온라인 주문 메뉴 리스트에 품절을 표시해야 합니다.  
+품절된 품목에 대해서는 주문이 되지 않습니다.  
+  
+![카페 온라인 주문 품절 메뉴](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fch2n6w%2FbtsOzAsFl2e%2FLJzqrnoNDhKSBedRyaU8tk%2Fimg.png)
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할
