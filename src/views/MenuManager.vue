@@ -1,4 +1,4 @@
-<!-- sr/views/MenuManagement.vue -->
+<!-- sr/views/MenuManager.vue -->
 <template>
   <v-container>
     <v-card class="pa-4 mx-auto" style="max-width: 700px;">

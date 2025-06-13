@@ -2,6 +2,16 @@
 <template>
   <v-container>
     <v-card class="pa-4 mx-auto" style="max-width: 700px;">
+      <!-- 운영 대시보드로 돌아가기 버튼 -->
+      <div class="text-end mb-4">
+        <span
+          class="text-primary text-subtitle-2 cursor-pointer"
+          @click="goToDashboard"
+        >
+          운영 대시보드
+        </span>
+      </div>
+
       <v-card-title class="text-h6 d-flex justify-space-between align-center">
         <span>{{ companyName }} - 메뉴</span>
         <div>
@@ -183,6 +193,13 @@ const optionHeaders = [
   { text: '순서', value: 'sortOrder' },
 ]
 
+const goToDashboard = (id, name) => {
+  router.push({
+    name: 'OperationsDashboard',
+    query: { companyId, companyName }
+  })
+}
+
 const getCategoryName = (id) => {
   const cat = categories.value.find(c => c.id === id)
   return cat ? cat.name : '알 수 없음'
@@ -226,7 +243,7 @@ function goToIceHotManagement() {
 
 function goToAddMenu() {
   router.push({
-    name: 'MenuManagement',
+    name: 'MenuManager',
     params: { companyId },
     query: { companyName },
   })

@@ -83,7 +83,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useAuthStore } from '@/stores/authStore' 
+import { useAuthStore } from '@/stores/authStore'
+import { useOrder } from '@/composables/useOrder'  // composable import
 
 const router = useRouter()
 const route = useRoute()
@@ -91,22 +92,51 @@ const authStore = useAuthStore()
 
 const cartItems = ref([])
 
-// 전체 금액 계산
 const totalAmount = computed(() =>
   cartItems.value.reduce((total, item) => total + calcItemPrice(item), 0)
 )
 
-// 항목 삭제
-const removeItem = (index) => {
-  cartItems.value.splice(index, 1)
-  localStorage.setItem('cart', JSON.stringify(cartItems.value))
-}
+const { loading, error, createOrder } = useOrder()
 
-// 주문 진행 (예: 실제 결제 페이지 이동 등)
-const proceedToOrder = () => {
-  alert('주문이 접수되었습니다!')
-  localStorage.removeItem('cart')
-  router.push('/')
+const proceedToOrder = async () => {
+  if (!cartItems.value.length) {
+    alert('장바구니가 비어있습니다.')
+    return
+  }
+  const companyId = route.query.companyId
+  if (!companyId) {
+    alert('잘못된 접근입니다. 회사 ID가 없습니다.')
+    return
+  }
+
+  const orderData = {
+    userId: authStore.user?.uid || 'guest',
+    userName: authStore.profile?.name || 'guest',
+    companyName: route.query.companyName || null,
+    items: cartItems.value.map(item => ({
+      menuId: item.menuId,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+      toppings: item.toppings || [],
+      option: item.option || null,
+      imageUrl: item.imageUrl || null,
+    })),
+    totalAmount: totalAmount.value,
+  }
+
+  try {
+    const orderId = await createOrder(companyId, orderData)
+    alert(`주문이 접수되었습니다! 주문 ID: ${orderId}`)
+
+    localStorage.removeItem('cart')
+    cartItems.value = []
+
+    router.push('/')
+  } catch (e) {
+    console.error(e)
+    alert('주문 처리 중 오류가 발생했습니다.')
+  }
 }
 
 const goToMenu = () => {
@@ -123,7 +153,7 @@ const goToMenu = () => {
 
 const updateQuantity = (index, delta) => {
   const item = cartItems.value[index]
-  item.quantity = Math.max(1, item.quantity + delta) // 최소 수량 1
+  item.quantity = Math.max(1, item.quantity + delta)
   localStorage.setItem('cart', JSON.stringify(cartItems.value))
 }
 
@@ -136,10 +166,10 @@ const calcItemPrice = (item) => {
 onMounted(() => {
   const saved = localStorage.getItem('cart')
   const items = saved ? JSON.parse(saved) : []
-  // 수량이 없으면 기본 1로 설정
   cartItems.value = items.map(item => ({
     ...item,
     quantity: item.quantity || 1
   }))
 })
 </script>
+

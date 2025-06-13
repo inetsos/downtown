@@ -61,12 +61,13 @@
                 size="small"
                 color="secondary"
                 class="mt-1"
-                @click="goToMenuManagement(company.id, company.name)"
+                @click="goToDashboard(company.id, company.name)"
               >
-                메뉴 관리
+                운영 대시보드
               </v-btn>
 
               <v-btn
+                v-else
                 size="small"
                 color="secondary"
                 class="mt-1"
@@ -102,11 +103,10 @@ const goToRegisterService = (id, name) => {
   })
 }
 
-const goToMenuManagement = (id, name) => {
+const goToDashboard = (id, name) => {
   router.push({
-    name: 'MenuList',
-    params: { companyId: id },
-    query: { companyName: name }
+    name: 'OperationsDashboard',
+    query: { companyId: id, companyName: name }
   })
 }
 

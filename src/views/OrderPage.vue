@@ -1,4 +1,3 @@
-<!-- src/views/OrderPage.vue -->
 <template>
   <v-container fluid>
     <v-card flat>
@@ -34,13 +33,14 @@
           cols="12"
           class="d-flex justify-center"
         >
-          <v-card             
+          <v-card
             class="mt-4 pa-2 d-flex flex-column align-center"
             max-width="600"
             style="width: 100%;"
             elevation="1"
             rounded="lg"
-            @click="selectMenu(menu)"
+            :class="{ 'sold-out': menu.isSoldOut }"
+            @click="!menu.isSoldOut && selectMenu(menu)"
           >
             <v-img
               :src="menu.imageUrl"
@@ -59,9 +59,12 @@
               {{ (menu.price ?? 0).toLocaleString() }}원
             </div>
 
+            <div v-if="menu.isSoldOut" class="sold-out-label text-center text-red">
+              품절
+            </div>
+
             <!-- 토핑/옵션 선택 UI: 항상 열려 있음 -->
             <div class="mt-6 px-2 text-center">
-
               <div class="mb-2">
                 <strong>토핑 선택</strong>
                 <v-checkbox
@@ -72,6 +75,7 @@
                   v-model="selectedToppings[menu.id]"
                   density="compact"
                   hide-details
+                  :disabled="menu.isSoldOut"
                 />
               </div>
 
@@ -83,16 +87,26 @@
                     :key="o.id"
                     :label="o.name"
                     :value="o.id"
+                    :disabled="menu.isSoldOut"
                   />
                 </v-radio-group>
               </div>
 
               <v-row class="mt-2 mb-4" dense justify="center" style="gap: 10px;">
                 <v-col cols="auto">
-                  <v-btn color="primary" style="min-width: 120px;" @click.stop="addToCart(menu)">담기</v-btn>
+                  <v-btn
+                    color="primary"
+                    style="min-width: 120px;"
+                    @click.stop="addToCart(menu)"
+                    :disabled="menu.isSoldOut"
+                  >
+                    담기
+                  </v-btn>
                 </v-col>
                 <v-col cols="auto">
-                  <v-btn color="secondary" style="min-width: 120px;" @click="goToCart">장바구니</v-btn>
+                  <v-btn color="secondary" style="min-width: 120px;" @click="goToCart">
+                    장바구니
+                  </v-btn>
                 </v-col>
               </v-row>
             </div>
@@ -187,6 +201,11 @@ const selectMenu = (menu) => {
 }
 
 const addToCart = (menu) => {
+  if (menu.isSoldOut) {
+    alert('해당 메뉴는 매진되어 주문할 수 없습니다.')
+    return
+  }
+
   const toppingsSelectedIds = selectedToppings.value[menu.id] || []
   const optionSelectedId = selectedOption.value[menu.id]
 
@@ -228,3 +247,19 @@ onMounted(async () => {
   selectedCategoryId.value = menus.value[0]?.categoryId ?? null
 })
 </script>
+
+<style scoped>
+.sold-out {
+  filter: grayscale(80%);
+  pointer-events: none;
+  opacity: 0.6;
+  user-select: none;
+}
+
+.sold-out-label {
+  font-weight: bold;
+  margin-top: 8px;
+  font-size: 1.5rem;
+}
+
+</style>

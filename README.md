@@ -318,6 +318,26 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 ![카페 온라인 주문 장바구니 1](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb8BBwc%2FbtsOwb7tA8U%2FBM9YyyHzEXwkHLOIYeQqZK%2Fimg.png)
 ![카페 온라인 주문 장바구니 2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FrNt6o%2FbtsOx8nSOJU%2FcekNI1rnkLMbsvarB08hB0%2Fimg.png)
   
+
+#### 25. 예약 포털 (Vue3 + Firebase) - 카페 운영 대시보드
+
+운영에 필요한 각종 관리 기능들을 모아둔 페이지를 ‘운영 대시보드’라 합시다.  
+운영에 필요한 각 기능들을 우선 다음과 같이 정리합니다.  
+  
+1. 메뉴 관리  
+2. 메뉴 품절 관리  
+3. 고객 주문 확인  
+4. 고객 주문 완료 및 픽업 알림  
+5. 고객 주문 취소  
+  
+이들 관리 기능 외에도 매출 집계, 현황 등 매출 분석과  
+많이 팔리는 품목 조회 등 고객 데이터 분석 등  
+운영에 필요한 각종 리포팅 기능도 필요할 것입니다.
+  
+계속 운영 대시보드에 필요한 기능들이 추가되어갈 것입니다.  
+  
+![카페 운영자 대시보드](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHsRhx%2FbtsOzgtZNfd%2F8JtE7MzaV1xGJROHDdxmyK%2Fimg.png)
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할

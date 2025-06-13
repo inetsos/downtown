@@ -86,8 +86,8 @@ const routes = [
   },
   {
     path: '/companies/:companyId/menus',
-    name: 'MenuManagement',
-    component: () => import('@/views/MenuManagement.vue'),
+    name: 'MenuManager',
+    component: () => import('@/views/MenuManager.vue'),
     props: route => ({
       companyId: route.params.companyId,
       companyName: route.query.companyName || '',
@@ -116,8 +116,22 @@ const routes = [
       companyId: route.params.companyId,
       companyName: route.query.companyName || '',
     }),
+  },
+  {
+    path: '/admin/dashboard',
+    name: 'OperationsDashboard',
+    component: () => import('@/views/OperationsDashboard.vue')  
+  },
+  {
+    path: '/admin/solsout',
+    name: 'SoldOutManager',
+    component: () => import('@/views/SoldOutManager.vue') 
+  },
+  {
+    path: '/admin/order-manager',
+    name: 'OrderManager',
+    component: () => import('@/views/OrderManager.vue') 
   }
-
 ]
 
 const router = createRouter({
