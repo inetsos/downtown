@@ -7,7 +7,10 @@ import {
   serverTimestamp, 
   query,
   orderBy,
-  onSnapshot
+  onSnapshot,
+  doc,
+  runTransaction,
+  updateDoc,
 } from 'firebase/firestore'
 
 export function useOrder() {
@@ -16,7 +19,7 @@ export function useOrder() {
   const orders = ref([])
 
   /**
-   * 회사(companyId) 하위 orders 서브컬렉션에 주문 저장
+   * 회사(companyId) 하위 orders 서브컬렉션에 주문 저장 (자동 증가 주문번호 포함)
    * @param {string} companyId 
    * @param {object} orderData 
    */
@@ -25,14 +28,33 @@ export function useOrder() {
     error.value = null
     try {
       const ordersColRef = collection(db, 'companies', companyId, 'orders')
-      const payload = {
-        ...orderData,
-        createdAt: serverTimestamp(),
-        status: 'pending',
-      }
-      const docRef = await addDoc(ordersColRef, payload)
+      const counterDocRef = doc(db, 'companies', companyId, 'orderCounter', 'counter')
+
+      let newOrderNumber = 0
+
+      await runTransaction(db, async (transaction) => {
+        const counterDoc = await transaction.get(counterDocRef)
+        if (!counterDoc.exists()) {
+          transaction.set(counterDocRef, { lastOrderNumber: 1 })
+          newOrderNumber = 1
+        } else {
+          const lastOrderNumber = counterDoc.data().lastOrderNumber || 0
+          newOrderNumber = lastOrderNumber + 1
+          transaction.update(counterDocRef, { lastOrderNumber: newOrderNumber })
+        }
+
+        const payload = {
+          ...orderData,
+          createdAt: serverTimestamp(),
+          status: '대기',
+          orderNumber: newOrderNumber,
+        }
+        const newOrderDocRef = doc(ordersColRef)
+        transaction.set(newOrderDocRef, payload)
+      })
+
       loading.value = false
-      return docRef.id
+      return newOrderNumber
     } catch (e) {
       error.value = e
       loading.value = false
@@ -65,11 +87,30 @@ export function useOrder() {
     return unsubscribe
   }
 
+  /**
+   * 주문 상태를 "완료"로 업데이트
+   * @param {string} companyId 
+   * @param {string} orderId 
+   */
+  const markAsCompleted = async (companyId, orderId) => {
+    if (!companyId || !orderId) return
+
+    try {
+      const orderDocRef = doc(db, 'companies', companyId, 'orders', orderId)
+      await updateDoc(orderDocRef, { status: '완료' })
+    } catch (e) {
+      error.value = e
+      console.error('주문 완료 처리 실패:', e)
+      throw e
+    }
+  }
+
   return {
     loading,
     error,
     orders,
     createOrder,
     fetchOrdersRealtime,
+    markAsCompleted,
   }
 }

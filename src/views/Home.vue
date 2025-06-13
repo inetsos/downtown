@@ -30,6 +30,7 @@
         :key="company.id"
         cols="12"
         md="4"
+        sm="6"
       >
         <v-card class="pa-2 mb-2" style="height: 100%;">
           <v-card-title class="d-flex align-center">

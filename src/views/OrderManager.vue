@@ -1,8 +1,18 @@
-<!-- src/views/OrderManager.vue -->
+<!-- src/views/OrderManager.vue-->
 <template>
   <v-container>
     <v-card>
-      <v-card-title class="text-h5 font-weight-bold">주문 관리</v-card-title>
+      <!-- 운영 대시보드로 돌아가기 버튼 -->
+      <div class="text-end mb-4 mr-2">
+        <span
+          class="text-primary text-subtitle-2 cursor-pointer"
+          @click="goToDashboard"
+        >
+          운영 대시보드
+        </span>
+      </div>
+
+      <v-card-title class="text-h5 font-weight-bold">{{companyName}} 주문 관리</v-card-title>
       <v-divider class="mb-4" />
 
       <v-card-text>
@@ -13,37 +23,65 @@
         <v-progress-linear v-if="loading" indeterminate color="primary" class="mb-3" />
 
         <template v-if="orders.length">
-          <v-list>
-            <v-list-item v-for="order in orders" :key="order.id" class="mb-6 pa-4">
-              <v-list-item-title class="text-h6 font-weight-bold mb-4">
-                주문 ID: {{ order.id }}
-              </v-list-item-title>
+          <div v-for="order in orders" :key="order.id" class="mb-6">
+            <v-card>
+              <v-card-title class="text-h6 font-weight-bold">
+                주문번호: {{ order.orderNumber }} / 주문 ID: {{ order.id }}
+                <v-spacer />
+                <v-chip :color="getStatusColor(order.status)" dark>{{ order.status }}</v-chip>
+              </v-card-title>
 
-              <p class="mb-2"><strong>사용자:</strong> {{ order.userName }} (ID: {{ order.userId }})</p>
-              <p class="mb-2"><strong>회사명:</strong> {{ order.companyName }}</p>
-              <p class="mb-2"><strong>총 금액:</strong> {{ order.totalAmount.toLocaleString() }}원</p>
-              <p class="mb-2"><strong>상태:</strong> {{ order.status }}</p>
-              <p class="mb-4"><strong>주문 일시:</strong> {{ formatDate(order.createdAt) }}</p>
+              <v-card-text>
+                <p><strong>회원:</strong> {{ order.userName }}</p>
+                <p><strong>총 금액:</strong> {{ order.totalAmount.toLocaleString() }}원</p>
+                <p><strong>주문 일시:</strong> {{ formatDate(order.createdAt) }}</p>
 
-              <v-divider class="mb-4" />
+                <v-divider class="my-4" />
 
-              <strong class="text-subtitle-1">주문 항목:</strong>
-              <v-list dense>
-                <v-list-item v-for="item in order.items" :key="item.menuId + (item.option?.name || '')" class="pl-4">
-                  <v-list-item-content>
-                    <p class="mb-1">
-                      <strong>{{ item.name }}</strong>
-                      <template v-if="item.option"> - 옵션: {{ item.option.name }}</template>
-                      <template v-if="item.toppings?.length">
-                        - 토핑: {{ item.toppings.map(t => t.name).join(', ') }}
-                      </template>
-                      / 수량: {{ item.quantity }}
-                    </p>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-list-item>
-          </v-list>
+                <strong class="text-h6 font-weight-medium">
+                  주문 항목:
+                </strong>
+
+
+                <div class="mt-2">
+                  <div
+                    v-for="(item, index) in order.items"
+                    :key="item.menuId + (item.option?.name || '')"
+                    class="mb-4"
+                  >
+                    <div class="text-body-1 font-weight-medium">
+                      {{ item.name }} - {{ item.option.name }}
+                    </div>
+
+                    <div v-if="item.toppings?.length" class="ml-2 mt-1 text-body-1 font-weight-medium">
+                      <span v-if="item.toppings?.length" style="color: #0066cc;">
+                        토핑: {{ item.toppings.map(t => t.name).join(', ') }}
+                      </span>
+                    </div>
+
+                    <div class="ml-2 mt-1 text-body-1 font-weight-medium">
+                      <span style="color: #CC5500;">
+                        수량: {{ item.quantity }}
+                      </span>
+                    </div>
+
+                    <!-- 항목 사이 분리선 (마지막 제외) -->
+                    <v-divider v-if="index < order.items.length - 1" class="my-3" />
+                  </div>
+                </div>
+              </v-card-text>
+              <v-btn
+                color="green"
+                dark
+                block
+                @click="markAsCompletedHandler(order.id)"
+                :disabled="order.status === '완료'"
+              >
+                완료
+              </v-btn>
+
+            </v-card>
+          </div>
         </template>
 
         <v-alert v-else type="info">주문 내역이 없습니다.</v-alert>
@@ -54,13 +92,24 @@
 
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useOrder } from '@/composables/useOrder'
 
 const route = useRoute()
+const router = useRouter()
+
 const companyId = route.query.companyId
-const { loading, error, orders, fetchOrdersRealtime } = useOrder()
+const companyName = route.query.companyName
+
+const { loading, error, orders, fetchOrdersRealtime, markAsCompleted } = useOrder()
 let unsubscribe = null
+
+const goToDashboard = () => {
+  router.push({
+    name: 'OperationsDashboard',
+    query: { companyId, companyName }
+  })
+}
 
 onMounted(() => {
   if (companyId) {
@@ -77,5 +126,26 @@ onUnmounted(() => {
 function formatDate(timestamp) {
   if (!timestamp) return '-'
   return timestamp.toDate?.()?.toLocaleString() ?? (timestamp instanceof Date ? timestamp.toLocaleString() : '-')
+}
+
+function getStatusColor(status) {
+  switch (status) {
+    case '완료': return 'green'
+    case '대기': return 'orange'
+    case '취소': return 'red'
+    default: return 'grey'
+  }
+}
+
+const markAsCompletedHandler = async (orderId) => {
+  if (!companyId) {
+    console.warn('companyId가 없습니다.')
+    return
+  }
+  try {
+    await markAsCompleted(companyId, orderId)
+  } catch (e) {
+    console.error('주문 완료 처리 중 오류 발생:', e)
+  }
 }
 </script>

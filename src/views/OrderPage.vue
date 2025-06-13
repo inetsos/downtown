@@ -120,10 +120,22 @@
       </v-alert>
     </v-card>
   </v-container>
+
+  <v-btn
+    v-if="showScrollTop"
+    color="primary"
+    fab
+    small
+    class="scroll-to-top-btn"
+    @click="scrollToTop"
+    elevation="4"
+  >
+    ↑
+  </v-btn>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMenus } from '@/composables/useMenus'
 import { useToppingManagement } from '@/composables/useToppingManagement'
@@ -155,6 +167,8 @@ const {
 // 메뉴별 선택 상태 (객체: key = menu.id)
 const selectedToppings = ref({})
 const selectedOption = ref({})
+
+const showScrollTop = ref(false)
 
 // 필터링된 메뉴
 const filteredMenus = computed(() => {
@@ -247,6 +261,25 @@ onMounted(async () => {
   await fetchIceHotOptions()
   selectedCategoryId.value = menus.value[0]?.categoryId ?? null
 })
+
+const onScroll = () => {
+  showScrollTop.value = window.scrollY > 100
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', onScroll)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', onScroll)
+})
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  })
+}
 </script>
 
 <style scoped>
@@ -263,4 +296,10 @@ onMounted(async () => {
   font-size: 1.5rem;
 }
 
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+}
 </style>

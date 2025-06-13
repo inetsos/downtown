@@ -348,6 +348,19 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
   
 ![카페 온라인 주문 품절 메뉴](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fch2n6w%2FbtsOzAsFl2e%2FLJzqrnoNDhKSBedRyaU8tk%2Fimg.png)
   
+
+#### 27. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페의 온라인 주문 관리
+
+고객 주문 확인 페이지에서 고객의 주문에 따라 음료가 준비되면 완료 버튼을 눌러 주문을 완료합니다.  
+주문확인 페이지의 경우 실제 카페에서 적용을 한다면   
+바쁘게 음료를 준비하면서 화면을 확인하므로 시인성이 좋아야 합니다.  
+그래서 주문 내용이 잘 보일 수 있도록 각 항목에 대해 폰트를 키우고 글자색도 다르게 부여했습니다.   
+  
+'완료' 버튼을 누르면 주문이 완료로 변경됩니다.  
+주문 상태 즉 대기, 완료의 태그 색을 다르게 하여 쉽게 구분할 수 있도록 했습니다.  
+  
+![카페 온라인 주문 주문 확인 및 완료 처리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Flup40%2FbtsOz48o9bk%2FZnwZW1FnjHGEQnA8Y97Ej0%2Fimg.png)
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할
