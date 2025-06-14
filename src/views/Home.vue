@@ -182,28 +182,41 @@ const handleReservation = (company) => {;
 
 // 카테고리 필터링된 목록
 const filteredCompanies = computed(() => {
+  let result = []
+
   if (selectedCategory.value === '전체' || !selectedCategory.value) {
-    return companyStore.companies
+    result = [...companyStore.companies]
+  } else {
+    result = companyStore.companies.filter(
+      (c) => c.category === selectedCategory.value
+    )
   }
-  return companyStore.companies.filter(
-    (c) => c.category === selectedCategory.value
-  )
+
+  // 업종 이름(한글 기준)으로 정렬
+  return result.sort((a, b) => a.category.localeCompare(b.category, 'ko'))
 })
+
 
 function isOpenNow(company) {
   if (!company.openTime || !company.closeTime) return false;
 
   const now = new Date();
-  const currentTime = now.getHours() * 60 + now.getMinutes();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
   const [openHour, openMinute] = company.openTime.split(':').map(Number);
   const [closeHour, closeMinute] = company.closeTime.split(':').map(Number);
 
-  const openTime = openHour * 60 + openMinute;
-  const closeTime = closeHour * 60 + closeMinute;
+  const openMinutes = openHour * 60 + openMinute;
+  const closeMinutes = closeHour * 60 + closeMinute;
 
-  return currentTime >= openTime && currentTime < closeTime;
+  if (openMinutes < closeMinutes) {
+    return currentMinutes >= openMinutes && currentMinutes < closeMinutes;
+  } else {
+    // 자정 넘기는 경우
+    return currentMinutes >= openMinutes || currentMinutes < closeMinutes;
+  }
 }
+
 
 </script>
 

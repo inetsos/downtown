@@ -131,7 +131,19 @@ const routes = [
     path: '/admin/order-manager',
     name: 'OrderManager',
     component: () => import('@/views/OrderManager.vue') 
+  },
+  {
+    path: '/my-orders',
+    name: 'MyOrderPage',
+    component: () => import('@/views/MyOrderPage.vue')
+  },
+  {
+    path: '/my-page',
+    name: 'MyPage',
+    component: () => import('@/views/MyPage.vue')
   }
+
+
 ]
 
 const router = createRouter({

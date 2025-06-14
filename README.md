@@ -361,6 +361,25 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
   
 ![카페 온라인 주문 주문 확인 및 완료 처리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Flup40%2FbtsOz48o9bk%2FZnwZW1FnjHGEQnA8Y97Ej0%2Fimg.png)
   
+
+#### 28. 예약 포털 (Vue3 + Firebase) 마이페이지 - 주문 내역, 예약 내역
+
+- 마이페이지
+동네 포털에 이전에 개발한 미용실 예약이 있습니다.   
+그리고 현재 개발 중인 카레 온라인 주문 기능으로  
+조회하는 것이 두개로 늘었습니다.  
+미용실 예약 조회와 카페 주문조회 입니다.  
+그래서 마이페이지를 새로 추가 하였습니다.  
+마이페이지에는 예약 내역과 주문 내역이 있습니다.  
+  
+![동네 포털 마이페이지](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbdLE7r%2FbtsOAh7QYO1%2F1HNQVhyuAUkNeUjtM9YC5k%2Fimg.png)
+
+- 주문 내역  
+카페의 온라인 주문 내역을 확인할 수 있습니다.  
+카페별로 구분하여 주문 내역을 볼 수 있습니다.  
+  
+![동네 포털 내 주문 보기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbbLD0G%2FbtsOBSTdxtC%2F1enKGEKq4fqvK1KnRKoxB1%2Fimg.png)
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할

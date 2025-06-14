@@ -78,10 +78,21 @@
 
     </v-card>
   </v-container>
+
+  <v-btn
+    v-show="showScrollTop"
+    icon
+    color="primary"
+    class="scroll-top-btn"
+    @click="scrollToTop"
+  >
+    <v-icon>mdi-arrow-up</v-icon>
+  </v-btn>
+
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 import { useOrder } from '@/composables/useOrder'  // composable import
@@ -171,5 +182,32 @@ onMounted(() => {
     quantity: item.quantity || 1
   }))
 })
+
+const showScrollTop = ref(false)
+
+const scrollHandler = () => {
+  showScrollTop.value = window.scrollY > 200
+}
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', scrollHandler)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', scrollHandler)
+})
+
 </script>
 
+<style scoped>
+.scroll-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+}
+</style>

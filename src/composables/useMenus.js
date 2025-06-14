@@ -26,7 +26,7 @@ export function useMenus(companyId) {
   const fetchMenus = async () => {
     loading.value = true
 
-    // 1. 카테고리 가져오기 (sortOrder 순으로 정렬)
+    // 1. 카테고리 가져오기
     const categorySnapshot = await getDocs(
       query(
         collection(db, 'companies', companyId, 'categories'),
@@ -49,7 +49,7 @@ export function useMenus(companyId) {
       ...doc.data()
     }))
 
-    // 3. 카테고리 순서대로 메뉴를 그룹핑
+    // 3. 메뉴 그룹핑
     const grouped = categoryList.map(category => {
       return {
         categoryId: category.id,
@@ -66,22 +66,32 @@ export function useMenus(companyId) {
   }
 
   const uploadImage = async (file) => {
-    const fileName = file.name || 'image.png' 
+    const fileName = file.name || 'image.png'
     const encodedName = encodeURIComponent(fileName)
-    const storageReference = storageRef(storage, 
-      `menus/${companyId}/${Date.now()}_${encodedName}`) 
+    const storageReference = storageRef(storage,
+      `menus/${companyId}/${Date.now()}_${encodedName}`
+    )
     await uploadBytes(storageReference, file)
     return await getDownloadURL(storageReference)
   }
-
 
   const addMenu = async (menu, imageFile) => {
     loading.value = true
     const imageUrl = await uploadImage(imageFile)
 
+    // 현재 카테고리 내 최대 sortOrder 계산
+    const q = query(
+      collection(db, 'companies', companyId, 'menus'),
+      where('categoryId', '==', menu.categoryId)
+    )
+    const snapshot = await getDocs(q)
+    const sortOrders = snapshot.docs.map(doc => doc.data().sortOrder || 0)
+    const maxSortOrder = sortOrders.length > 0 ? Math.max(...sortOrders) : -1
+
     const payload = {
       ...menu,
       imageUrl: imageUrl || '',
+      sortOrder: maxSortOrder + 1,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
     }

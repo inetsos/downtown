@@ -12,7 +12,7 @@
       <v-btn text to="/" tag="router-link">홈</v-btn>
 
       <template v-if="isLoggedIn">
-        <v-btn text to="/my-reservations" tag="router-link">예약보기</v-btn>
+        <v-btn text to="/my-page" tag="router-link">마이페이지</v-btn>
         <v-btn text to="/register-company" tag="router-link">상점등록</v-btn>
         <v-btn text to="/my-companies" tag="router-link">상점보기</v-btn>
         <v-btn text to="/profile" tag="router-link">프로필</v-btn>

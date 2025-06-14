@@ -36,7 +36,6 @@
 
         <!-- 토핑 선택 (다중) -->
         <v-select
-          ref="toppingSelectRef"
           v-model="form.toppingIds"
           :items="toppings"
           item-title="name"
@@ -44,24 +43,7 @@
           label="선택 가능한 토핑"
           multiple
           chips
-        >
-          <!-- 닫기 버튼 추가 -->
-          <template #append-item>
-            <v-divider class="mt-2" />
-            <div class="d-flex justify-end pr-4 pb-2">
-              <v-btn
-                variant="text"
-                size="small"
-                class="d-flex align-center"
-                @click="closeToppingMenu"
-              >
-                <v-icon icon="mdi-close" class="mr-1 mt-1" />
-                닫기
-              </v-btn>
-            </div>
-          </template>
-
-        </v-select>
+        />
 
         <!-- 옵션 선택 (다중) -->
         <v-select
@@ -72,30 +54,13 @@
           label="선택 가능한 옵션"
           multiple
           chips
-          ref="optionSelectRef"
-        >
-          <template #append-item>
-            <v-divider class="mt-2" />
-            <div class="d-flex justify-end pr-4 pb-2">
-              <v-btn
-                variant="text"
-                size="small"
-                class="d-flex align-center"
-                @click="closeOptionMenu"
-              >
-                <v-icon icon="mdi-close" class="mr-1 mt-1" />
-                닫기
-              </v-btn>
-            </div>
-          </template>
-        </v-select>
-
+        />
 
         <!-- 이미지 업로드 -->
         <v-file-input
-          v-model="imageFile"
           label="메뉴 이미지 선택"
           accept="image/*"
+          @change="onImageChange"
           show-size
           clearable
         />
@@ -211,18 +176,6 @@ const imageFile = ref(null)
 
 const isEditMode = ref(false)
 const editingMenuId = ref(null)
-
-const toppingSelectRef = ref(null)
-
-const closeToppingMenu = () => {
-  toppingSelectRef.value?.blur()
-}
-
-const optionSelectRef = ref(null)
-
-const closeOptionMenu = () => {
-  optionSelectRef.value?.blur()
-}
 
 const onSort = async (category) => {
   const sortedMenus = groupedMenus.value[category]
