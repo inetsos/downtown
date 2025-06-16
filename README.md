@@ -404,6 +404,34 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 
 ![동네 포털 비회원 주문 조회](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcuapOs%2FbtsOA8buoRT%2FoRa4071lHIwQ9iQtuAeWz1%2Fimg.png)
   
+
+#### 30. 예약 포털 (Vue3 + Firebase) - 회원의 카페 온라인 주문
+
+회원의 주문은 상점의 ‘온라인 주문’ 버튼을 누르면 온라인 주문을 할 수 있습니다.  
+
+회원이 로그인 하지 않은 상태에서 ‘온라인 주문’을 누르면  
+로그인 페이지로 이동하여 로그인을 합니다.  
+로그인에 성공을 하면 주문 페이지로 이동합니다.  
+  
+온라인 주문에서 메뉴를 선택한 후   
+장바구니로 이동하여 주문을 할 수 있습니다.  
+회원 주문의 경우 이름과 전화번호 입력은 없습니다.  
+   
+온라인 주문 페이지에는 ‘주문 내역’ 링크가 있습니다.  
+이것을 누르면 회원의 이 카페에 대한 주문 내역을 확인할 수 있습니다.  
+  
+- 회원 온라인 주문 - 홈  
+
+![동네 포털 비회원 온라인 주문](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fm0P8i%2FbtsOAIqOa3G%2FHoDkXudbrKoKp2E1dRv4BK%2Fimg.png)
+
+- 회원 온라인 주문 장바구니  
+
+![동네 포털 회원 온라인 주문 장바구니](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FckNAMD%2FbtsOBhsB2tN%2FNatQjk9j9KBcCEt2HRUOM0%2Fimg.png)
+
+- 회원 주문 내역
+
+![동네 포털 회원 온라인 주문 장바구니](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbEdVOj%2FbtsOAWih3CT%2FK5qoOSM3Ey89kboVX3jTnk%2Fimg.png)
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할

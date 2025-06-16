@@ -184,6 +184,21 @@ const goToOrder = (companyId, companyName) => {
 
 const handleOrder = (company) => {
   if (!isOpenNow(company)) return;
+
+  // 회원이 로그인 하지 않은 상태에서 온라인 주문을 클릭한 경우
+  if (!isLoggedIn.value) {
+    // 로그인 페이지로 이동하면서 리다이렉트 경로를 쿼리로 전달
+    router.push({
+      path: '/login',
+      query: {
+        redirect: '/order',
+        companyId: company.id,
+        companyName: company.name
+      }
+    });
+    return;
+  }
+
   goToOrder(company.id, company.name);
 };
 
