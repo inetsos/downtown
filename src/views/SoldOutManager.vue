@@ -1,7 +1,21 @@
 <!-- src/views/SoldOutManager.vue -->
 <template>
-  <v-container>
-    <!-- 카테고리 탭 -->
+  <v-container> 
+
+    <!-- 메뉴 카드 목록 -->
+    <v-card>
+      <!-- 운영 대시보드로 돌아가기 버튼 -->
+      <div class="text-end mb-4 mr-2">
+        <span
+          class="text-primary text-subtitle-2 cursor-pointer"
+          @click="goToDashboard"
+        >
+          운영 대시보드
+        </span>
+      </div>
+
+      <v-card-title class="text-h6">메뉴 품절 상태 관리</v-card-title>
+      <!-- 카테고리 탭 -->
     <div class="d-flex flex-wrap mb-4" style="gap: 12px;">
       <v-chip
         v-for="category in menus"
@@ -13,10 +27,6 @@
         {{ category.categoryName }}
       </v-chip>
     </div>
-
-    <!-- 메뉴 카드 목록 -->
-    <v-card>
-      <v-card-title class="text-h6">메뉴 품절 상태 관리</v-card-title>
       <v-divider />
       <v-card-text>
         <v-row>
@@ -74,16 +84,27 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useMenus } from '@/composables/useMenus'
 
 const route = useRoute()
+const router = useRouter()
+
 const companyId = route.query.companyId
+const companyName = route.query.companyName
+
 const { menus, fetchMenus, updateMenu } = useMenus(companyId)
 
 // 카테고리 DOM 참조 저장용
 const categoryRefs = ref({})
 const showScrollTop = ref(false)
+
+const goToDashboard = () => {
+  router.push({
+    name: 'OperationsDashboard',
+    query: { companyId, companyName }
+  })
+}
 
 // 특정 카테고리로 스크롤 이동
 const scrollToCategory = (categoryId) => {

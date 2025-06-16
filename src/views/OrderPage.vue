@@ -2,10 +2,40 @@
 <template>
   <v-container fluid>
     <v-card flat>
-      <v-card-title class="text-h6 px-4">{{ companyName }} 메뉴</v-card-title>
+      <v-card-title
+        class="text-h6 px-4 d-flex align-center justify-space-between"
+        style="max-width: 600px; margin: 0 auto;"
+      >
+        <span>{{ companyName }} 메뉴</span>
+
+        <!-- 익명 로그인 사용자일 때 -->
+        <v-btn
+          v-if="isAnonymous"
+          variant="plain"
+          color="primary"
+          @click="goToGuestOrder"
+          class="pa-0 text-body-2 font-weight-regular"
+          style="min-width: auto; text-decoration: underline; cursor: pointer;"
+        >
+          비회원 주문 조회
+        </v-btn>
+
+        <!-- 일반 로그인 사용자일 때 -->
+        <v-btn
+          v-else
+          variant="plain"
+          color="primary"
+          @click="goToMyOrders"
+          class="pa-0 text-body-2 font-weight-regular"
+          style="min-width: auto; text-decoration: underline; cursor: pointer;"
+        >
+          주문 내역
+        </v-btn>
+
+      </v-card-title>
 
       <!-- 카테고리 태그 선택 -->
-      <div class="px-4 py-2 overflow-x-auto whitespace-nowrap">
+      <div class="px-4 py-2 overflow-x-auto whitespace-nowrap" style="max-width: 600px; margin: 0 auto;">
         <v-chip-group
           v-model="selectedCategoryId"
           class="flex-nowrap"
@@ -115,9 +145,15 @@
         </v-col>
       </v-row>
 
-      <v-alert v-if="!filteredMenus.length" type="info" class="ma-4">
+      <v-alert
+        v-if="!filteredMenus.length  && !isLoading"
+        type="info"
+        class="ma-4 mx-auto"
+        max-width="600"
+      >
         해당 카테고리에 메뉴가 없습니다.
       </v-alert>
+
     </v-card>
   </v-container>
 
@@ -140,6 +176,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { useMenus } from '@/composables/useMenus'
 import { useToppingManagement } from '@/composables/useToppingManagement'
 import { useIceHotManager } from '@/composables/useIceHotManager'
+import { useAuthStore } from '@/stores/authStore'
+
+const authStore = useAuthStore()
 
 const route = useRoute()
 const router = useRouter()
@@ -151,6 +190,8 @@ const companyName = route.query.companyName || ''
 const { menus, fetchMenus } = useMenus(companyId)
 const selectedCategoryId = ref(null)
 const selectedMenuId = ref(null)
+
+const isLoading = ref(true)
 
 // 토핑 관리 (Firestore에서 불러옴)
 const {
@@ -170,11 +211,33 @@ const selectedOption = ref({})
 
 const showScrollTop = ref(false)
 
+const isAnonymous = computed(() => authStore.user?.isAnonymous === true)
+
 // 필터링된 메뉴
 const filteredMenus = computed(() => {
   const group = menus.value.find(g => g.categoryId === selectedCategoryId.value)
   return group?.menus || []
 })
+
+const goToGuestOrder = () => {
+  router.push({
+    path: '/guest-order',
+    query: {
+      companyId: companyId,
+      companyName: companyName,
+    }
+  })
+}
+
+const goToMyOrders = () => {
+  router.push({ 
+    path: '/my-orders', 
+    query: {
+      companyId: companyId,
+      companyName: companyName,
+    }
+  })
+}
 
 watch(filteredMenus, (newMenus) => {
   newMenus.forEach(menu => {
@@ -260,6 +323,7 @@ onMounted(async () => {
   await loadToppings()
   await fetchIceHotOptions()
   selectedCategoryId.value = menus.value[0]?.categoryId ?? null
+  isLoading.value = false;
 })
 
 const onScroll = () => {

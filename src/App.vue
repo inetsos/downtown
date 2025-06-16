@@ -22,9 +22,10 @@
       </template>
 
       <!-- 로그인/로그아웃 아이콘 버튼 -->
-      <v-btn icon @click="handleAuthClick">
+      <v-btn @click="handleAuthClick" class="d-flex align-center">
+        <span class="text-body-1 mr-1">{{ isLoggedIn ? '로그아웃' : '로그인' }}</span>
         <v-icon>{{ isLoggedIn ? 'mdi-logout' : 'mdi-login' }}</v-icon>
-      </v-btn>
+      </v-btn>   
     </v-app-bar>
 
     <!-- 페이지 컨텐츠 -->
@@ -43,7 +44,7 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 // 로그인 상태 확인
-const isLoggedIn = computed(() => !!authStore.user)
+const isLoggedIn = computed(() => authStore.isLoggedIn)
 
 const goHome = () => {
   router.push('/')

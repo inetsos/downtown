@@ -36,10 +36,16 @@
           <v-card-title class="d-flex align-center">
             <v-icon color="primary" class="mr-2">mdi-storefront</v-icon>
             <div>
-              <b>{{ company.name }}</b>
+              <b 
+                style="cursor: pointer;" 
+                @click="goToDetail(company.id)"
+              >
+                {{ company.name }}
+              </b>
               <span class="text-grey"> ({{ company.category }})</span>
             </div>
           </v-card-title>
+
 
           <v-card-text>
             <div class="mb-2">
@@ -76,38 +82,43 @@
 
             <div class="d-flex flex-wrap gap-2">
 
-              <v-btn
-                v-if="company.category === '카페'"
-                color="primary"
-                size="small"
-                @click.stop="handleOrder(company)"
-                :disabled="!isOpenNow(company)"
-                :style="{ pointerEvents: isOpenNow(company) ? 'auto' : 'none' }"
-              >
-                온라인 주문
-              </v-btn>
+              <!-- 업종이 카페인 경우 -->
+              <span v-if="company.category === '카페'">
+                <v-btn
+                  class="mr-2"
+                  color="primary"
+                  size="small"
+                  @click.stop="handleOrder(company)"
+                  :disabled="!isOpenNow(company)"
+                  :style="{ pointerEvents: isOpenNow(company) ? 'auto' : 'none' }"
+                >
+                  온라인 주문
+                </v-btn>
 
-              <v-btn
-                v-else
-                color="primary"
-                size="small"
-                @click.stop="handleReservation(company)"
-                :disabled="!isOpenNow(company)"
-                :style="{ pointerEvents: isOpenNow(company) ? 'auto' : 'none' }"
-              >
-                예약하기
-              </v-btn>
-
-              <!-- ✅ 새로 추가된 상세보기 버튼 -->
-              <v-btn
-                color="grey"
-                size="small"
-                variant="outlined"
-                class="ml-2"
-                @click="goToDetail(company.id)"
-              >
-                상세보기
-              </v-btn>
+                <!-- 비로그인(비회원)인 경우 -->
+                <v-btn
+                  v-if = "!isLoggedIn"               
+                  color="secondary"
+                  size="small"
+                  @click.stop="handleGuestOrder(company)"
+                  :disabled="!isOpenNow(company)"
+                  :style="{ pointerEvents: isOpenNow(company) ? 'auto' : 'none' }"
+                >
+                  비회원 주문
+                </v-btn>
+              </span>
+              <span v-else>
+                <!-- 그 외 업종은 '예약하기' -->
+                <v-btn
+                  color="primary"
+                  size="small"
+                  @click.stop="handleReservation(company)"
+                  :disabled="!isOpenNow(company)"
+                  :style="{ pointerEvents: isOpenNow(company) ? 'auto' : 'none' }"
+                >
+                  예약하기
+                </v-btn>
+              </span>     
             </div>
           </v-card-text>
         </v-card>
@@ -122,11 +133,13 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCompanyStore } from '@/stores/companyStore'
-import { useAuthStore } from '@/stores/authStore' // ✅ 추가
+import { useAuthStore } from '@/stores/authStore'
 
 const companyStore = useCompanyStore()
-const authStore = useAuthStore() // ✅ 추가
+const authStore = useAuthStore()
 const router = useRouter()
+
+const isLoggedIn = computed(() => authStore.isLoggedIn)
 
 const selectedCategory = ref('전체')
 const categories = ['배달음식', '카페', '소매업', '서비스업', '교육', '병원', '기타']
@@ -164,8 +177,7 @@ const goToOrder = (companyId, companyName) => {
     path: '/order',
     query: {
       companyId,
-      companyName,
-      username: authStore.profile.name
+      companyName
     }
   })
 }
@@ -174,6 +186,25 @@ const handleOrder = (company) => {
   if (!isOpenNow(company)) return;
   goToOrder(company.id, company.name);
 };
+
+const handleGuestOrder = async (company) => {
+  if (!isOpenNow(company)) return;
+
+  // 익명 로그인한 후 온라인 주문으로 간다.
+  // 익명 사용자 자동 로그인 처리
+  if (!authStore.user) {
+    try {
+      await authStore.loginAnonymously()
+    } catch (err) {
+      console.error(err)
+      alert('비회원 로그인 중 오류가 발생했습니다.')
+      return
+    }
+  }
+  
+  goToOrder(company.id, company.name);
+};
+
 
 const handleReservation = (company) => {;
   if (!isOpenNow(company)) return;

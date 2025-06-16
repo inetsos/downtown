@@ -102,13 +102,13 @@ const dashboardLinks = ref([
   {
     title: '주문 완료 및 픽업 알림',
     description: '주문 상태 업데이트 및 알림 전송',
-    route: '/admin/notify',
+    //route: '/admin/notify',
     icon: 'mdi-bell-ring'
   },
   {
     title: '고객 주문 취소 처리',
     description: '고객 요청 주문 취소 승인',
-    route: '/admin/cancel',
+    //route: '/admin/cancel',
     icon: 'mdi-cancel'
   }
 ])

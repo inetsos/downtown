@@ -9,6 +9,8 @@ import {
   orderBy,
   onSnapshot,
   doc,
+  where,
+  getDocs,
   runTransaction,
   updateDoc,
 } from 'firebase/firestore'
@@ -105,6 +107,55 @@ export function useOrder() {
     }
   }
 
+  // markAsCompleted 사용 수정 필요.
+  const updateOrderStatus = async (companyId, orderId, status) => {
+    try {
+      const orderDocRef = doc(db, 'companies', companyId, 'orders', orderId)
+      await updateDoc(orderDocRef, { status })
+    } catch (e) {
+      error.value = e
+      console.error('주문 상태 업데이트 실패:', e)
+      throw e
+    }
+  }
+
+  /**
+   * 비회원 전화번호로 주문 검색
+   * @param {string} companyId 
+   * @param {string} guestPhone 
+   * @returns {Promise<Array>} 주문 배열 반환
+   */
+  const searchGuestOrder = async (companyId, guestPhone) => {
+    loading.value = true
+    error.value = null
+
+    console.log(companyId, guestPhone);
+    try {
+      const ordersColRef = collection(db, 'companies', companyId, 'orders')
+      const q = query(
+        ordersColRef,
+        where('userPhone', '==', guestPhone),
+        where('isGuest', '==', true),
+        orderBy('createdAt', 'desc')
+      )
+
+      console.log(q);
+      const snapshot = await getDocs(q)
+      const results = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+console.log(results);
+      loading.value = false
+      return results
+    } catch (e) {
+      error.value = e
+      loading.value = false
+      console.error('비회원 주문 검색 실패:', e)
+      throw e
+    }
+  }
+
   return {
     loading,
     error,
@@ -112,5 +163,7 @@ export function useOrder() {
     createOrder,
     fetchOrdersRealtime,
     markAsCompleted,
+    updateOrderStatus,
+    searchGuestOrder 
   }
 }

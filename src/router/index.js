@@ -141,8 +141,12 @@ const routes = [
     path: '/my-page',
     name: 'MyPage',
     component: () => import('@/views/MyPage.vue')
-  }
-
+  },
+  {
+    path: '/guest-order',
+    name: 'GuestOrder',
+    component: () => import('@/views/GuestOrder.vue')
+  },
 
 ]
 

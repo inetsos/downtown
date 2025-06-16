@@ -2,7 +2,11 @@
 <template>
   <v-container fluid>
     <v-card flat>
-      <v-card-title class="text-h6 font-weight-bold">내 주문 내역</v-card-title>
+      <v-card-title class="text-h6 font-weight-bold d-flex align-center">
+        <v-icon left color="primary" class="mr-2">mdi-store</v-icon>
+        {{ companyName ? `${companyName} 주문 내역` : '내 주문 내역' }}
+      </v-card-title>
+
       <v-divider />
 
       <v-alert
@@ -83,17 +87,33 @@
 </template>
 
 <script setup>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useMyOrders } from '@/composables/useMyOrders'
 import { useAuthStore } from '@/stores/authStore'
 import { format } from 'date-fns'
 
 const authStore = useAuthStore()
+const route = useRoute()
 const userId = authStore.user?.uid
 
-const { orders, fetchOrders } = useMyOrders(userId)
+const companyId = computed(() => route.query.companyId || null)
+const companyName = computed(() => route.query.companyName || null)
 
-onMounted(fetchOrders)
+const { orders, fetchOrders, fetchAllOrders } = useMyOrders(userId)
+
+watch(
+  companyId,
+  async (id) => {
+    if (!userId) return
+    if (id) {
+      await fetchOrders(id)
+    } else {
+      await fetchAllOrders()
+    }
+  },
+  { immediate: true }
+)
 
 const groupedOrders = computed(() => {
   return orders.value.reduce((acc, order) => {

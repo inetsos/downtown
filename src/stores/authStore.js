@@ -1,6 +1,6 @@
 // src/stores/authStore.js
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { auth, db } from '../firebase'
 import {
   createUserWithEmailAndPassword,
@@ -13,6 +13,7 @@ import {
   reauthenticateWithCredential,
   GoogleAuthProvider,
   signInWithPopup,
+  signInAnonymously // 비회원 로그인
 } from 'firebase/auth'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
 
@@ -50,15 +51,43 @@ export const useAuthStore = defineStore('auth', () => {
     profile.value = null
   }
 
+  const isLoggedIn = computed(() => !!user.value && !user.value.isAnonymous)
+
+  const loginAnonymously = async () => {
+    const result = await signInAnonymously(auth)
+    user.value = result.user
+
+    // 익명 사용자는 Firestore에 저장하지 않아도 됨
+    profile.value = {
+      uid: result.user.uid,
+      name: '비회원 사용자',
+      aboutMe: '',
+      isAnonymous: true,
+      createdAt: new Date(),
+    }
+  }
+
   const initAuth = () => {
     onAuthStateChanged(auth, async (currentUser) => {
       user.value = currentUser
+
       if (currentUser) {
-        const profileDoc = await getDoc(doc(db, 'profiles', currentUser.uid))
-        profile.value = profileDoc.exists() ? profileDoc.data() : null
+        if (currentUser.isAnonymous) {
+          profile.value = {
+            uid: currentUser.uid,
+            name: '비회원 사용자',
+            aboutMe: '',
+            isAnonymous: true,
+            createdAt: new Date(),
+          }
+          //console.log('익명 로그인 성공:', user.value.uid)
+        } else {
+          const profileDoc = await getDoc(doc(db, 'profiles', currentUser.uid))
+          profile.value = profileDoc.exists() ? profileDoc.data() : null
+        }
       } else {
         profile.value = null
-      } 
+      }
     })
   }
 
@@ -109,9 +138,11 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     user,
     profile,
+    isLoggedIn,
     register,
     login,
     logout,
+    loginAnonymously,
     initAuth,
     changePassword,
     resetPassword,

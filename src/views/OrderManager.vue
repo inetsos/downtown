@@ -32,10 +32,19 @@
               </v-card-title>
 
               <v-card-text>
-                <p><strong>회원:</strong> {{ order.userName }}</p>
-                <p><strong>총 금액:</strong> {{ order.totalAmount.toLocaleString() }}원</p>
-                <p><strong>주문 일시:</strong> {{ formatDate(order.createdAt) }}</p>
-
+                <div class="order-info">
+                  <div v-if="order.isGuest">
+                    <p><strong style="color: red;">비회원</strong></p>
+                    <p><strong>이름:</strong> {{ order.userName }}</p>
+                    <p><strong>전화번호:</strong> {{ order.userPhone }}</p>
+                  </div>
+                  <div v-else>
+                    <p><strong>회원:</strong> {{ order.userName }}</p>
+                  </div>
+                  <p><strong>총 금액:</strong> {{ order.totalAmount.toLocaleString() }}원</p>
+                  <p><strong>주문 일시:</strong> {{ formatDate(order.createdAt) }}</p>
+                </div>
+                
                 <v-divider class="my-4" />
 
                 <strong class="text-h6 font-weight-medium">
@@ -149,3 +158,9 @@ const markAsCompletedHandler = async (orderId) => {
   }
 }
 </script>
+
+<style scoped>
+  .order-info p {
+    margin: 6px 0;
+  }
+</style>

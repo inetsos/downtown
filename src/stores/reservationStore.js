@@ -62,23 +62,6 @@ export const useReservationStore = defineStore('reservation', () => {
     form.reservationNumber = reservationNumber; // 자동 증가 예약번호
 
     const docRef = await addDoc(collection(db, 'reservations'), form)
-    // const data = {
-    //   userId: authStore.user.uid,
-    //   userName: authStore.profile.name,
-    //   companyId: form.companyId,
-    //   companyName: form.companyName,
-    //   serviceId: form.serviceId,
-    //   serviceName: form.serviceName,
-    //   date: form.date,
-    //   timeSlots: form.timeSlots,
-    //   memo: form.memo,
-    //   status: '대기중',
-    //   createdAt: serverTimestamp(),
-    //   reservationNumber // 자동 증가 예약번호
-    // }
-
-    // const docRef = await addDoc(collection(db, 'reservations'), data)
-
     return {
       id: docRef.id,
       ...form,
