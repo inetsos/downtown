@@ -38,9 +38,11 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const login = async (email, password) => {
+    console.log("sos")
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     user.value = userCredential.user
 
+    console.log("qqqq")
     const profileDoc = await getDoc(doc(db, 'profiles', user.value.uid))
     profile.value = profileDoc.exists() ? profileDoc.data() : null
   }

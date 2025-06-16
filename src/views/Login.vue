@@ -1,6 +1,6 @@
 <!-- src/views/Login.vue -->
 <template>
-  <v-container class="d-flex justify-center align-start" style="min-height: 100vh;">
+  <v-container class="d-flex justify-center align-start" style="min-height: 100vh;  padding-top: 40px;">
     <v-card width="400" class="pa-4">
       <v-card-title class="text-h6">로그인</v-card-title>
 
@@ -54,11 +54,30 @@ const email = ref('')
 const password = ref('')
 
 const login = async () => {
+  // 로그인하지 않은 상태에서 온라인 주문을 클릭한 경우
+  // 로그인을 하도록 함
   try {
-    await authStore.login(email.value, password.value)
+    await authStore.login(email, password)
+
+    // // 로그인 후 리다이렉트 처리
+    // const redirect = route.query.redirect
+    // const companyId = route.query.companyId
+    // const companyName = route.query.companyName
+
+    // if (redirect === '/order' && companyId && companyName) {
+    //   router.push({
+    //     path: '/order',
+    //     query: { companyId, companyName }
+    //   })
+    // } else {
+    //   router.push('/')
+    // }
+
     router.push('/')
+
   } catch (error) {
-    alert(error.message || '로그인에 실패했습니다.')
+    console.error('로그인 실패:', error)
+    alert('로그인에 실패했습니다.')
   }
 }
 
