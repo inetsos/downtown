@@ -380,6 +380,30 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
   
 ![동네 포털 내 주문 보기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbbLD0G%2FbtsOBSTdxtC%2F1enKGEKq4fqvK1KnRKoxB1%2Fimg.png)
   
+
+#### 29. 예약 포털 (Vue3 + Firebase) - 익명 로그인, 비회원 주문
+
+비회원 주문을 클릭하면 ‘익명 로그인’을 합니다.  
+그러면  Firebase에서 임시 사용자 계정을 생성 하고 이 계정은 익명 로그인 계정임을 알 수 있습니다.  
+  
+익명 로그인을 한 후 온라인 주문에서 메뉴 선택을 하고  
+장바구니에 접속을 하면   
+장바구니에서는 익명 로그인일 경우 이름과 전화번호를 입력 받습니다.  
+
+이름과 전화번호를 입력한 후 ‘주문하기’ 버튼을 누르면 비회원 주문이 됩니다.  
+  
+- 비회원 주문 - 홈  
+
+![동네 포털 비회원 주문 링크](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbHxO64%2FbtsOCjXrNCm%2FjwE2IGPWP3UvfokxssO251%2Fimg.png)
+  
+- 비회원 주문 하기  
+
+![동네 포털 비회원 주문 하기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkPQXA%2FbtsOCPO1vts%2F4NCRckMG6IuylKk5wA8Sa0%2Fimg.png)
+  
+- 비회원 주문 조회  
+
+![동네 포털 비회원 주문 조회](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcuapOs%2FbtsOA8buoRT%2FoRa4071lHIwQ9iQtuAeWz1%2Fimg.png)
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할
