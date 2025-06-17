@@ -22,18 +22,18 @@ Vue 3, Vuetify 3, Firebase를 기반으로 제작된 **다중 업체 예약 관�
 
 https://inetsos.tistory.com/
 
-#### 1. 동네 (예약) 포털 - Vue3 + Vuetify + Firebase
+### 1. 동네 (예약) 포털 - Vue3 + Vuetify + Firebase
 여러 업체가 함께 사용하는 예약 포털을 Vue, Vuetify, Firebase를 활용해 개발합니다.  
 이 조합은 빠른 개발, 실시간 기능, 확장성에 매우 적합합니다.  
 아래는 시스템 아키텍처와 주요 기능을 고려한 설계 및 개발 로드맵입니다.  
 
-#### 2. 동네 (예약) 포털 - Vue 3 + Vite + Vuetify 3 + JS 프로젝트
+### 2. 동네 (예약) 포털 - Vue 3 + Vite + Vuetify 3 + JS 프로젝트
  - 프로젝트  
 &nbsp; npm create vite@latest booking-portal -- --template vue   
 &nbsp; cd booking-portal   
 &nbsp; npm install vuetify@^3 @mdi/font sass vite-plugin-vuetify    
   
-#### 3. 동네 (예약) 포털 (Vue 3 + Firebase) - 회원 등록, 로그인
+### 3. 동네 (예약) 포털 (Vue 3 + Firebase) - 회원 등록, 로그인
 Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비밀번호 회원등록 및 로그인 기능을 구현합니다.
 - createUserWithEmailAndPassword  
   Firebase Authentication에서 이메일과 비밀번호를 사용해 새 사용자를 생성할 때 사용하는 메서드입니다. 주로 웹 앱이나 모바일 앱에서 사용자 회원가입 기능을 구현할 때 사용됩니다.
@@ -41,7 +41,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 - signInWithEmailAndPassword  
   Firebase Authentication에서 이메일과 비밀번호를 사용해 기존 사용자를 로그인시키는 메서드입니다. 로그인 기능이 필요한 앱에서 자주 사용됩니다.
 
-#### 4. 동네 (예약) 포털 (Vue 3 + Firebase) - 비밀번호 변경, 비밀번호 리셋
+### 4. 동네 (예약) 포털 (Vue 3 + Firebase) - 비밀번호 변경, 비밀번호 리셋
 - 비밀번호 변경
 보안상의 이유로 비밀번호는 주기적으로 변경하는 것이 좋습니다.  
 비밀번호 변경은 로그인 후에 가능하므로 프로필 페이지 기능을 둡니다.  
@@ -54,7 +54,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
  비밀번호를 변경하는 것은 민감한 작업이므로 사용자의 신원을 다시 확인한 후 비밀번호를 변경합니다.  
 
 
-#### 5. 동네 (예약) 포털 (Vue 3 + Firebase) - 구글 계정으로 로그인
+### 5. 동네 (예약) 포털 (Vue 3 + Firebase) - 구글 계정으로 로그인
 
 &nbsp; Firebase Authentication의 이메일과 비밀번호로 회원 가입을 하지 않고 구글 계정으로 로그인하는 기능을 구현합니다.  
   
@@ -64,7 +64,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; 구글 계정으로 로그인을 하여 다른 프로필을 생성하면  
 &nbsp; 이 두 계정을 각 다른 사용자로 인식합니다.  
   
-#### 6. 동네 (예약) 포털 (Vue 3 + Firebase) - 회원의 업체 관리
+### 6. 동네 (예약) 포털 (Vue 3 + Firebase) - 회원의 업체 관리
 
 &nbsp; 회원은 여러 업체를 등록할 수 있습니다.  
 &nbsp; 회원이 등록한 업체는 등록한 회원이 관리자가 됩니다.  
@@ -73,7 +73,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; 회원이 등록한 업체는 등록한 회원이 관리자가 됩니다.  
 &nbsp; 등록한 업체의 정보는 수정, 삭제할 수 있습니다.  
   
-#### 7. 동네 (예약) 포털 (Vue 3 + Firebase) - 등록 업체 보기(홈)
+### 7. 동네 (예약) 포털 (Vue 3 + Firebase) - 등록 업체 보기(홈)
 
 &nbsp; 홈페이지에 등록한 모든 업체들을 보여 줍니다.  
 &nbsp; 업종을 선택하면 해당 업종의 업체들만 볼 수 있습니다.  
@@ -82,7 +82,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; 로그인 한 상태라면 ‘예약 하기’ 버튼을 볼 수 있고,  
 &nbsp; 예약 하기를 누르면 예약 화면으로 이동합니다.  
 
-#### 8. 동네 (예약) 포털 (Vue 3 + Firebase) - 예약하기
+### 8. 동네 (예약) 포털 (Vue 3 + Firebase) - 예약하기
 
 &nbsp; 업체 등록 정보에 영업 시간을 추가하였습니다.  
 &nbsp; 영업 시간에 따라 영업 상태 (영업중, 영업 종료)를 표시할 수 있습니다.  
@@ -91,7 +91,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; 예약 시간은 30분 단위의 타임슬롯을 선택하고,  
 &nbsp; 하나의 예약에 타임 슬롯을 여러개 선택할 수 있습니다.  
   
-#### 9. 동네 (예약) 포털 (Vue 3 + Firebase) - 회원 예약 보기, 예약 기능 개선
+### 9. 동네 (예약) 포털 (Vue 3 + Firebase) - 회원 예약 보기, 예약 기능 개선
 
 &nbsp; 예약 기능의 개선이 있습니다.  
 &nbsp; 예약 정보에 업체 이름을 추가하였고,  
@@ -112,7 +112,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
     
 &nbsp; 예약 정보에 업체 이름, 예약 번호 등의 추가로 UI도 개선하였습니다.  
 
-#### 10. 동네 (예약) 포털 (Vue 3 + Firebase) - 업체 예약 관리
+### 10. 동네 (예약) 포털 (Vue 3 + Firebase) - 업체 예약 관리
 
 &nbsp; 예약 정보에 회원 이름을 추가하였습니다.  
 &nbsp; 업체에서 예약 조회를 할 때 고객의 이름이 보이는 것이 좋다고 생각했기 때문입니다.  
@@ -122,7 +122,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; 이것을 누르면 해당 업체의 예약 리스트를 볼 수 있습니다.  
 &nbsp; 업체의 관리자는 각 예약에 대해 승인과 거부를 할 수 있습니다.  
   
-#### 11. 동네 (예약) 포털 (Vue 3 + Firebase) - 주소 api 연동 선택
+### 11. 동네 (예약) 포털 (Vue 3 + Firebase) - 주소 api 연동 선택
   
 &nbsp; 주소 API 연동을 위해 사용할 수 있는 대표적인 서비스는 다음과 같습니다:  
 
@@ -132,7 +132,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; ✅ 4. Google Places API / Geocoding API  
 
 
-#### 12. 동네 (예약) 포털 (Vue 3 + Firebase) - 업체 주소 등록
+### 12. 동네 (예약) 포털 (Vue 3 + Firebase) - 업체 주소 등록
 
 &nbsp; 업체 등록 정보에 주소를 추가합니다.  
 &nbsp; 주소 API는 Kakao 주소 검색 API (우편번호 서비스)를 사용합니다.  
@@ -142,7 +142,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; 지도에 업체의 위치를 보여주기 위해서입니다.  
 &nbsp; 지도는 네이버 지도를 사용할 예정입니다.  
 
-#### 13. 동네 (예약) 포털 (Vue 3 + Firebase) - 네이버 지도 sdk 연동 가이드
+### 13. 동네 (예약) 포털 (Vue 3 + Firebase) - 네이버 지도 sdk 연동 가이드
 
 &nbsp; 네이버 지도 SDK 연동은 다음 3단계로 구성됩니다:  
   
@@ -150,12 +150,12 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; ✅ 2. SDK 스크립트 삽입  
 &nbsp; ✅ 3. 지도 초기화 코드 작성  
 
-#### 14. 동네 (예약) 포털 (Vue 3 + Firebase) - 네이버 지도에 업체 위치 보기
+### 14. 동네 (예약) 포털 (Vue 3 + Firebase) - 네이버 지도에 업체 위치 보기
 
 &nbsp; Home의 업체 리스트에서 업체 정보에 주소가 있습니다.  
 &nbsp; 주소 옆에 '지도 보기' 버튼이 있고 이것을 누르면 네이버 지도로 위치를 보여 줍니다.  
   
-#### 15. 동네 (예약) 포털 (Vue 3 + Firebase) - 네이버 지도 상점 위치 보기 개선
+### 15. 동네 (예약) 포털 (Vue 3 + Firebase) - 네이버 지도 상점 위치 보기 개선
 
 &nbsp; 상점의 주소로 네이버 지도 위에 표시를 하였을 때 실제 위치와 차이가 납니다.  
 &nbsp; 상호로 위치를 검색하는 기능을 추가하였습니다.  
@@ -164,7 +164,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
   
 📌 POI (Point of Interest): 위치 기반 데이터에서 관심 지점(상점, 식당, 병원, 공원 등)을 의미합니다.  
   
-#### 16. 동네 (예약) 포털 (Vue 3 + Firebase) - 미용실 예약 커스터마이징
+### 16. 동네 (예약) 포털 (Vue 3 + Firebase) - 미용실 예약 커스터마이징
 
 &nbsp; 예약 관리 시스템을 고도화합니다.  
 &nbsp; 미용실에 대해 커스터마이징을 진행해 봅시다.  
@@ -185,13 +185,13 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; 서비서업인 경우 상점 상세 보기에서도 ‘서비스 보기’로 등록된 서비스를 볼 수 있습니다.  
 &nbsp; 관리자는 예약 관리에서 예약 시간과 함께 고객의 서비스도 확인할 수 있습니다.  
   
-#### 17. 동네 포털 - v-expansion-panels, v-data-table, vuedraggable
+### 17. 동네 포털 - v-expansion-panels, v-data-table, vuedraggable
 
 - v-expansion-panels는 Vuetify에서 제공하는 UI 컴포넌트로, 여러 개의 내용을 아코디언(accordion) 방식으로 펼치고 접을 수 있게 해주는 구성 요소입니다.  
 - v-data-table은 Vuetify에서 제공하는 강력한 표 형식의 데이터 표시 컴포넌트입니다.   
 - vuedraggable는 Vue.js에서 드래그 앤 드롭(Drag & Drop) 기능을 쉽게 구현할 수 있게 해주는 인기 라이브러리입니다.   
   
-#### 18. 동네 포털 (Vue 3 + Vuetify + Firebase) - 메뉴 카테고리 관리    
+### 18. 동네 포털 (Vue 3 + Vuetify + Firebase) - 메뉴 카테고리 관리    
 
 &nbsp; 테이크아웃 커피점의 메뉴 관리를 생각해 봅니다.  
   
@@ -212,7 +212,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
   
 ![카테고리 관리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbquPwg%2FbtsOtiEaEp8%2FAPbV3yV2AU7mDW3PAe6IcK%2Fimg.png)
   
-#### 19. 동네 포털 (Vue 3 + Vuetify + Firebase) - 토핑 관리 
+### 19. 동네 포털 (Vue 3 + Vuetify + Firebase) - 토핑 관리 
   
 &nbsp; 커피에 크림(휘핑 크림, 비낙농 크림 등)이나 시럽, 초콜릿 등을 추가하여   
 &nbsp; 커피 위에 장식하는 것을 '토핑'이라고 합니다.   
@@ -237,7 +237,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
   
 ![토핑 관리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb85JaE%2FbtsOrByy2tn%2F6rqNqxcITpaVY6aPiFWddk%2Fimg.png)
 
-#### 20. 동네 포털 (Vue 3 + Vuetify + Firebase) - 음료 Ice/Hot 옵션 관리
+### 20. 동네 포털 (Vue 3 + Vuetify + Firebase) - 음료 Ice/Hot 옵션 관리
 
 &nbsp; 대부분의 음료는 아이스(Ice), 핫(Hot)을 선택할 수 있습니다.  
 &nbsp; 그러나 일부 음료의 경우 아이스만, 또는 핫만 가능할 수 있습니다.  
@@ -250,7 +250,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
     
 ![옵션 관리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FePj6l5%2FbtsOsVW17FN%2F2FEif2mkWqzNgd2UVBKIE1%2Fimg.png)
 
-#### 21. 동네 포털 (Vue 3 + Vuetify) - Firebase Storage (메뉴 이미지 저장)
+### 21. 동네 포털 (Vue 3 + Vuetify) - Firebase Storage (메뉴 이미지 저장)
 
 &nbsp; 메뉴에는 이미지가 있습니다.  
 &nbsp; 메뉴를 등록할 때 로컬 PC에서 이미지를 선택하면  
@@ -261,7 +261,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 &nbsp; Firebase에서 제공하는 파일 저장 서비스입니다.  
 &nbsp; 주로 앱에서 이미지, 오디오, 비디오, PDF 같은 대용량 파일을 안전하게 저장하고, 필요할 때 불러오는 데 사용됩니다.  
 
-#### 22. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페 메뉴 관리
+### 22. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페 메뉴 관리
 
 &nbsp; 메뉴는 카테고리, 이름, 설명, 가격, 가능한 토핑, 옵션의 항목을 가지고 있습니다.  
 &nbsp; 또한 각 메뉴는 이미지도 가지고 있습니다.  
@@ -281,9 +281,21 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 ![메뉴 관리 2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FPqqJe%2FbtsOuEIB6ro%2FzZAZOT6IVnc9PWBIkOrBK1%2Fimg.png)
 
 ![메뉴 관리 3](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcP5xp9%2FbtsOxq9VEW0%2FU7ELuxfCC8cAlH0rrBmpbk%2Fimg.png)
-  
-  
-#### 24. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페 온라인 주문
+   
+### 23. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페 메뉴 관리 완성
+
+메뉴를 등록려면  
+메뉴 이미지를 업로드하고,  
+이름, 설명, 가격을 입력하고  
+음료에 가능한 토핑과 옵션을 선택하여   
+저장합니다.  
+
+![메뉴 관리 완성 1](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fn8ZAO%2FbtsOv6dwVgu%2FcXay1oRJwhGhXhPuvqlpU1%2Fimg.png)
+![메뉴 관리 완성 1](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FUkAx1%2FbtsOxruuylL%2FLdjbQkriuUkofpJuU56iBK%2Fimg.png)
+![메뉴 관리 완성 1](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FenfVui%2FbtsOwIXvPRE%2FYRPJKMUROk9YHhqjg5BiW1%2Fimg.png)
+![메뉴 관리 완성 1](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbaT88H%2FbtsOvvkmQ61%2FQ4ImINSv9vesqnllZBGOgK%2Fimg.png)
+
+### 24. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페 온라인 주문
 
 - 카페 온라인 주문  
 
@@ -319,7 +331,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 ![카페 온라인 주문 장바구니 2](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FrNt6o%2FbtsOx8nSOJU%2FcekNI1rnkLMbsvarB08hB0%2Fimg.png)
   
 
-#### 25. 예약 포털 (Vue3 + Firebase) - 카페 운영 대시보드
+### 25. 예약 포털 (Vue3 + Firebase) - 카페 운영 대시보드
 
 운영에 필요한 각종 관리 기능들을 모아둔 페이지를 ‘운영 대시보드’라 합시다.  
 운영에 필요한 각 기능들을 우선 다음과 같이 정리합니다.  
@@ -338,7 +350,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
   
 ![카페 운영자 대시보드](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHsRhx%2FbtsOzgtZNfd%2F8JtE7MzaV1xGJROHDdxmyK%2Fimg.png)
   
-#### 26. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페 메뉴 품절 상태 관리
+### 26. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페 메뉴 품절 상태 관리
 
 메뉴가 품절인 경우에 대한 처리를 생각해 봅시다.  
    
@@ -349,7 +361,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 ![카페 온라인 주문 품절 메뉴](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fch2n6w%2FbtsOzAsFl2e%2FLJzqrnoNDhKSBedRyaU8tk%2Fimg.png)
   
 
-#### 27. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페의 온라인 주문 관리
+### 27. 예약 포털 (Vue3 + Vuetify + Firebase) - 카페의 온라인 주문 관리
 
 고객 주문 확인 페이지에서 고객의 주문에 따라 음료가 준비되면 완료 버튼을 눌러 주문을 완료합니다.  
 주문확인 페이지의 경우 실제 카페에서 적용을 한다면   
@@ -362,7 +374,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 ![카페 온라인 주문 주문 확인 및 완료 처리](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Flup40%2FbtsOz48o9bk%2FZnwZW1FnjHGEQnA8Y97Ej0%2Fimg.png)
   
 
-#### 28. 예약 포털 (Vue3 + Firebase) 마이페이지 - 주문 내역, 예약 내역
+### 28. 예약 포털 (Vue3 + Firebase) 마이페이지 - 주문 내역, 예약 내역
 
 - 마이페이지
 동네 포털에 이전에 개발한 미용실 예약이 있습니다.   
@@ -381,7 +393,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 ![동네 포털 내 주문 보기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbbLD0G%2FbtsOBSTdxtC%2F1enKGEKq4fqvK1KnRKoxB1%2Fimg.png)
   
 
-#### 29. 예약 포털 (Vue3 + Firebase) - 익명 로그인, 비회원 주문
+### 29. 예약 포털 (Vue3 + Firebase) - 익명 로그인, 비회원 주문
 
 비회원 주문을 클릭하면 ‘익명 로그인’을 합니다.  
 그러면  Firebase에서 임시 사용자 계정을 생성 하고 이 계정은 익명 로그인 계정임을 알 수 있습니다.  
@@ -405,7 +417,7 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 ![동네 포털 비회원 주문 조회](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcuapOs%2FbtsOA8buoRT%2FoRa4071lHIwQ9iQtuAeWz1%2Fimg.png)
   
 
-#### 30. 예약 포털 (Vue3 + Firebase) - 회원의 카페 온라인 주문
+### 30. 예약 포털 (Vue3 + Firebase) - 회원의 카페 온라인 주문
 
 회원의 주문은 상점의 ‘온라인 주문’ 버튼을 누르면 온라인 주문을 할 수 있습니다.  
 
@@ -432,6 +444,36 @@ Vue 3 + Vuetify + Firebase + 상태관리(Pinia)를 사용하여 이메일/비�
 
 ![동네 포털 회원 온라인 주문 장바구니](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbEdVOj%2FbtsOAWih3CT%2FK5qoOSM3Ey89kboVX3jTnk%2Fimg.png)
   
+
+### 31. 예약 포털 (Vue3 + Firebase) - chart.js, vue-chartjs
+
+매출 분석은 차트로 시각화 하여 나타내도록 합시다.  
+차트를 사용하여 매출을 시각화합니다.  
+  
+Vue.js 애플리케이션에서 차트를 시각화하기 위해 필요한 두 가지 라이브러리를 설치합니다.
+  
+#### 🔧 Vue Chart 설치   
+
+npm install chart.js@4 vue-chartjs@5  
+
+이 명령은 다음을 설치합니다:  
+- chart.js 라이브러리의 4.x 버전  
+- vue-chartjs 라이브러리의 5.x 버전 (Vue 3용)  
+  
+이 조합은 Vue 3 프로젝트에서 차트를 표시하려는 경우 가장 호환성 있는 버전 조합입니다.
+
+#### 매출 대시보드  
+  
+매출 대시보드를 통해 매출 데이터를 시각적으로 통합하여 실시간으로 모니터링합니다.  
+
+- useSalesSummary.js  
+useSalesSummary는 Vue 3의 Composition API와 Firebase Firestore를 활용해  
+매출 요약 및 트렌드 데이터(일/주/월/연/시간대별)를 계산하고 시각화하기 위한 Composable 함수입니다.
+
+![동네 포털 회원 온라인 주문 매츨 차트](
+https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbiZqff%2FbtsOEPVNbM5%2Fbovg2z2B5jegSgEtCIpSuk%2Fimg.png)
+  
+
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할
