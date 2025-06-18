@@ -1,3 +1,4 @@
+<!-- src/components/HourlySalesChart.vue -->
 <template>
   <Line :data="chartData" :options="chartOptions" />
 </template>

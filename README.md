@@ -488,6 +488,21 @@ Firestore 데이터를 기반으로 오늘, 이번주, 이번달, 올해와 그 
 
 ![매츨 분석 - 모바일](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F39twF%2FbtsOFlBjvKB%2F3aEq4YURcMK1sbkXtlRU21%2Fimg.png)
   
+
+### 33. 예약 포털 (Vue3 + Firebase) - 카페 시간대별 매출 분석
+
+시간대별로 매출과 주문량을 함께 시각화하면 유용한 인사이트를 얻을 수 있습니다.  
+  
+두 데이터(매출 & 주문량)를 이중 Y축 차트로 동시에 보여주어  
+흐름을 한눈에 비교할 수 있어서 직관적입니다.   
+  
+기간을 입력하면 Firebase Firestore에 저장된 주문 데이터를 기준으로,   
+입력 기간 내 시간대별 매출(totalAmount)과 주문 수(order count)를 트렌드 차트로 화면에 출력합니다.  
+  
+![시간대별 매츨 분석 - 데스크탑](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FeH5LGX%2FbtsODWJgVat%2F2vECfbx44uWMUNrRP4P1y1%2Fimg.png)
+
+![시간대별 매츨 분석 - 모바일](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FALC6L%2FbtsOFmNLU01%2FCWyG7GOyeUFWqJkv4IKqVk%2Fimg.png)
+
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할

@@ -1,3 +1,4 @@
+<!-- src/views/HourlySalesAnalysis.vue-->
 <template>
   <v-card>
     <!-- 운영 대시보드로 돌아가기 버튼 -->

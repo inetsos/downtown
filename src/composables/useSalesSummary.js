@@ -1,3 +1,4 @@
+// src/composables/useSalesSummary.js 
 import { ref } from 'vue'
 import { collection, query, where, orderBy, getDocs, Timestamp } from 'firebase/firestore'
 import { db } from '@/firebase'
