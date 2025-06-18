@@ -59,16 +59,17 @@
                     :key="index"
                     class="order-item mb-3"
                   >
+                    <div class="order-header">[ {{ item.categoryName }} ]</div>
                     <div class="d-flex justify-space-between align-center font-weight-medium">
-                      <div>{{ item.name }} × {{ item.quantity }}</div>
+                      <div>{{ item.name }} {{ item.option.name }} × {{ item.quantity }}</div>
                       <div class="order-item-price">{{ (item.price * item.quantity).toLocaleString() }}원</div>
                     </div>
                     <div v-if="item.toppings?.length" class="order-subinfo">
                       토핑: {{ item.toppings.map(t => t.name).join(', ') }}
                     </div>
-                    <div v-if="item.option" class="order-subinfo">
+                    <!-- <div v-if="item.option" class="order-subinfo">
                       옵션: {{ item.option.name }}
-                    </div>
+                    </div> -->
                   </div>
                 </div>
 
@@ -84,10 +85,25 @@
       </div>
     </v-card>
   </v-container>
+
+  <v-fab-transition>
+    <v-btn
+      v-if="showScrollTop"
+      icon
+      color="primary"
+      class="position-fixed"
+      style="bottom: 24px; right: 24px; z-index: 1000;"
+      @click="scrollToTop"
+    >
+      <v-icon>mdi-arrow-up</v-icon>
+    </v-btn>
+  </v-fab-transition>
+
+
 </template>
 
 <script setup>
-import { onMounted, computed, watch } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useMyOrders } from '@/composables/useMyOrders'
 import { useAuthStore } from '@/stores/authStore'
@@ -101,6 +117,24 @@ const companyId = computed(() => route.query.companyId || null)
 const companyName = computed(() => route.query.companyName || null)
 
 const { orders, fetchOrders, fetchAllOrders } = useMyOrders(userId)
+
+const showScrollTop = ref(false)
+
+const onScroll = () => {
+  showScrollTop.value = window.scrollY > 200
+}
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', onScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
+})
 
 watch(
   companyId,
@@ -183,9 +217,9 @@ const formatDate = (ts) => {
 }
 
 .order-subinfo {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: #6b7280;
-  padding-left: 12px;
+  padding-left: 8px;
   margin-top: 2px;
 }
 
@@ -196,5 +230,10 @@ const formatDate = (ts) => {
   font-weight: 700;
   color: #1e88e5;
 }
+
+.scroll-top-btn {
+  z-index: 9999;
+}
+
 </style>
 

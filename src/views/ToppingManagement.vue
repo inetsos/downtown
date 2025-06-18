@@ -1,4 +1,3 @@
-<!-- src/views/ToppingManagement.vue -->
 <template>
   <v-container>
     <!-- 토핑 등록/수정 카드 -->
@@ -8,9 +7,8 @@
           {{ isEditMode ? '토핑 수정' : '토핑 등록' }}
         </span>
         <v-spacer />
-        <!-- 메뉴로 이동 버튼 -->
         <v-btn variant="text" class="mt-4" color="primary" @click="goToMenu">
-          메뉴로 가기
+          메뉴
         </v-btn>
       </v-card-title>
 
@@ -23,7 +21,6 @@
           min="0"
           required
         />
-
         <v-card-actions>
           <v-spacer />
           <v-btn type="submit" :loading="loading" color="primary">
@@ -43,47 +40,94 @@
 
     <!-- 드래그 가능한 토핑 리스트 -->
     <v-card class="pa-4 max-w-600 mx-auto mt-6">
-      <v-table>
-        <thead>
-          <tr>
-            <th style="width: 40px;"></th>
-            <th>토핑명</th>
-            <th class="text-end">가격</th>
-            <th class="text-end">순서</th>
-            <th style="width: 40px;"></th>            
-          </tr>
-        </thead>
-        <draggable
-          tag="tbody"
-          v-model="toppings"
-          item-key="id"
-          @end="saveOrder"
-          handle=".drag-handle"
-        >
-          <template #item="{ element }">
-            <tr>
-              <td>
-                <v-icon class="drag-handle" color="grey darken-1" size="20" style="cursor: grab;">
-                  mdi-drag
-                </v-icon>
-              </td>
-              <td>{{ element.name }}</td>
-              <td class="text-end">{{ Number(element.price).toLocaleString() }}원</td>
-              <td class="text-end">{{ element.sortOrder }}</td>
-              <td>
-                <v-icon
-                  color="error"
-                  class="cursor-pointer"
-                  @click="deleteTopping(element.id)"
+      <h3 class="text-subtitle-1 mb-2">토핑 목록</h3>
+
+      <!-- 데스크탑용 테이블 -->
+      <v-data-table
+        v-show="!isMobile"
+        :headers="headers"
+        :items="toppings"
+        item-value="id"
+        disable-sort
+        hide-default-footer
+        class="elevation-1"
+      >
+        <v-list lines="one" density="compact">
+          <draggable
+            v-model="toppings"
+            item-key="id"
+            tag="div"
+            @end="saveOrder"
+            handle=".drag-handle"
+          >
+            <template #item="{ element, index }">
+              <v-card-text
+                class="d-flex align-center justify-space-between border rounded-lg mb-2 px-3 py-2"
+                style="gap: 12px;"
+              >
+                <!-- 드래그 핸들 -->
+                <v-btn
+                  icon
+                  variant="text"
+                  class="drag-handle"
+                  aria-label="순서 변경"
                 >
-                  mdi-delete
-                </v-icon>
-              </td>
-            </tr>
+                  <v-icon color="grey-darken-1" size="20">mdi-drag</v-icon>
+                </v-btn>
+
+                <!-- 이름 및 가격 -->
+                <div class="flex-grow-1">
+                  <div class="text-body-1 font-weight-medium">{{ element.name }}</div>
+                  <div class="text-caption text-grey">
+                    {{ new Intl.NumberFormat('ko-KR').format(element.price) }}원
+                  </div>
+                </div>
+
+                <!-- 순서 -->
+                <div class="text-caption text-grey">
+                  #{{ index + 1 }}
+                </div>
+
+                <!-- 삭제 버튼 -->
+                <v-btn
+                  icon
+                  variant="text"
+                  color="error"
+                  @click="deleteTopping(element.id)"
+                  aria-label="삭제"
+                >
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </v-card-text>
+            </template>
+          </draggable>
+        </v-list>
+
+      </v-data-table>
+
+      <!-- 모바일용 카드 UI -->
+      <div v-show="isMobile">
+        <draggable v-model="toppings" item-key="id" @end="saveOrder" handle=".drag-handle">
+          <template #item="{ element, index }">
+            <v-card class="mb-3" elevation="1">
+              <v-card-text class="d-flex justify-space-between align-center">
+                <div class="d-flex align-center">
+                  <v-icon class="drag-handle mr-2" color="grey-darken-1" size="20" style="cursor: grab">mdi-drag</v-icon>
+                  <div>
+                    <div class="font-weight-medium">{{ element.name }}</div>
+                    <div class="text-grey text-caption">{{ Number(element.price).toLocaleString() }}원 • {{ index + 1 }}번째</div>
+                  </div>
+                </div>
+                <v-btn icon size="small" color="error" @click="deleteTopping(element.id)">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </v-card-text>
+            </v-card>
           </template>
         </draggable>
-      </v-table>
+      </div>
     </v-card>
+
   </v-container>
 </template>
 
@@ -92,6 +136,10 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import draggable from 'vuedraggable'
 import { useToppingManagement } from '@/composables/useToppingManagement'
+import { useDisplay } from 'vuetify'
+
+const { smAndDown } = useDisplay()
+const isMobile = smAndDown
 
 const route = useRoute()
 const router = useRouter()
@@ -114,6 +162,14 @@ const {
 
 const toppings = ref([])
 const savingOrder = ref(false)
+
+const headers = [
+  { title: '', key: 'drag', sortable: false},
+  { title: '토핑명', key: 'name' },
+  { title: '가격', key: 'price', align: 'end' },
+  { title: '순서', key: 'order', align: 'end' },
+  { title: '', key: 'actions', sortable: false },
+]
 
 const onSubmit = async () => {
   const success = await submit()
@@ -152,7 +208,7 @@ const deleteTopping = async (id) => {
 }
 
 const loadToppingsList = async () => {
-  toppings.value = await fetchAllToppings() 
+  toppings.value = await fetchAllToppings()
 }
 
 const saveOrder = async () => {
@@ -160,7 +216,7 @@ const saveOrder = async () => {
   const success = await updateToppingOrder(toppings.value)
   savingOrder.value = false
   if (success) {
-    loadToppingsList() 
+    loadToppingsList()
   } else {
     alert('순서 저장 실패')
   }
@@ -183,12 +239,6 @@ onMounted(() => {
   max-width: 600px;
 }
 
-.no-bg-btn {
-  background: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin-left: 0 !important;
-}
 /* 드래그 핸들에 grab 커서 강제 적용 */
 .drag-handle {
   cursor: grab;

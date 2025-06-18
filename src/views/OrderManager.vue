@@ -59,6 +59,9 @@
                     class="mb-4"
                   >
                     <div class="text-body-1 font-weight-medium">
+                      [ {{ item.categoryName }} ]
+                    </div>
+                    <div class="text-body-1 font-weight-medium">
                       {{ item.name }} - {{ item.option.name }}
                     </div>
 

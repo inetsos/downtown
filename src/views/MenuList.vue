@@ -1,7 +1,6 @@
-<!-- src/views/MenuList.vue -->
 <template>
-  <v-container>
-    <v-card class="pa-4 mx-auto" style="max-width: 700px;">
+  <v-container class="pa-2 pa-sm-4">
+    <v-card class="pa-4 mx-auto" :style="{ maxWidth: '700px', width: '100%' }">
       <!-- 운영 대시보드로 돌아가기 버튼 -->
       <div class="text-end mb-4">
         <span
@@ -12,23 +11,15 @@
         </span>
       </div>
 
-      <v-card-title class="text-h6 d-flex justify-space-between align-center">
-        <span>{{ companyName }} - 메뉴</span>
-        <div>
-          <v-btn class="mr-2" color="success" @click="goToCategoryManagement">
-            카테고리 관리
-          </v-btn>
-          <v-btn class="mr-2" color="secondary" @click="goToToppingManagement">
-            토핑 관리
-          </v-btn>
-          <v-btn class="mr-2" color="secondary" @click="goToIceHotManagement">
-            옵션 관리
-          </v-btn>
-          <v-btn color="primary" @click="goToAddMenu">
-            메뉴 관리
-          </v-btn>
-        </div>
-      </v-card-title>
+      <v-card-title class="text-h6 d-flex flex-column">
+      <div>{{ companyName }} - 메뉴</div>
+      <div class="d-flex flex-wrap gap-2 justify-end mt-2">
+        <v-btn class="mr-2" color="success" @click="goToCategoryManagement">카테고리</v-btn>
+        <v-btn class="mr-2" color="secondary" @click="goToToppingManagement">토핑</v-btn>
+        <v-btn class="mr-2" color="secondary" @click="goToIceHotManagement">옵션</v-btn>
+        <v-btn class="mr-2" color="primary" @click="goToAddMenu">메뉴</v-btn>
+      </div>
+    </v-card-title>
 
       <v-divider class="my-4" />
 
@@ -37,31 +28,32 @@
           <v-list-subheader class="text-h6 font-weight-bold">{{ category }}</v-list-subheader>
 
           <template v-for="(menu, index) in menuList" :key="menu.id">
-            <v-list-item>
-              <template #prepend>
-                <v-avatar size="90" rounded>
-                  <v-img :src="menu.imageUrl" />
-                </v-avatar>
-              </template>
+            <v-list-item class="flex-column align-center text-center">
+              <v-avatar size="160" rounded class="mb-3">
+                <v-img :src="menu.imageUrl" />
+              </v-avatar>
 
-              <v-list-item-title class="font-weight-bold">{{ menu.name }}</v-list-item-title>
-
-              <div v-if="menu.description">설명: {{ menu.description }}</div>
-              <div>가격: {{ Number(menu.price).toLocaleString()}}원</div>
-              <div>
-                토핑:
-                <span v-if="menu.toppingIds?.length">
-                  {{ getToppingNames(menu.toppingIds).join(', ') || '토핑 없음' }}
-                </span>
-                <span v-else>없음</span>
-              </div>
-              <div>
-                옵션:
-                <span v-if="menu.optionIds?.length">
-                  {{ getOptionNames(menu.optionIds).join(', ') }}
-                </span>
-                <span v-else>없음</span>
-              </div>
+              <v-list-item-content style="min-width: 0;">
+                <div class="font-weight-bold mb-1">{{ menu.name }}</div>
+                <div v-if="menu.description" class="text-grey-darken-1 mb-1">
+                  {{ menu.description }}
+                </div>
+                <div class="mb-1">가격: {{ Number(menu.price).toLocaleString() }}원</div>
+                <div class="mb-1">
+                  토핑:
+                  <span v-if="menu.toppingIds?.length">
+                    {{ getToppingNames(menu.toppingIds).join(', ') || '토핑 없음' }}
+                  </span>
+                  <span v-else>없음</span>
+                </div>
+                <div>
+                  옵션:
+                  <span v-if="menu.optionIds?.length">
+                    {{ getOptionNames(menu.optionIds).join(', ') }}
+                  </span>
+                  <span v-else>없음</span>
+                </div>
+              </v-list-item-content>
             </v-list-item>
 
             <v-divider v-if="index < menuList.length - 1" />
@@ -73,82 +65,83 @@
     </v-card>
 
     <!-- 카테고리  테이블 -->
-    <v-card class="pa-4 mx-auto mt-4" style="max-width: 700px;">
-      <v-card-title>카테고리</v-card-title>
-      
-      <v-data-table
-        :headers="categoryHeaders"
-        :items="categories"
-        item-key="id"
-        class="elevation-1"
-        fixed-header
-        :items-per-page="5"
-        dense
-      >
-        <template #header.name>
-          카테고리
-        </template>
-        <template #header.sortOrder>
-          순서
-        </template>
-      </v-data-table>
-    </v-card>
+    <div class="overflow-x-auto">
+      <v-card class="pa-4 mx-auto mt-4" :style="{ maxWidth: '700px', width: '100%' }">
+        <v-card-title>카테고리</v-card-title>
+
+        <v-data-table
+          :headers="categoryHeaders"
+          :items="categories"
+          item-key="id"
+          class="elevation-1"
+          fixed-header
+          :items-per-page="5"
+          dense
+        >
+          <template #header.name>카테고리</template>
+          <template #header.sortOrder>순서</template>
+        </v-data-table>
+      </v-card>
+    </div>
 
     <!-- 토핑 테이블 -->
-    <v-card class="pa-4 mx-auto mt-4" style="max-width: 700px;">
-      <v-card-title>토핑</v-card-title>
-      
-      <v-data-table
-        :headers="toppingHeaders"
-        :items="toppings"
-        item-key="id"
-        class="elevation-1"
-        fixed-header
-        :items-per-page="5"
-        dense
-      >
-        <template #header.name>
-          토핑
-        </template>
-        <template #header.price>
-          가격
-        </template>
-        <template #header.sortOrder>
-          순서
-        </template>
-        <template #item.price="{ item }">
-          {{ Number(item.price).toLocaleString() }}원
-        </template>
-      </v-data-table>
-    </v-card>
+    <div class="overflow-x-auto">
+      <v-card class="pa-4 mx-auto mt-4" :style="{ maxWidth: '700px', width: '100%' }">
+        <v-card-title>토핑</v-card-title>
+
+        <v-data-table
+          :headers="toppingHeaders"
+          :items="toppings"
+          item-key="id"
+          class="elevation-1"
+          fixed-header
+          :items-per-page="5"
+          dense
+        >
+          <template #header.name>토핑</template>
+          <template #header.price>가격</template>
+          <template #header.sortOrder>순서</template>
+          <template #item.price="{ item }">{{ Number(item.price).toLocaleString() }}원</template>
+        </v-data-table>
+      </v-card>
+    </div>
 
     <!-- 옵션 테이블 -->
-    <v-card class="pa-4 mx-auto mt-4" style="max-width: 700px;">
-      <v-card-title>옵션</v-card-title>
-      
-      <v-data-table
-        :headers="optionHeaders"
-        :items="options"
-        item-key="id"
-        class="elevation-1"
-        fixed-header
-        :items-per-page="5"
-        dense
-      >
-        <template #header.name>
-          옵션
-        </template>
-        <template #header.sortOrder>
-          순서
-        </template>
-      </v-data-table>
-    </v-card>
+    <div class="overflow-x-auto">
+      <v-card class="pa-4 mx-auto mt-4" :style="{ maxWidth: '700px', width: '100%' }">
+        <v-card-title>옵션</v-card-title>
 
+        <v-data-table
+          :headers="optionHeaders"
+          :items="options"
+          item-key="id"
+          class="elevation-1"
+          fixed-header
+          :items-per-page="5"
+          dense
+        >
+          <template #header.name>옵션</template>
+          <template #header.sortOrder>순서</template>
+        </v-data-table>
+      </v-card>
+    </div>
   </v-container>
+  <v-btn
+    v-show="showScrollTop"
+    icon="mdi-arrow-up"
+    color="primary"
+    class="scroll-top-btn"
+    @click="scrollToTop"
+  />
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { 
+  ref, 
+  computed, 
+  onMounted, 
+  onBeforeUnmount 
+} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMenus } from '@/composables/useMenus'
 
@@ -193,7 +186,7 @@ const optionHeaders = [
   { text: '순서', value: 'sortOrder' },
 ]
 
-const goToDashboard = (id, name) => {
+const goToDashboard = () => {
   router.push({
     name: 'OperationsDashboard',
     query: { companyId, companyName }
@@ -251,6 +244,31 @@ function goToAddMenu() {
 
 onMounted(async () => {
   await Promise.all([getCategories(), getToppings(), getOptions(), fetchMenus()])
+  window.addEventListener('scroll', handleScroll)
 })
 
+const showScrollTop = ref(false)
+
+function handleScroll() {
+  showScrollTop.value = window.scrollY > 200
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
+
 </script>
+
+<style scoped>
+.scroll-top-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 100;
+}
+</style>

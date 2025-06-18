@@ -1,34 +1,45 @@
 <!-- src/views/MapView.vue -->
 <template>
   <v-container>
-    <h3>{{ name }} 위치</h3>
-    <v-btn color="primary" class="mt-2 mb-2" @click="search">
+    <v-app-bar color="primary" dark dense>
+      <v-btn icon @click="goBack" aria-label="뒤로가기">
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+      <v-toolbar-title>{{ name }} 위치</v-toolbar-title>
+    </v-app-bar>
+
+    <v-alert type="info" class="mt-4 mb-2" dense>
+      주소로 상점 위치를 찾는 경우 실제 위치와 차이가 날 수 있습니다.
+    </v-alert>
+
+    <v-btn color="primary" class="mb-3" block @click="search">
       상호로 위치 검색
-    </v-btn> 주소로 상점 위치를 찾는 경우 실제 위치와 차이가 나는 경우가 있습니다.
-    <div ref="mapElement" style="width: 100%; height: 400px;"></div> 
-    <v-icon
-      @click="goBack"
-      style="cursor: pointer;"
-      aria-label="뒤로가기"
-    >
-      mdi-arrow-left
-    </v-icon>
+    </v-btn>
 
-    <ul v-if="results.length" class="mt-4">
-      <li
-        v-for="(item, index) in results"
-        :key="index"
-        class="border-b py-2 cursor-pointer"
-        @click="moveToLocation(item)"
-      >
-        <strong v-html="item.title"></strong><br />
-        주소: {{ item.roadAddress || item.address }}<br />
-        전화번호: {{ item.telephone || '없음' }}
-      </li>
-    </ul>
+    <div ref="mapElement" style="width: 100%; height: 400px;"></div>
 
+    <v-divider class="my-4" />
+
+    <div v-if="results.length">
+      <h4 class="mb-2">검색 결과 ({{ results.length }}건)</h4>
+      <v-list lines="two" density="comfortable">
+        <v-list-item
+          v-for="(item, index) in results"
+          :key="index"
+          @click="moveToLocation(item)"
+          class="rounded-lg mb-2 border"
+        >
+          <v-list-item-title v-html="item.title" class="text-primary font-weight-medium" />
+          <v-list-item-subtitle>
+            <div>주소: {{ item.roadAddress || item.address }}</div>
+            <div>전화: {{ item.telephone || '없음' }}</div>
+          </v-list-item-subtitle>
+        </v-list-item>
+      </v-list>
+    </div>
   </v-container>
 </template>
+
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
@@ -106,10 +117,21 @@ const initMap = async () => {
 
     infoWindow = new naver.maps.InfoWindow({
       content: `
-        <div id="infoWindowContent" style="padding:10px;min-width:200px;line-height:150%;cursor:pointer;">
+        <div 
+          id="infoWindowContent" 
+          style="
+            padding:10px;
+            min-width:200px;
+            max-width:90vw;
+            box-sizing:border-box;
+            word-break:break-word;
+            line-height:150%;
+            cursor:pointer;
+          "
+        >
           <strong>${name}</strong><br/>
-          [도로명 주소] ${roadAddress || '없음'}<br/>
-          [지번 주소] ${jibunAddress || '없음'}<br/>
+          ${roadAddress || '없음'}<br/>
+          ${jibunAddress || '없음'}<br/>
           <small>(클릭하면 닫힘)</small>
         </div>
       `
@@ -156,7 +178,18 @@ const moveToLocation = (item) => {
 
   if (infoWindow) {
     infoWindow.setContent(`
-      <div id="infoWindowContent" style="padding:10px;min-width:200px;line-height:150%;cursor:pointer;">
+      <div 
+          id="infoWindowContent" 
+          style="
+            padding:10px;
+            min-width:200px;
+            max-width:90vw;
+            box-sizing:border-box;
+            word-break:break-word;
+            line-height:150%;
+            cursor:pointer;
+          "
+        >
         <strong>${item.title}</strong><br/>
         주소: ${item.roadAddress || item.address}<br/>
         전화번호: ${item.telephone || '없음'}<br/>

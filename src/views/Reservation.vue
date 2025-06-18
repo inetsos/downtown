@@ -1,106 +1,112 @@
 <!-- src/views/Reservation.vue -->
 <template>
   <v-container max-width="800" class="mx-auto">
-    <!-- ... 기존 코드 ... -->
-
-    <v-form @submit.prevent="submitReservation" ref="formRef">
-      <v-card class="pa-4" elevation="2">
-        <v-card-title class="text-h6 font-weight-bold">
-          {{ companyName }} ({{ companyCategory }}) - 예약하기
+    <v-form @submit.prevent="submitReservation" ref="formRef" class="mb-4">
+      <v-card elevation="2" class="pa-4">
+        <v-card-title class="text-h6 font-weight-bold px-0">
+          {{ companyName }} ({{ companyCategory }}) - 예약 하기
         </v-card-title>
 
-        <!-- 영업시간 및 상태 표시 -->
-        <span class="mb-3 ml-4 mr-4">
-          <strong>영업시간:</strong>
-          {{ openTime || '--' }} ~ {{ closeTime || '--' }}
-        </span>
-        <strong>영업 상태:</strong>
-        <span class="mb-3 ml-2" :class="isOpen ? 'text-success' : 'text-error'">
-          {{ isOpen ? '영업중' : '영업 종료' }}
-        </span>
+        <div class="d-flex flex-wrap align-center mb-3 px-0">
+          <div class="me-4">
+            <strong>영업시간: </strong>
+            <span>{{ openTime || '--' }} ~ {{ closeTime || '--' }}</span>
+          </div>
+          <div>
+            <strong>영업 상태: </strong>
+            <span :class="isOpen ? 'text-success' : 'text-error'">
+              {{ isOpen ? '영업중' : '영업 종료' }}
+            </span>
+          </div>
+        </div>
 
-        <v-card-subtitle class="text-end">{{ username }} </v-card-subtitle>
-        <v-card-text>
+        <v-card-subtitle class="text-end px-0 mb-3">{{ username }}</v-card-subtitle>
 
-          <!-- 서비스 상품 선택 추가 -->
-          <v-select
-            v-model="form.serviceId"
-            :items="services"
-            item-title="name"
-            item-value="id"
-            label="서비스 선택"
-            :rules="[rules.required]"
-            required
-            dense
-            class="mb-4"
-            clearable
-          ></v-select>
+        <!-- 서비스 선택 -->
+        <v-select
+          v-model="form.serviceId"
+          :items="services"
+          item-title="name"
+          item-value="id"
+          label="서비스 선택"
+          :rules="[rules.required]"
+          required
+          dense
+          clearable
+          class="mb-4"
+          :loading="loadingServices"
+          hide-details="auto"
+          outlined
+        />
 
-          <!-- 날짜 선택 -->
-          <v-text-field
-            label="예약 날짜"
-            v-model="form.date"
-            type="date"
-            :rules="[rules.required, rules.notPast]"
-            required
-            dense
-            class="mb-4"
-          />
+        <!-- 날짜 선택 -->
+        <v-text-field
+          label="예약 날짜"
+          v-model="form.date"
+          type="date"
+          :rules="[rules.required, rules.notPast]"
+          required
+          dense
+          outlined
+          class="mb-4"
+        />
 
-          <!-- 시간 선택 -->
-          <div class="mb-2 font-weight-medium">시간 선택</div>
-
-          <v-input
-            v-model="form.timeSlots"
-            :rules="[v => v.length > 0 || '최소 1개 이상의 시간을 선택하세요.']"
-            hide-details="auto"
+        <!-- 시간 선택 -->
+        <div class="mb-2 font-weight-medium">시간 선택</div>
+        <v-row class="mb-4" dense>
+          <v-col
+            v-for="slot in allTimeSlots"
+            :key="slot"
+            cols="6"
+            sm="4"
+            md="3"
+            class="pa-0"
           >
-            <v-row class="mb-4">
-              <v-col v-for="slot in allTimeSlots" :key="slot" cols="3" class="pa-0">
-                <v-checkbox
-                  v-model="form.timeSlots"
-                  :label="slot"
-                  :value="slot"
-                  color="primary"
-                  hide-details
-                  density="compact"
-                  class="ma-0"
-                />
-              </v-col>
-            </v-row>
-          </v-input>
+            <v-checkbox
+              v-model="form.timeSlots"
+              :label="slot"
+              :value="slot"
+              color="primary"
+              hide-details
+              density="compact"
+              class="ma-0"
+              style="user-select:none"
+            />
+          </v-col>
+        </v-row>
 
-          <!-- 메모 -->
-          <v-textarea
-            label="메모"
-            v-model="form.memo"
-            auto-grow
-            clearable
-            rows="2"
-            class="mb-4 mt-4"
-          />
+        <!-- 메모 -->
+        <v-textarea
+          label="메모"
+          v-model="form.memo"
+          auto-grow
+          clearable
+          rows="2"
+          outlined
+          class="mb-4 mt-2"
+        />
 
-          <!-- 버튼 -->
-          <v-btn type="submit" color="primary" block>예약하기</v-btn>
-        </v-card-text>
+        <!-- 버튼 -->
+        <v-btn type="submit" color="primary" block large elevation="2">
+          예약하기
+        </v-btn>
       </v-card>
     </v-form>
 
     <!-- 예약 성공 모달 -->
-     <!-- 예약 성공 모달 -->
     <v-dialog
       v-model="dialog"
       max-width="400"
       @click:outside="closeDialog"
       @keydown.esc="closeDialog"
     >
-      <v-card v-if="reservationResult">
+      <v-card v-if="reservationResult" class="pa-4">
         <v-card-title class="headline">예약 완료</v-card-title>
-        <v-card-text>
-          <v-table>
+        <v-card-text class="px-0">
+          <v-simple-table dense>
             <tbody>
               <tr>
-                <th class="text-left"></th>
+                <th class="text-left">업체명</th>
                 <td>{{ reservationResult.companyName }}</td>
               </tr>
               <tr>
@@ -136,7 +142,7 @@
                 <td>{{ reservationResult.id }}</td>
               </tr>
             </tbody>
-          </v-table>
+          </v-simple-table>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -145,7 +151,6 @@
       </v-card>
     </v-dialog>
   </v-container>
-  
 </template>
 
 <script setup>

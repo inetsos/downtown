@@ -155,19 +155,29 @@
       </v-alert>
 
     </v-card>
-  </v-container>
+    <v-btn
+      color="primary"
+      @click="generateFakeOrdersWithStringToppingPrices(100)"
+      class="mx-auto my-4 d-block"
+    >
+      페이크 데이터
+    </v-btn>
 
-  <v-btn
-    v-if="showScrollTop"
-    color="primary"
-    fab
-    small
-    class="scroll-to-top-btn"
-    @click="scrollToTop"
-    elevation="4"
-  >
-    ↑
-  </v-btn>
+  </v-container>
+  
+  <v-fab-transition>
+    <v-btn
+      v-if="showScrollTop"
+      icon
+      color="primary"
+      class="position-fixed"
+      style="bottom: 24px; right: 24px; z-index: 1000;"
+      @click="scrollToTop"
+    >
+      <v-icon>mdi-arrow-up</v-icon>
+    </v-btn>
+  </v-fab-transition>
+
 </template>
 
 <script setup>
@@ -189,7 +199,14 @@ const companyName = route.query.companyName || ''
 // 메뉴 관리
 const { menus, fetchMenus } = useMenus(companyId)
 const selectedCategoryId = ref(null)
+const selectedCategoryName = ref('')
+
 const selectedMenuId = ref(null)
+
+watch(selectedCategoryId, (newId) => {
+  const category = menus.value.find(group => group.categoryId === newId)
+  selectedCategoryName.value = category?.categoryName || ''
+})
 
 const isLoading = ref(true)
 
@@ -295,6 +312,8 @@ const addToCart = (menu) => {
   }
 
   const selectedData = {
+    categoryId: selectedCategoryId.value,
+    categoryName: selectedCategoryName.value,
     menuId: menu.id,
     name: menu.name,
     price: menu.price,
@@ -343,6 +362,94 @@ const scrollToTop = () => {
     top: 0,
     behavior: 'smooth',
   })
+}
+
+import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { db } from '@/firebase';
+import { faker } from '@faker-js/faker';
+
+async function generateFakeOrdersWithStringToppingPrices(count = 100) {
+  // 메뉴, 토핑, 옵션, 카테고리 불러오기
+  const menusSnap = await getDocs(collection(db, 'companies', companyId, 'menus'));
+  const toppingsSnap = await getDocs(collection(db, 'companies', companyId, 'toppings'));
+  const optionsSnap = await getDocs(collection(db, 'companies', companyId, 'icehotOptions'));
+  const categoriesSnap = await getDocs(collection(db, 'companies', companyId, 'categories'));
+
+  const menus = menusSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  const toppingsMap = Object.fromEntries(toppingsSnap.docs.map(doc => [doc.id, doc.data()]));
+  const optionsMap = Object.fromEntries(optionsSnap.docs.map(doc => [doc.id, doc.data()]));
+  const categoryMap = Object.fromEntries(categoriesSnap.docs.map(doc => [doc.id, doc.data().name]));
+
+  if (menus.length === 0) {
+    console.error('메뉴 데이터가 없습니다.');
+    return;
+  }
+
+  const ordersRef = collection(db, 'companies', companyId, 'orders');
+
+  for (let i = 0; i < count; i++) {
+    const isGuest = Math.random() < 0.3;
+    const name = isGuest ? faker.person.fullName() : `user${i}`;
+    const phone = isGuest ? faker.phone.number('010-####-####') : null;
+
+    const itemCount = faker.number.int({ min: 1, max: 3 });
+    const selectedItems = faker.helpers.arrayElements(menus, itemCount);
+
+    const cartItems = selectedItems.map(menu => {
+      const selectedToppings = menu.toppingIds
+        ? faker.helpers.arrayElements(menu.toppingIds, faker.number.int({ min: 0, max: menu.toppingIds.length }))
+        : [];
+
+      const selectedOption = menu.optionIds?.length
+        ? faker.helpers.arrayElement(menu.optionIds)
+        : null;
+
+      const quantity = faker.number.int({ min: 1, max: 3 });
+
+      const toppingTotal = selectedToppings.reduce((sum, toppingId) => {
+        const topping = toppingsMap[toppingId];
+        const price = parseInt(topping?.price || '0', 10);
+        return sum + price;
+      }, 0);
+
+      const optionPrice = 0;
+
+      const unitTotal = menu.price + toppingTotal + optionPrice;
+      const total = unitTotal * quantity;
+
+      return {
+        menuId: menu.id,
+        name: menu.name,
+        price: menu.price,
+        quantity,
+        toppings: selectedToppings,
+        option: selectedOption,
+        imageUrl: menu.imageUrl || null,
+        categoryId: menu.categoryId || null,
+        categoryName: categoryMap[menu.categoryId] || '기타',
+        _calculatedPrice: total
+      };
+    });
+
+    const totalAmount = cartItems.reduce((sum, item) => sum + item._calculatedPrice, 0);
+    const itemsForSave = cartItems.map(({ _calculatedPrice, ...item }) => item);
+
+    const order = {
+      userId: isGuest ? 'guest' : `user${i}`,
+      userName: name,
+      userPhone: phone,
+      isGuest,
+      companyName: null,
+      items: itemsForSave,
+      totalAmount,
+      createdAt: faker.date.between({ from: new Date('2025-06-16'), to: new Date() }),
+    };
+
+    await addDoc(ordersRef, order);
+    console.log(`주문 ${i + 1} 저장 완료`);
+  }
+
+  console.log('모든 주문 저장 완료!');
 }
 </script>
 

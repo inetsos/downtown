@@ -28,10 +28,23 @@
       </v-card-text>
     </v-card>
   </v-container>
+
+  <v-fab-transition>
+    <v-btn
+      v-if="showScrollTop"
+      icon
+      color="primary"
+      class="position-fixed"
+      style="bottom: 24px; right: 24px; z-index: 1000;"
+      @click="scrollToTop"
+    >
+      <v-icon>mdi-arrow-up</v-icon>
+    </v-btn>
+  </v-fab-transition>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
@@ -39,6 +52,24 @@ const route = useRoute()
 
 const companyId = route.query.companyId
 const companyName = route.query.companyName || ''
+
+const showScrollTop = ref(false)
+
+const handleScroll = () => {
+  showScrollTop.value = window.scrollY > 200
+}
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 
 const goToMenuList = () => {
   if (!companyId || !companyName) {
@@ -80,6 +111,46 @@ const goToOrderManager = () => {
   })
 }
 
+// ... 기존 코드 위에 추가
+const goToSalesAnalysis = () => {
+  if (!companyId || !companyName) {
+    console.error('Missing companyId or companyName')
+    alert('회사 정보를 찾을 수 없습니다.')
+    return
+  }
+  
+  router.push({
+    name: 'SalesAnalysis',
+    query: { companyId, companyName }
+  })
+}
+
+const goToHourlySalesAnalysis = () => {
+  if (!companyId || !companyName) {
+    console.error('Missing companyId or companyName')
+    alert('회사 정보를 찾을 수 없습니다.')
+    return
+  }
+  
+  router.push({
+    name: 'HourlySalesAnalysis',
+    query: { companyId, companyName }
+  })
+}
+
+const goToProductSalesReport = () => {
+  if (!companyId || !companyName) {
+    console.error('Missing companyId or companyName')
+    alert('회사 정보를 찾을 수 없습니다.')
+    return
+  }
+
+  router.push({
+    name: 'ProductSalesReport',
+    query: { companyId, companyName }
+  })
+}
+
 const dashboardLinks = ref([
   {
     title: '메뉴 관리',
@@ -110,6 +181,25 @@ const dashboardLinks = ref([
     description: '고객 요청 주문 취소 승인',
     //route: '/admin/cancel',
     icon: 'mdi-cancel'
+  },
+  {
+    title: '매출 분석',
+    description: '일/주/월/연 매출 요약 및 성장률 확인',
+    icon: 'mdi-chart-line',
+    action: goToSalesAnalysis
+  },
+  {
+    title: '시간대별 매출 분석',
+    description: '시간별 매출 트렌드 및 분석',
+    icon: 'mdi-timetable',
+    action: goToHourlySalesAnalysis
+  },
+  {
+    title: '상품별 매출 리포트',
+    description: '상품 단위의 상세 매출 정보',
+    icon: 'mdi-chart-bar',
+    action: goToProductSalesReport
   }
+  
 ])
 </script>
