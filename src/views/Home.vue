@@ -1,14 +1,17 @@
 <!-- src/views/Home.vue -->
 <template>
-  <v-container>
-    <v-card-title>우리 동네 '예약 포털' 입니다.</v-card-title>
+  <v-container fluid>
+    <v-card-title class="text-h6 text-sm-h5 text-center mb-4">
+      우리 동네 '예약 포털' 입니다.
+    </v-card-title>
 
-    <div class="my-3">
-      <div class="ma-1 mb-1">업종 선택</div>
+    <div class="my-3 px-2">
+      <div class="mb-1 text-subtitle-2 font-weight-medium">업종 선택</div>
       <v-chip-group
         v-model="selectedCategory"
         column
         mandatory
+        class="d-flex flex-wrap"
       >
         <v-chip
           v-for="item in ['전체', ...categories]"
@@ -24,108 +27,101 @@
       </v-chip-group>
     </div>
 
-    <v-row>
+    <v-row dense>
       <v-col
         v-for="company in filteredCompanies"
         :key="company.id"
         cols="12"
-        md="4"
         sm="6"
+        md="4"
       >
-        <v-card class="pa-2 mb-2" style="height: 100%;">
-          <v-card-title class="d-flex align-center">
-            <v-icon color="primary" class="mr-2">mdi-storefront</v-icon>
-            <div>
-              <b 
-                style="cursor: pointer;" 
-                @click="goToDetail(company.id)"
+        <v-card class="d-flex flex-column justify-space-between h-100 pa-3 mb-3">
+          <div>
+            <v-card-title class="d-flex align-center pa-0 mb-2">
+              <v-icon color="primary" class="mr-2">mdi-storefront</v-icon>
+              <div>
+                <b @click="goToDetail(company.id)" style="cursor: pointer;">
+                  {{ company.name }}
+                </b>
+                <span class="text-grey text-caption">({{ company.category }})</span>
+              </div>
+            </v-card-title>
+
+            <v-card-text class="pa-0">
+              <div class="mb-2 text-body-2">
+                {{ company.description || '소개글 없음' }}
+              </div>
+
+              <div
+                v-if="company.openTime && company.closeTime"
+                class="mb-2 text-grey text-caption"
               >
-                {{ company.name }}
-              </b>
-              <span class="text-grey"> ({{ company.category }})</span>
-            </div>
-          </v-card-title>
-
-
-          <v-card-text>
-            <div class="mb-2">
-              {{ company.description || '소개글 없음' }}
-            </div>
-
-            <div v-if="company.openTime && company.closeTime" class="mb-2 text-grey">
-              영업시간: {{ company.openTime }} ~ {{ company.closeTime }}
-              <v-chip
-                :color="isOpenNow(company) ? 'green' : 'red'"
-                size="x-small"
-                class="ml-2"
-              >
-                {{ isOpenNow(company) ? '영업 중' : '영업 종료' }}
-              </v-chip>
-            </div>
-
-            <div class="mb-1">
-              <strong>주소:</strong> {{ company.address || '--' }}
-              <v-btn
-                size="small"
-                class="ml-2"
-                variant="text"
-                color="blue"
-                @click.stop="goToMap(company)"
-              >
-                지도 보기
-              </v-btn>
-            </div>
-
-            <div class="mb-2">
-              <strong>상세주소:</strong> {{ company.detailAddress || '--' }}
-            </div>
-
-            <div class="d-flex flex-wrap gap-2">
-
-              <!-- 업종이 카페인 경우 -->
-              <span v-if="company.category === '카페'">
-                <v-btn
-                  class="mr-2"
-                  color="primary"
-                  size="small"
-                  @click.stop="handleOrder(company)"
-                  :disabled="!isOpenNow(company)"
-                  :style="{ pointerEvents: isOpenNow(company) ? 'auto' : 'none' }"
+                영업시간: {{ company.openTime }} ~ {{ company.closeTime }}
+                <v-chip
+                  :color="isOpenNow(company) ? 'green' : 'red'"
+                  size="x-small"
+                  class="ml-2"
                 >
-                  온라인 주문
-                </v-btn>
+                  {{ isOpenNow(company) ? '영업 중' : '영업 종료' }}
+                </v-chip>
+              </div>
 
-                <!-- 비로그인(비회원)인 경우 -->
+              <div class="mb-1 text-body-2">
+                <strong>주소:</strong> {{ company.address || '--' }}
                 <v-btn
-                  v-if = "!isLoggedIn"               
-                  color="secondary"
-                  size="small"
-                  @click.stop="handleGuestOrder(company)"
-                  :disabled="!isOpenNow(company)"
-                  :style="{ pointerEvents: isOpenNow(company) ? 'auto' : 'none' }"
+                  size="x-small"
+                  class="ml-1"
+                  variant="text"
+                  color="blue"
+                  @click.stop="goToMap(company)"
                 >
-                  비회원 주문
+                  지도 보기
                 </v-btn>
-              </span>
-              <span v-else>
-                <!-- 그 외 업종은 '예약하기' -->
-                <v-btn
-                  color="primary"
-                  size="small"
-                  @click.stop="handleReservation(company)"
-                  :disabled="!isOpenNow(company)"
-                  :style="{ pointerEvents: isOpenNow(company) ? 'auto' : 'none' }"
-                >
-                  예약하기
-                </v-btn>
-              </span>     
-            </div>
-          </v-card-text>
+              </div>
+
+              <div class="mb-2 text-body-2">
+                <strong>상세주소:</strong> {{ company.detailAddress || '--' }}
+              </div>
+            </v-card-text>
+          </div>
+
+          <!-- 하단 버튼: 항상 아래에 고정 -->
+          <div class="d-flex flex-column gap-2 mt-2">
+            <v-btn
+              v-if="company.category === '카페'"
+              color="primary"
+              size="small"
+              @click.stop="handleOrder(company)"
+              :disabled="!isOpenNow(company)"
+            >
+              온라인 주문
+            </v-btn>
+
+            <v-btn
+              v-if="company.category === '카페' && !isLoggedIn"
+              color="secondary"
+              size="small"
+              class="mt-2"
+              @click.stop="handleGuestOrder(company)"
+              :disabled="!isOpenNow(company)"
+            >
+              비회원 주문
+            </v-btn>
+
+            <v-btn
+              v-if="company.category !== '카페'"
+              color="primary"
+              size="small"
+              @click.stop="handleReservation(company)"
+              :disabled="!isOpenNow(company)"
+            >
+              예약하기
+            </v-btn>
+          </div>
         </v-card>
-
       </v-col>
-    </v-row>
 
+    </v-row>
   </v-container>
 </template>
 

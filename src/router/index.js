@@ -147,6 +147,22 @@ const routes = [
     name: 'GuestOrder',
     component: () => import('@/views/GuestOrder.vue')
   },
+  {
+    path: '/sales',
+    name: 'SalesAnalysis',
+    component: () => import('@/views/SalesAnalysis.vue')
+  },
+  ,
+  {
+    path: '/hourly-sales',
+    name: 'HourlySalesAnalysis',
+    component: () => import('@/views/HourlySalesAnalysis.vue')
+  },
+  {
+    path: '/produce-sales',
+    name: 'ProductSalesReport',
+    component: () => import('@/views/ProductSalesReport.vue')
+  },
 
 ]
 

@@ -38,11 +38,8 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const login = async (email, password) => {
-    console.log("sos")
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     user.value = userCredential.user
-
-    console.log("qqqq")
     const profileDoc = await getDoc(doc(db, 'profiles', user.value.uid))
     profile.value = profileDoc.exists() ? profileDoc.data() : null
   }
@@ -81,11 +78,10 @@ export const useAuthStore = defineStore('auth', () => {
             aboutMe: '',
             isAnonymous: true,
             createdAt: new Date(),
-          }
-          //console.log('익명 로그인 성공:', user.value.uid)
+          }          
         } else {
           const profileDoc = await getDoc(doc(db, 'profiles', currentUser.uid))
-          profile.value = profileDoc.exists() ? profileDoc.data() : null
+          profile.value = profileDoc.exists() ? profileDoc.data() : null          
         }
       } else {
         profile.value = null

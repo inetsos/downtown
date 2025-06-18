@@ -13,6 +13,7 @@
           <v-col v-for="(item, index) in cartItems" :key="index" cols="12">
             <v-card class="pa-2 d-flex flex-column align-center" elevation="1" rounded="lg">
               <v-img :src="item.imageUrl" cover width="220" height="220" class="rounded-lg mb-2" />
+              <div class="font-weight-bold text-subtitle-1 mb-1">[ {{ item.categoryName }} ]</div>
               <div class="font-weight-bold text-subtitle-1 mb-1">{{ item.name }}</div>
               <div class="text-body-2 text-grey-darken-1 mb-1">옵션: {{ item.option?.name || '없음' }}</div>
               <div class="text-body-2 mb-2">토핑: {{ item.toppings?.length ? item.toppings.map(t => t.name).join(', ') : '없음' }}</div>
@@ -129,8 +130,7 @@ const proceedToOrder = async () => {
     return
   }
 
-  //console.log(guestPhone.value || null)
-  if(isAnonymous)
+  if(isAnonymous.value)
     isGuest.value = true;
 
   const orderData = {
@@ -140,6 +140,8 @@ const proceedToOrder = async () => {
     isGuest: isGuest.value,
     companyName: route.query.companyName || null,
     items: cartItems.value.map(item => ({
+      categoryId: item.categoryId,
+      categoryName: item.categoryName,
       menuId: item.menuId,
       name: item.name,
       price: item.price,

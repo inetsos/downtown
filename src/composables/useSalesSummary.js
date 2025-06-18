@@ -49,9 +49,9 @@ export function useSalesSummary(companyId) {
     return ((current - previous) / previous) * 100
   }
 
-  const loadSummary = async () => {
-    const now = new Date()
-
+  const loadSummary = async (baseDateStr = null) => {
+    const now = baseDateStr ? new Date(baseDateStr) : new Date()
+    
     const [todayStart, todayEnd] = [startOfDay(now), endOfDay(now)]
     const [yesterdayStart, yesterdayEnd] = [startOfDay(subDays(now, 1)), endOfDay(subDays(now, 1))]
 
@@ -113,15 +113,15 @@ export function useSalesSummary(companyId) {
     }
 
     await Promise.all([
-      loadDailyTrend(),
-      loadWeeklyTrend(),
-      loadMonthlyTrend(),
-      loadYearlyTrend()
+      loadDailyTrend(baseDateStr),
+      loadWeeklyTrend(baseDateStr),
+      loadMonthlyTrend(baseDateStr),
+      loadYearlyTrend(baseDateStr)
     ])
   }
 
-  const loadDailyTrend = async () => {
-    const today = new Date()
+  const loadDailyTrend = async (baseDateStr) => {
+    const today = new Date(baseDateStr)
     const startDate = subDays(today, 6)
 
     const dates = Array.from({ length: 7 }).map((_, i) => {
@@ -154,8 +154,10 @@ export function useSalesSummary(companyId) {
     daySales.value = trend.map(item => item.total)
   }
 
-  const loadWeeklyTrend = async () => {
-    const today = new Date()
+  //const loadWeeklyTrend = async () => {
+    //const today = new Date()
+  const loadWeeklyTrend = async (baseDateStr) => {
+    const today = new Date(baseDateStr)
     const weeks = Array.from({ length: 6 }).map((_, i) => {
       const start = startOfWeek(subWeeks(today, 5 - i))
       const end = endOfWeek(start)
@@ -189,8 +191,9 @@ export function useSalesSummary(companyId) {
     weekSales.value = weeks.map(w => salesMap.get(w.label) || 0)
   }
 
-  const loadMonthlyTrend = async () => {
-    const today = new Date()
+  const loadMonthlyTrend = async (baseDateStr) => {
+    //const today = new Date()
+    const today = new Date(baseDateStr)
     const months = Array.from({ length: 6 }).map((_, i) => {
       const date = subMonths(today, 5 - i)
       return {
@@ -227,8 +230,9 @@ export function useSalesSummary(companyId) {
     monthSales.value = months.map(m => salesMap.get(m.label) || 0)
   }
 
-  const loadYearlyTrend = async () => {
-    const today = new Date()
+  const loadYearlyTrend = async (baseDateStr) => {
+    //const today = new Date()
+    const today = new Date(baseDateStr)
     const years = Array.from({ length: 4 }).map((_, i) => {
       const date = subYears(today, 3 - i)
       return {

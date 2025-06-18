@@ -474,6 +474,20 @@ useSalesSummary는 Vue 3의 Composition API와 Firebase Firestore를 활용해
 https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbiZqff%2FbtsOEPVNbM5%2Fbovg2z2B5jegSgEtCIpSuk%2Fimg.png)
   
 
+### 32. 예약 포털 (Vue3 + Firebase) - 매출을 vue-chartjs 차트로 시각화
+
+useSalesSummary() composable은 매출 분석을 위한 강력한 도구입니다.   
+Firestore 데이터를 기반으로 오늘, 이번주, 이번달, 올해와 그 이전 기간의 데이터를 가져와 매출 트렌드와 성장율을 계산 계산하여 관리자 대시보드에 출력합니다. 
+  
+- 일 매출: 최근 7일간의 일별 매출 트렌드 및 성장율  
+- 주 매출: 최근 6주 간의 주간 매출 트렌드 및 성장율  
+- 월 매출: 최근 6개월 간의 월별 매출 트렌드 및 성장율  
+- 년 매출: 최근 4년 간의 연도별 매출 트렌드 및 성장율  
+  
+![매츨 분석 - 데스크탑](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbbyRag%2FbtsOE7J4U8J%2FS8N4xxcH8IBaa7QFCSXVd0%2Fimg.png)
+
+![매츨 분석 - 모바일](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F39twF%2FbtsOFlBjvKB%2F3aEq4YURcMK1sbkXtlRU21%2Fimg.png)
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할

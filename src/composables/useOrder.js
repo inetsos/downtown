@@ -145,7 +145,7 @@ export function useOrder() {
         id: doc.id,
         ...doc.data()
       }))
-console.log(results);
+      
       loading.value = false
       return results
     } catch (e) {

@@ -1,78 +1,97 @@
 <!-- src/views/CompanyDetail.vue -->
 <template>
   <v-container fluid>
-    <div class="d-flex justify-center">
-      <v-card class="pa-4" width="900">
-        <v-card-title>업체 상세 정보</v-card-title>
+    <v-row justify="center">
+      <v-col cols="12" md="10" lg="8">
+        <v-card class="pa-4">
+          <v-card-title class="text-h6 text-center">
+            상점 정보 상세 정보
+          </v-card-title>
 
-        <v-card-text>
-          <div class="mb-3">
-            <strong>업체명:</strong> 
-            {{ company?.name || '없음' }}
-          </div>
+          <v-divider class="my-3"></v-divider>
 
-          <div class="mb-3">
-            <strong>업종:</strong> 
-            {{ company?.category || '없음' }}
-          </div>
+          <v-card-text>
+            <v-row dense>
+              <v-col cols="12" sm="6">
+                <strong>업체명:</strong> {{ company?.name || '없음' }}
+              </v-col>
 
-          <div class="mb-3">
-            <strong>소개글:</strong><br />
-            <div class="multiline-text">
-              {{ company?.description || '없음' }}
-            </div>
-          </div>
+              <v-col cols="12" sm="6">
+                <strong>업종:</strong> {{ company?.category || '없음' }}
+              </v-col>
 
-          <!-- 영업시간 및 상태 표시 -->
-          <div class="mb-3">
-            <strong>영업시간:</strong>
-            {{ company?.openTime || '--' }} ~ {{ company?.closeTime || '--' }}
-          </div>
-          <div class="mb-3" :class="isOpen ? 'text-success' : 'text-error'">
-            <strong>영업 상태:</strong>
-            {{ isOpen ? '영업중' : '영업 종료' }}
-          </div>
+              <v-col cols="12">
+                <strong>소개글:</strong>
+                <div class="multiline-text mt-1">
+                  {{ company?.description || '없음' }}
+                </div>
+              </v-col>
 
-          <v-card-subtitle class="pa-0 pt-1">
-            <strong>주소:</strong> {{ company.address || '--' }}
+              <v-col cols="12" sm="6">
+                <strong>영업시간:</strong><br />
+                {{ company?.openTime || '--' }} ~ {{ company?.closeTime || '--' }}
+              </v-col>
+
+              <v-col cols="12" sm="6" :class="isOpen ? 'text-success' : 'text-error'">
+                <strong>영업 상태:</strong><br />
+                {{ isOpen ? '영업중' : '영업 종료' }}
+              </v-col>
+
+              <v-col cols="12">
+                <strong>주소:</strong> {{ company.address || '--' }}
+                <v-btn
+                  size="small"
+                  variant="text"
+                  color="blue"
+                  class="ml-2"
+                  @click.stop="goToMap(company)"
+                >
+                  지도 보기
+                </v-btn>
+              </v-col>
+
+              <v-col cols="12">
+                <strong>상세주소:</strong> {{ company.detailAddress || '--' }}
+              </v-col>
+            </v-row>
+          </v-card-text>
+
+          <v-divider class="my-2"></v-divider>
+
+          <v-card-actions class="d-flex flex-wrap justify-center gap-2">
             <v-btn
-              size="small"
-              class="ml-2"
-              variant="text"
-              color="blue"
-              @click.stop="goToMap(company)"
+              v-if="authStore.user?.uid === company?.ownerId && company?.category === '카페'"
+              color="teal-darken-2"
+              @click="goToDashboard(company.id)"
             >
-              지도 보기
+              운영 대시보드
             </v-btn>
-          </v-card-subtitle>
 
-          <v-card-subtitle class="pa-0 pt-1">
-            <strong>상세주소:</strong> {{ company.detailAddress || '--' }}
-          </v-card-subtitle>
-        </v-card-text>
 
-        <v-card-actions class="justify-end">
-          <!-- 🔹 서비스 목록 버튼 추가 -->
-          <v-btn 
-            v-if="company.category === '서비스업'"
-            color="secondary"
-            @click="goToServiceList(company.id, company.name)">
-            서비스 보기
-          </v-btn>
+            <v-btn 
+              v-if="company.category === '서비스업'"
+              color="secondary"
+              @click="goToServiceList(company.id, company.name)"
+            >
+              서비스 보기
+            </v-btn>
 
-          <v-btn
-            v-if="authStore.user"
-            color="primary"
-            @click="goToReservation(company.id)"
-            :disabled="!isOpen"
-          >
-            예약하기
-          </v-btn>
+            <v-btn
+              v-if="authStore.user"
+              color="primary"
+              @click="goToReservation(company.id)"
+              :disabled="!isOpen"
+            >
+              예약하기
+            </v-btn>
 
-          <v-btn color="grey" @click="goBack">홈</v-btn>
-        </v-card-actions>
-      </v-card>
-    </div>
+            <v-btn color="grey" @click="goBack">
+              홈
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -126,6 +145,16 @@ const isOpen = computed(() => {
   }
 })
 
+const goToDashboard = () => {
+  router.push({
+    name: 'OperationsDashboard',
+    query: { 
+      companyId: company.value.id, 
+      companyName: company.value.name 
+    },
+  })
+}
+
 const goToReservation = (companyId) => {  
   router.push({
     path: '/reservation',
@@ -162,6 +191,7 @@ const goBack = () => {
 <style scoped>
 .multiline-text {
   white-space: pre-line;
+  font-size: 0.95rem;
 }
 
 .text-success {
