@@ -104,6 +104,32 @@ exports.naverLogin = onRequest({
   });
 });
 
+// 상호로 검색
+exports.naverLocalSearch = onRequest(
+  {
+    secrets: [NAVER_CLIENT_ID, NAVER_CLIENT_SECRET],
+  },
+  async (req, res) => {
+    cors(req, res, async () => {
+      try {
+        const { query } = req.query;
+        const apiUrl = `https://openapi.naver.com/v1/search/local.json?query=${encodeURIComponent(query)}&display=15`;
+
+        const result = await axios.get(apiUrl, {
+          headers: {
+            "X-Naver-Client-Id": NAVER_CLIENT_ID.value(),
+            "X-Naver-Client-Secret": NAVER_CLIENT_SECRET.value(),
+          },
+        });
+
+        res.status(200).json(result.data);
+      } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+    });
+  }
+);
+
 exports.kakaoLogin = onRequest({
   region: "asia-northeast3"  // 서울 리전 예시
 }, (req, res) => {

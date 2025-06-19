@@ -8,6 +8,10 @@
     ],
     "rewrites": [
       {
+        "source": "/naver-api/search/local.json",
+        "function": "naverLocalSearch"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

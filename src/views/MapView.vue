@@ -60,15 +60,12 @@ let marker = null
 let infoWindow = null
 
 const search = async () => {
+  // functions 기능 있음 -> firebase.json 참고.
   const encoded = encodeURIComponent(dong.value + ' ' + name)
-  const res = await fetch(`/naver-api/search/local.json?query=${encoded}&display=15`, {
-    headers: {
-      'X-Naver-Client-Id': import.meta.env.VITE_NAVER_CLIENT_ID,
-      'X-Naver-Client-Secret': import.meta.env.VITE_NAVER_CLIENT_SECRET,
-    }
-  })
+  const res = await fetch(`/naver-api/search/local.json?query=${encoded}`)
+  const data = await res.json()
+  console.log(data)
 
-  const data = await res.json() 
   results.value = data.items || []
 }
 
