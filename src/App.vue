@@ -6,7 +6,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer" class="d-sm-none" />
 
       <v-app-bar-title style="cursor: pointer;" @click="goHome">
-        우리 동네 예약 포털
+        우리 동네
       </v-app-bar-title>
 
       <!-- 데스크탑 메뉴 -->

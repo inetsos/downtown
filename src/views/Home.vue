@@ -1,10 +1,10 @@
 <!-- src/views/Home.vue -->
 <template>
   <v-container fluid>
-    <v-card-title class="text-h6 text-sm-h5 text-center mb-4">
-      우리 동네 '예약 포털' 입니다.
-    </v-card-title>
-
+    <div class="text-center">
+      <strong>사이드 프로젝트 웹 서비스 테스트용으로<br/> 실제 서비스는 되지 않습니다.</strong>
+    </div>
+    <br/>
     <div class="my-3 px-2">
       <div class="mb-1 text-subtitle-2 font-weight-medium">업종 선택</div>
       <v-chip-group
@@ -158,15 +158,35 @@ const goToDetail = (id) => {
   router.push(`/company/${id}`)
 }
 
-const goToReservation = (companyId) => { 
+const goToReservation = (companyId, companyName) => { 
   router.push({
     path: '/reservation',
     query: {
       companyId,
-      username: authStore.profile.name
+      companyName,
     }
   })
 }
+
+const handleReservation = (company) => {
+  if (!isOpenNow(company)) return;
+
+  // 회원이 로그인 하지 않은 상태에서 온라인 주문을 클릭한 경우
+  if (!isLoggedIn.value) {
+    // 로그인 페이지로 이동하면서 리다이렉트 경로를 쿼리로 전달
+    router.push({
+      path: '/login',
+      query: {
+        redirect: '/reservation',
+        companyId: company.id,
+        companyName: company.name
+      }
+    });
+    return;
+  }
+
+  goToReservation(company.id, company.name);
+};
 
 const goToOrder = (companyId, companyName) => { 
   router.push({
@@ -214,12 +234,6 @@ const handleGuestOrder = async (company) => {
   }
   
   goToOrder(company.id, company.name);
-};
-
-
-const handleReservation = (company) => {;
-  if (!isOpenNow(company)) return;
-  goToReservation(company.id);
 };
 
 // 카테고리 필터링된 목록

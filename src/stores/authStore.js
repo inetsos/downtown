@@ -13,9 +13,11 @@ import {
   reauthenticateWithCredential,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithCustomToken,
   signInAnonymously // 비회원 로그인
 } from 'firebase/auth'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
+import axios from 'axios'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
@@ -133,6 +135,111 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  const loginWithKakao = async (authCode) => {
+    
+    const isLocal = window.location.hostname === 'localhost';
+    const KAKAO_REDIRECT_URI = isLocal
+      ? 'http://localhost:5173/kakao-callback'
+      : 'https://my-project-bd617.web.app/kakao-callback';
+
+    try {
+      // 1. 카카오 토큰 요청
+      const tokenRes = await axios.post('https://kauth.kakao.com/oauth/token', null, {
+        params: {
+          grant_type: 'authorization_code',
+          client_id: import.meta.env.VITE_KAKAO_REST_API_KEY,
+          redirect_uri: KAKAO_REDIRECT_URI,
+          code: authCode,
+        },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+
+      const { access_token } = tokenRes.data
+
+      // 2. 사용자 정보 요청
+      const userRes = await axios.get('https://kapi.kakao.com/v2/user/me', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      const kakaoUser = userRes.data
+      const kakaoUid = `kakao:${kakaoUser.id}`
+
+      // 3. Firebase Functions에 카카오 AccessToken 보내서 커스텀 토큰 받기
+      const customTokenRes = await axios.post('https://asia-northeast3-my-project-bd617.cloudfunctions.net/kakaoLogin', {
+        accessToken: access_token,
+      });
+
+      const customToken = customTokenRes.data.token;
+
+      // 4. Firebase 커스텀 토큰으로 로그인
+      const userCredential = await signInWithCustomToken(auth, customToken);
+      user.value = userCredential.user;
+
+      // 5. Firestore에서 프로필 확인
+      const profileRef = doc(db, 'profiles', kakaoUid);
+      const profileDoc = await getDoc(profileRef);
+
+      if (!profileDoc.exists()) {
+        // 신규 사용자일 경우에만 프로필 저장
+        const profileData = {
+          uid: kakaoUid,
+          name: kakaoUser.properties?.nickname || '카카오 사용자',
+          email: kakaoUser.kakao_account?.email || '',
+          aboutMe: '',
+          provider: 'kakao',
+          createdAt: new Date(),
+        };
+        await setDoc(profileRef, profileData);
+        profile.value = profileData;
+      } else {
+        // 기존 사용자라면 기존 프로필 유지
+        profile.value = profileDoc.data();
+      }
+
+      return { isNewUser: !profileDoc.exists() };
+      
+    } catch (error) {
+      console.error('카카오 로그인 실패:', error)
+      throw error
+    }
+  }
+
+  const loginWithNaver = async (authCode, state) => {
+    try {
+      // Firebase Functions로 code, state 전송
+      const customTokenRes = await axios.post(
+        'https://asia-northeast3-my-project-bd617.cloudfunctions.net/naverLogin',
+        { code: authCode, state }
+      );
+
+      const { token: customToken, profile: profileData } = customTokenRes.data;
+
+      const userCredential = await signInWithCustomToken(auth, customToken);
+      user.value = userCredential.user;
+
+      // Firestore 저장 (필요시)
+      const profileRef = doc(db, 'profiles', user.value.uid);
+      const profileDoc = await getDoc(profileRef);
+
+      if (!profileDoc.exists()) {
+        await setDoc(profileRef, profileData);
+        profile.value = profileData;
+        return { isNewUser: true };
+      } else {
+        profile.value = profileDoc.data();
+        return { isNewUser: false };
+      }
+
+    } catch (error) {
+      console.error('네이버 로그인 실패:', error);
+      throw error;
+    }
+  };
+
   return {
     user,
     profile,
@@ -145,5 +252,7 @@ export const useAuthStore = defineStore('auth', () => {
     changePassword,
     resetPassword,
     loginWithGoogle,
+    loginWithKakao,
+    loginWithNaver,
   }
 })

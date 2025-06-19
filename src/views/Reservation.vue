@@ -4,7 +4,7 @@
     <v-form @submit.prevent="submitReservation" ref="formRef" class="mb-4">
       <v-card elevation="2" class="pa-4">
         <v-card-title class="text-h6 font-weight-bold px-0">
-          {{ companyName }} ({{ companyCategory }}) - 예약 하기
+          {{ companyName }} - 예약 하기
         </v-card-title>
 
         <div class="d-flex flex-wrap align-center mb-3 px-0">
@@ -159,12 +159,16 @@ import { useRoute, useRouter } from 'vue-router'
 import { useCompanyStore } from '@/stores/companyStore'
 import { useReservationStore } from '@/stores/reservationStore'
 import { useServiceManagement } from '@/composables/useServiceManagement'
+import { useAuthStore } from '@/stores/authStore'
 
 const router = useRouter()
 const route = useRoute()
+const authStore = useAuthStore()
 
 const companyId = route.query.companyId ?? ''
-const username = route.query.username ?? ''
+const companyName = route.query.companyName ?? ''
+
+const username = authStore.profile.name
 
 const selectedService = computed(() =>
   services.value?.find(service => service.id === form.value.serviceId)
@@ -214,7 +218,7 @@ const dialog = ref(false)
 const reservationResult = ref(null)
 
 const company = computed(() => companyStore.company)
-const companyName = computed(() => company.value?.name || '')
+//const companyName = computed(() => company.value?.name || '')
 const companyCategory = computed(() => company.value?.category || '')
 const openTime = computed(() => company.value?.openTime || '00:00')
 const closeTime = computed(() => company.value?.closeTime || '00:00')

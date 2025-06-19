@@ -502,7 +502,17 @@ Firestore 데이터를 기반으로 오늘, 이번주, 이번달, 올해와 그 
 ![시간대별 매츨 분석 - 데스크탑](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FeH5LGX%2FbtsODWJgVat%2F2vECfbx44uWMUNrRP4P1y1%2Fimg.png)
 
 ![시간대별 매츨 분석 - 모바일](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FALC6L%2FbtsOFmNLU01%2FCWyG7GOyeUFWqJkv4IKqVk%2Fimg.png)
+  
 
+### 34. 예약 포털 (Vue3 + Firebase) - 상품별 매출 리포트
+  
+상품별 판매 수량과 매출 집계 리포트는 단순한 자료가 아니라, 경영의 나침반과도 같은 역할을 해요.   
+기간을 입력하고 ‘조회’를 누르면 입력한 기간 동안의 매출 수량과 금액의 집계를 매출액이 큰 순으로 정렬하여 출력합니다.  
+  
+![상품별 매출 리포트 - 데스크탑](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FFjXZP%2FbtsOHENUR77%2F2VfQruK4ZLvqw00dDdI9sK%2Fimg.png)
+
+![상품별 매출 리포트 - 모바일](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fng1C7%2FbtsOIZDKGaz%2FtrXoIFI6kOULk4Q4jGqIb1%2Fimg.png)
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할

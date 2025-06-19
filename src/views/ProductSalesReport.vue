@@ -1,3 +1,4 @@
+<!-- src/views/ProductSalesReport.vue-->
 <template>
   <v-card>
     <!-- 운영 대시보드로 돌아가기 버튼 -->
@@ -85,8 +86,29 @@
 
       </v-row>
 
-      <!-- 테이블 -->
+      <!-- 📱 반응형 테이블 -->
+      <div v-if="isMobile">
+        <v-card
+          v-for="item in productSales"
+          :key="item.productName"
+          class="mb-2"
+          outlined
+        >
+          <v-card-title class="text-subtitle-1 font-weight-bold">
+            {{ item.productName }}
+          </v-card-title>
+          <v-card-text class="text-body-2">
+            <div>카테고리: {{ item.category }}</div>
+            <div>판매 수량: {{ item.quantitySold.toLocaleString() }}</div>
+            <div class="font-weight-medium">
+              총 매출: {{ item.totalAmount.toLocaleString() }} 원
+            </div>
+          </v-card-text>
+        </v-card>
+      </div>
+
       <v-data-table
+        v-else
         :headers="headers"
         :items="productSales"
         :items-per-page="10"
@@ -120,6 +142,10 @@ import { ref, computed, watch } from 'vue'
 import { format } from 'date-fns'
 import { useRoute, useRouter } from 'vue-router'
 import { useSalesSummary } from '@/composables/useSalesSummary'
+import { useDisplay } from 'vuetify'
+
+const { smAndDown } = useDisplay()
+const isMobile = computed(() => smAndDown.value)
 
 const router = useRouter()
 const route = useRoute()

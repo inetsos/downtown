@@ -2,7 +2,7 @@
 <template>
   <v-container>
     <v-card class="pa-2 mx-auto" max-width="800">
-      <v-card-title>업체 등록</v-card-title>
+      <v-card-title>상점 등록</v-card-title>
 
       <v-text-field v-model="name" label="업체명" required />
 
