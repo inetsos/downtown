@@ -1,4 +1,3 @@
-<!-- src/views/Reservation.vue -->
 <template>
   <v-container max-width="800" class="mx-auto">
     <v-form @submit.prevent="submitReservation" ref="formRef" class="mb-4">
@@ -53,6 +52,13 @@
 
         <!-- 시간 선택 -->
         <div class="mb-2 font-weight-medium">시간 선택</div>
+        <v-row dense>
+          <v-col cols="12" v-if="showTimeSlotError">
+            <div class="text-error text-body-2 mb-2">
+              최소 한 개 이상의 시간을 선택해주세요.
+            </div>
+          </v-col>
+        </v-row>
         <v-row class="mb-4" dense>
           <v-col
             v-for="slot in allTimeSlots"
@@ -71,6 +77,7 @@
               density="compact"
               class="ma-0"
               style="user-select:none"
+              @change="showTimeSlotError = false"
             />
           </v-col>
         </v-row>
@@ -85,6 +92,17 @@
           outlined
           class="mb-4 mt-2"
         />
+
+        <!-- 예약 버튼 위 에러 메시지 -->
+        <v-alert
+          v-if="errorMessage"
+          type="error"
+          dense
+          text
+          class="mb-4"
+        >
+          {{ errorMessage }}
+        </v-alert>
 
         <!-- 버튼 -->
         <v-btn type="submit" color="primary" block large elevation="2">
@@ -103,46 +121,28 @@
       <v-card v-if="reservationResult" class="pa-4">
         <v-card-title class="headline">예약 완료</v-card-title>
         <v-card-text class="px-0">
-          <v-simple-table dense>
-            <tbody>
-              <tr>
-                <th class="text-left">업체명</th>
-                <td>{{ reservationResult.companyName }}</td>
-              </tr>
-              <tr>
-                <th class="text-left">예약 번호</th>
-                <td>{{ reservationResult.reservationNumber }}</td>
-              </tr>
-              <tr>
-                <th class="text-left">예약 날짜</th>
-                <td>{{ reservationResult.date }}</td>
-              </tr>
-              <tr>
-                <th class="text-left">시간</th>
-                <td>{{ reservationResult.timeSlots?.join(', ') || '' }}</td>
-              </tr>
-              <tr>
-                <th class="text-left">서비스</th>
-                <td>{{ reservationResult.serviceName || '없음' }}</td>
-              </tr>
-              <tr>
-                <th class="text-left">메모</th>
-                <td>{{ reservationResult.memo || '없음' }}</td>
-              </tr>
-              <tr>
-                <th class="text-left">상태</th>
-                <td>{{ reservationResult.status }}</td>
-              </tr>
-              <tr>
-                <th class="text-left">예약 시간</th>
-                <td>{{ formatDateTime(reservationResult.createdAt) }}</td>
-              </tr>
-              <tr>
-                <th class="text-left">예약 ID</th>
-                <td>{{ reservationResult.id }}</td>
-              </tr>
-            </tbody>
-          </v-simple-table>
+          <v-card-text class="px-0">
+            <v-table density="compact">
+              <thead>
+                <tr>
+                  <th class="text-left">항목</th>
+                  <th class="text-left">내용</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>업체명</td><td>{{ reservationResult.companyName }}</td></tr>
+                <tr><td>예약 번호</td><td>{{ reservationResult.reservationNumber }}</td></tr>
+                <tr><td>예약 날짜</td><td>{{ reservationResult.date }}</td></tr>
+                <tr><td>시간</td><td>{{ reservationResult.timeSlots?.join(', ') || '' }}</td></tr>
+                <tr><td>서비스</td><td>{{ reservationResult.serviceName || '없음' }}</td></tr>
+                <tr><td>메모</td><td>{{ reservationResult.memo || '없음' }}</td></tr>
+                <tr><td>상태</td><td>{{ reservationResult.status }}</td></tr>
+                <tr><td>예약 시간</td><td>{{ formatDateTime(reservationResult.createdAt) }}</td></tr>
+                <tr><td>예약 ID</td><td>{{ reservationResult.id }}</td></tr>
+              </tbody>
+            </v-table>
+          </v-card-text>
+
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -154,7 +154,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCompanyStore } from '@/stores/companyStore'
 import { useReservationStore } from '@/stores/reservationStore'
@@ -169,23 +169,15 @@ const companyId = route.query.companyId ?? ''
 const companyName = route.query.companyName ?? ''
 
 const username = authStore.profile.name
-
-const selectedService = computed(() =>
-  services.value?.find(service => service.id === form.value.serviceId)
-)
-
-const companyStore = useCompanyStore()
-const reservationStore = useReservationStore()
-// 서비스를 가져온다.
-const { services, loadingServices } = useServiceManagement(companyId)
-const formRef = ref()
+const errorMessage = ref('')
+const showTimeSlotError = ref(false)
 
 const today = new Date().toISOString().split('T')[0]
 const form = ref({
   companyId: '',
   companyName: '',
-  serviceId: null, 
-  serviceName: null, 
+  serviceId: null,
+  serviceName: null,
   date: today,
   timeSlots: [],
   memo: '',
@@ -209,34 +201,58 @@ const rules = {
     if (!v) return true
     const selectedDate = new Date(v)
     const today = new Date()
-    today.setHours(0, 0, 0, 0) // 오늘 00:00으로 초기화
+    today.setHours(0, 0, 0, 0)
     return selectedDate >= today || '오늘 이전 날짜는 선택할 수 없습니다'
   }
 }
 
+const formRef = ref()
 const dialog = ref(false)
 const reservationResult = ref(null)
 
+const companyStore = useCompanyStore()
+const reservationStore = useReservationStore()
+const { services, loadingServices } = useServiceManagement(companyId)
+
+const selectedService = computed(() =>
+  services.value?.find(service => service.id === form.value.serviceId)
+)
+
 const company = computed(() => companyStore.company)
-//const companyName = computed(() => company.value?.name || '')
 const companyCategory = computed(() => company.value?.category || '')
 const openTime = computed(() => company.value?.openTime || '00:00')
 const closeTime = computed(() => company.value?.closeTime || '00:00')
 
+watch(form, () => {
+  errorMessage.value = ''
+  showTimeSlotError.value = false
+}, { deep: true })
+
 const submitReservation = async () => {
   const { valid } = await formRef.value.validate()
-  if (!valid) return
+
+  if (!form.value.timeSlots.length) {
+    showTimeSlotError.value = true
+  }
+
+  if (!valid || !form.value.timeSlots.length) {
+    errorMessage.value = '필수 입력 항목을 모두 입력해주세요.'
+    return
+  }
+
+  errorMessage.value = ''
+  showTimeSlotError.value = false
 
   try {
     form.value.companyId = companyId
-    form.value.companyName = companyName.value
-    form.value.serviceName = selectedService.value?.name;
+    form.value.companyName = companyName
+    form.value.serviceName = selectedService.value?.name
     const res = await reservationStore.submitReservation(form.value)
 
     reservationResult.value = res
     dialog.value = true
   } catch (err) {
-    alert('예약 실패: ' + (err.response?.data?.message || err.message))
+    errorMessage.value = '예약 실패: ' + (err.response?.data?.message || err.message)
   }
 }
 

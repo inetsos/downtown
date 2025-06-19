@@ -50,7 +50,9 @@ import { ref, watchEffect } from 'vue'
 import { useAuthStore } from '../stores/authStore'
 import { doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const authStore = useAuthStore()
 
 const email = ref('')
@@ -82,6 +84,7 @@ const save = async () => {
     aboutMe: aboutMe.value,
   }
   alert('프로필이 저장되었습니다.')
+  router.push('/')
 }
 
 const changePassword = async () => {
@@ -93,12 +96,15 @@ const changePassword = async () => {
   try {
     // authStore의 changePassword 함수에 재인증 포함됨
     await authStore.changePassword(currentPassword.value, newPassword.value)
-    alert('비밀번호가 변경되었습니다.')
-
+    
     // 입력 초기화
     currentPassword.value = ''
     newPassword.value = ''
     confirmPassword.value = ''
+
+    alert('비밀번호가 변경되었습니다.')
+    router.push('/')
+
   } catch (error) {
     alert('비밀번호 변경 실패: ' + error.message)
   }

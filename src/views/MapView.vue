@@ -61,6 +61,7 @@ let infoWindow = null
 
 const search = async () => {
   // functions 기능 있음 -> firebase.json 참고.
+  // localhost에서는 동작하지 않음, 20250619
   const encoded = encodeURIComponent(dong.value + ' ' + name)
   const res = await fetch(`/naver-api/search/local.json?query=${encoded}`)
   const data = await res.json()
