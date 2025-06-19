@@ -537,20 +537,32 @@ Firestore 데이터를 기반으로 오늘, 이번주, 이번달, 올해와 그 
   
 ✅ 카카오 인증 전체 흐름 (Firebase 연동 기준)
 1. 사용자 → 로그인 버튼 클릭  
-&nbsp;&nbsp; 카카오 로그인 창으로 리디렉션됨  
+&nbsp; 카카오 로그인 창으로 리디렉션됨  
 2. 카카오 로그인 성공 → Redirect URI로 돌아옴  
-&nbsp;&nbsp; code 파라미터가 포함되어 돌아옴  
+&nbsp; code 파라미터가 포함되어 돌아옴  
 3. 클라이언트 → code로 카카오 액세스 토큰 요청  
 4. 클라이언트 → 액세스 토큰으로 카카오 사용자 정보 요청  
 5. 클라이언트 → 서버로 accessToken 전송  
 6. 서버 (Firebase Cloud Function)  
-&nbsp;&nbsp; 카카오 사용자 ID로 Firebase UID 생성 (kakao:123456)  
-&nbsp;&nbsp; 커스텀 토큰 발급  
+&nbsp; 카카오 사용자 ID로 Firebase UID 생성 (kakao:123456)  
+&nbsp; 커스텀 토큰 발급  
 7. 클라이언트 → Firebase 로그인  
-&nbsp;&nbsp; Firebase 인증에 로그인 완료  
-&nbsp;&nbsp; 이후 Firebase 서비스 사용 가능 (DB, Storage, 인증 상태 등)  
+&nbsp; Firebase 인증에 로그인 완료  
+&nbsp; 이후 Firebase 서비스 사용 가능 (DB, Storage, 인증 상태 등)  
     
 ![카카오로 로그인](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FyJTpz%2FbtsOHeJzhOo%2FCPa0mqlOKROnvY3ddGoklk%2Fimg.png)
+  
+
+### 37. 예약 포털 (Vue3 + Firebase) - 네이버 로그인 구현
+  
+1. [사용자 요청] 네이버 로그인 버튼 클릭  
+&nbsp; 네이버 로그인 URL을 만들어 브라우저 이동:  
+2. [네이버] 로그인 후 리디렉션  
+&nbsp; 성공 시 REDIRECT_URI로 리디렉션됩니다:  
+3. [클라이언트 or 서버] Access Token 요청  
+4. [access token] 사용자 정보 요청  
+5. [Firebase Functions] → Custom Token 생성 (선택 사항)  
+6. [클라이언트] Firebase 로그인  
   
 ---
 
