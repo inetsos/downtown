@@ -513,6 +513,45 @@ Firestore 데이터를 기반으로 오늘, 이번주, 이번달, 올해와 그 
 
 ![상품별 매출 리포트 - 모바일](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fng1C7%2FbtsOIZDKGaz%2FtrXoIFI6kOULk4Q4jGqIb1%2Fimg.png)
   
+
+### 35. 예약 포털 (Vue3 + Firebase) - 카카오 로그인 기능 구현에 필요한 것들
+
+- 카카오 로그인 구현 단계  
+   
+소셜 로그인은 사용자가 별도의 회원가입 절차 없이 기존에 사용하던 소셜 계정 (예: 카카오, 네이버, 구글 등)을 이용하여 다른 서비스에 로그인할 수 있도록 하는 기능입니다.   
+  
+✅ 1. 카카오 개발자 등록 및 앱 설정  
+✅ 2. 프론트엔드 구현 (Vue 등)  
+🔸 1) 카카오 로그인 URL 생성 및 리디렉션  
+🔸 2) 콜백 페이지 처리  
+🔸 3) 액세스 토큰 요청  
+🔸 4) 사용자 정보 요청  
+✅ 3. Firebase 연동 (Custom Token 방식)  
+🔸 1) Cloud Function 예시 (kakaoLogin)  
+✅ 4. Firebase Auth에 로그인  
+✅ 5. Firestore 사용자 프로필 저장 (선택)  
+    
+### 36. 예약 포털 (Vue3 + Firebase) - 카카오 로그인 구현
+  
+카카오 인증 전체 흐름은 크게 클라이언트(프론트엔드)와 서버(백엔드/Firebase Functions)가 함께 협력하여 사용자를 카카오 → Firebase 인증 사용자로 연동하는 방식입니다.  
+  
+✅ 카카오 인증 전체 흐름 (Firebase 연동 기준)
+1. 사용자 → 로그인 버튼 클릭  
+&nbsp;&nbsp; 카카오 로그인 창으로 리디렉션됨  
+2. 카카오 로그인 성공 → Redirect URI로 돌아옴  
+&nbsp;&nbsp; code 파라미터가 포함되어 돌아옴  
+3. 클라이언트 → code로 카카오 액세스 토큰 요청  
+4. 클라이언트 → 액세스 토큰으로 카카오 사용자 정보 요청  
+5. 클라이언트 → 서버로 accessToken 전송  
+6. 서버 (Firebase Cloud Function)  
+&nbsp;&nbsp; 카카오 사용자 ID로 Firebase UID 생성 (kakao:123456)  
+&nbsp;&nbsp; 커스텀 토큰 발급  
+7. 클라이언트 → Firebase 로그인  
+&nbsp;&nbsp; Firebase 인증에 로그인 완료  
+&nbsp;&nbsp; 이후 Firebase 서비스 사용 가능 (DB, Storage, 인증 상태 등)  
+    
+![카카오로 로그인](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FyJTpz%2FbtsOHeJzhOo%2FCPa0mqlOKROnvY3ddGoklk%2Fimg.png)
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할
