@@ -26,6 +26,10 @@
         비밀번호를 잊으셨나요?
       </v-btn>
 
+      <v-btn variant="text" class="mt-2" @click="gotoRegister" block>
+        회원 가입
+      </v-btn>
+
       <v-divider class="my-4"></v-divider>
 
       <!-- ✅ 구글 로그인 버튼 -->
@@ -38,12 +42,35 @@
         <v-icon left class="mr-2">mdi-google</v-icon>
         구글 계정으로 로그인
       </v-btn>
+
+      <!-- ✅ 카카오 로그인 버튼 -->
+      <v-btn
+        color="#FEE500"
+        class="kakao-login mt-2"
+        block
+        @click="loginWithKakao"
+      >
+        <v-icon left class="mr-2">mdi-chat</v-icon>
+        카카오 계정으로 로그인
+      </v-btn>
+
+      <!-- ✅ 네이버 로그인 버튼 추가 -->
+      <v-btn
+        color="#03C75A"
+        class="naver-login mt-2"
+        block
+        @click="loginWithNaver"
+      >
+        <v-icon left class="mr-2">mdi-account</v-icon>
+        네이버 계정으로 로그인
+      </v-btn>
+
     </v-card>
   </v-container>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 
@@ -53,6 +80,43 @@ const authStore = useAuthStore()
 
 const email = ref('')
 const password = ref('')
+
+const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY
+
+const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID
+
+const isLocal = window.location.hostname === 'localhost';
+const NAVER_REDIRECT_URI = isLocal
+  ? 'http://localhost:5173/naver-callback'
+  : 'https://my-project-bd617.web.app/naver-callback';
+
+const KAKAO_REDIRECT_URI = isLocal
+  ? 'http://localhost:5173/kakao-callback'
+  : 'https://my-project-bd617.web.app/kakao-callback';
+
+const loginWithNaver = () => {
+  const state = crypto.randomUUID()  // CSRF 방지용
+  const url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${encodeURIComponent(NAVER_REDIRECT_URI)}&state=${state}`
+  window.location.href = url
+}
+
+onMounted(() => {
+  if (window.Kakao && !window.Kakao.isInitialized()) {
+    window.Kakao.init(KAKAO_JS_KEY)
+  }
+})
+
+const loginWithKakao = () => {
+  if (!window.Kakao) {
+    alert('Kakao SDK 로드 실패')
+    return
+  }
+
+  window.Kakao.Auth.authorize({
+    redirectUri: KAKAO_REDIRECT_URI,
+    throughTalk: false // ✅ 웹 방식만 사용
+  })
+}
 
 const login = async () => {
   // 로그인하지 않은 상태에서 온라인 주문을 클릭한 경우
@@ -68,6 +132,11 @@ const login = async () => {
     if (redirect === '/order' && companyId && companyName) {
       router.push({
         path: '/order',
+        query: { companyId, companyName }
+      })
+    } else if (redirect === '/reservation' && companyId && companyName) {
+      router.push({
+        path: '/reservation',
         query: { companyId, companyName }
       })
     } else {
@@ -93,6 +162,11 @@ const resetPassword = async () => {
   }
 }
 
+const gotoRegister = () =>
+{
+  router.push('/register') 
+}
+
 const loginWithGoogle = async () => {
   try {
     const { isNewUser } = await authStore.loginWithGoogle()
@@ -112,6 +186,18 @@ const loginWithGoogle = async () => {
 .google-login {
   border: 1px solid #ccc;
   color: #444;
+  font-weight: 500;
+}
+
+.kakao-login {
+  background-color: #FEE500;
+  color: #000;
+  font-weight: 500;
+}
+
+.naver-login {
+  background-color: #03C75A;
+  color: #fff;
   font-weight: 500;
 }
 </style>
