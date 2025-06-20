@@ -120,13 +120,24 @@
           </div>
         </v-card>
       </v-col>
-
     </v-row>
+
+    <v-fab-transition>
+      <v-btn
+        v-show="showScrollTop"
+        color="primary"
+        icon
+        class="scroll-top-btn"
+        @click="scrollToTop"
+      >
+        <v-icon>mdi-arrow-up</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </v-container>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCompanyStore } from '@/stores/companyStore'
 import { useAuthStore } from '@/stores/authStore'
@@ -140,8 +151,23 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
 const selectedCategory = ref('전체')
 const categories = ['배달음식', '카페', '소매업', '서비스업', '교육', '병원', '기타']
 
+const showScrollTop = ref(false)
+
+const handleScroll = () => {
+  showScrollTop.value = window.scrollY > 300
+}
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
 onMounted(() => {
   companyStore.fetchAllCompanies()
+  window.addEventListener('scroll', handleScroll)
 })
 
 const goToMap = (company) => {
@@ -272,8 +298,15 @@ function isOpenNow(company) {
     return currentMinutes >= openMinutes || currentMinutes < closeMinutes;
   }
 }
-
-
 </script>
+
+<style scoped>
+  .scroll-top-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+  }
+</style>
 
 

@@ -89,6 +89,33 @@ export function useOrder() {
     return unsubscribe
   }
 
+  const fetchOrdersRealtimeToday = (companyId, startDate, endDate) => {
+    loading.value = true
+    error.value = null
+
+    const ordersColRef = collection(db, 'companies', companyId, 'orders')
+
+    const q = query(
+      ordersColRef,
+      where('createdAt', '>=', startDate),
+      where('createdAt', '<=', endDate),
+      orderBy('createdAt', 'asc')
+    )
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      orders.value = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      loading.value = false
+    }, (e) => {
+      error.value = e
+      loading.value = false
+    })
+
+    return unsubscribe
+  }
+
   /**
    * 주문 상태를 "완료"로 업데이트
    * @param {string} companyId 
@@ -162,6 +189,7 @@ export function useOrder() {
     orders,
     createOrder,
     fetchOrdersRealtime,
+    fetchOrdersRealtimeToday,
     markAsCompleted,
     updateOrderStatus,
     searchGuestOrder 

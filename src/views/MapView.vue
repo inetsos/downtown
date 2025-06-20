@@ -8,16 +8,16 @@
       <v-toolbar-title>{{ name }} 위치</v-toolbar-title>
     </v-app-bar>
 
+    <div ref="mapElement" style="width: 100%; height: 400px;"></div>
+
     <v-alert type="info" class="mt-4 mb-2" dense>
       주소로 상점 위치를 찾는 경우 실제 위치와 차이가 날 수 있습니다.
     </v-alert>
 
+
     <v-btn color="primary" class="mb-3" block @click="search">
       상호로 위치 검색
     </v-btn>
-
-    <div ref="mapElement" style="width: 100%; height: 400px;"></div>
-
     <v-divider class="my-4" />
 
     <div v-if="results.length">

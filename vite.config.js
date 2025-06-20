@@ -20,7 +20,23 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'), // @ → src
+      '@': path.resolve(__dirname, 'src'),
     },
   },
+  build: {
+    chunkSizeWarningLimit: 1500, // 경고 임계값 상향(옵션)
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('vuetify')) return 'vuetify'
+            if (id.includes('firebase')) return 'firebase'
+            if (id.includes('vue-router')) return 'vue-router'
+            if (id.includes('vue')) return 'vue'
+            return 'vendor'
+          }
+        }
+      }
+    }
+  }
 })

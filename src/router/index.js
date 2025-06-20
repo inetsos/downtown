@@ -85,7 +85,7 @@ const routes = [
     }),
   },
   {
-    path: '/companies/:companyId/menus',
+    path: '/companies/:companyId/menu-manager',
     name: 'MenuManager',
     component: () => import('@/views/MenuManager.vue'),
     props: route => ({

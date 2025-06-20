@@ -2,17 +2,13 @@
 <template>
   <v-card>
     <!-- 운영 대시보드로 돌아가기 버튼 -->
-    <div class="d-flex justify-end mt-4 mb-4 mr-2">
-      <v-btn
-        text
-        color="primary"
-        class="text-subtitle-2"
+    <div class="text-end mb-4 mr-2">
+      <span
+        class="text-primary text-subtitle-2 cursor-pointer"
         @click="goToDashboard"
-        elevation="0"
       >
-        <v-icon left>mdi-arrow-left</v-icon>
         운영 대시보드
-      </v-btn>
+      </span>
     </div>
 
     <v-card-title class="headline font-weight-bold">시간대별 매출 분석</v-card-title>
