@@ -125,25 +125,24 @@
             >
               <template #item="{ element: menu, index }">
                 <div>
-                  <v-list-item :data-id="menu.id">
-                    <template #prepend>
-                      <v-avatar size="90" rounded>
-                        <v-img :src="menu.imageUrl" />
-                      </v-avatar>
-                    </template>
+                  <v-list-item :data-id="menu.id" class="d-flex flex-column align-center text-center pa-4">
+                    <v-avatar size="160" rounded class="mb-3">
+                      <v-img :src="menu.imageUrl" />
+                    </v-avatar>
 
-                    <v-list-item-title class="font-weight-bold">{{ menu.name }}</v-list-item-title>
-
-                    <div v-if="menu.description">설명: {{ menu.description }}</div>
-                    <div>가격: {{ Number(menu.price).toLocaleString() }}원</div>
-                    <div>
+                    <div class="font-weight-bold mb-1">{{ menu.name }}</div>
+                    <div v-if="menu.description" class="text-grey-darken-1 mb-1">
+                      {{ menu.description }}
+                    </div>
+                    <div class="mb-1">가격: {{ Number(menu.price).toLocaleString() }}원</div>
+                    <div class="mb-1">
                       토핑:
                       <span v-if="menu.toppingIds?.length">
                         {{ getToppingNames(menu.toppingIds).join(', ') || '토핑 없음' }}
                       </span>
                       <span v-else>없음</span>
                     </div>
-                    <div>
+                    <div class="mb-3">
                       옵션:
                       <span v-if="menu.optionIds?.length">
                         {{ getOptionNames(menu.optionIds).join(', ') }}
@@ -151,10 +150,11 @@
                       <span v-else>없음</span>
                     </div>
 
-                    <template #append>
-                      <v-btn size="small" color="primary" class="mr-2" @click="onEdit(menu)">수정</v-btn>
-                      <v-btn size="small" color="error" @click="onDelete(menu.id)">삭제</v-btn>
-                    </template>
+                    <!-- 수정/삭제 버튼 -->
+                    <div class="d-flex justify-center align-center mt-2">
+                      <v-btn size="small" color="primary" @click="onEdit(menu)">수정</v-btn>
+                      <v-btn size="small" color="error" class="ml-2" @click="onDelete(menu.id)">삭제</v-btn>
+                    </div>
                   </v-list-item>
 
                   <v-divider v-if="index < menuList.length - 1" />

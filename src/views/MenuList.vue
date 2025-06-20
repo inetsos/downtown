@@ -13,11 +13,11 @@
 
       <v-card-title class="text-h6 d-flex flex-column">
       <div>{{ companyName }} - 메뉴</div>
-      <div class="d-flex flex-wrap gap-2 justify-end mt-2">
-        <v-btn class="mr-2" color="success" @click="goToCategoryManagement">카테고리</v-btn>
-        <v-btn class="mr-2" color="secondary" @click="goToToppingManagement">토핑</v-btn>
-        <v-btn class="mr-2" color="secondary" @click="goToIceHotManagement">옵션</v-btn>
-        <v-btn class="mr-2" color="primary" @click="goToAddMenu">메뉴</v-btn>
+      <div class="d-flex justify-end mt-2" style="gap: 4px;">
+        <v-btn color="success" @click="goToCategoryManagement">카테고리</v-btn>
+        <v-btn color="secondary" @click="goToToppingManagement">토핑</v-btn>
+        <v-btn color="secondary" @click="goToIceHotManagement">옵션</v-btn>
+        <v-btn color="primary" @click="goToAddMenu">메뉴</v-btn>
       </div>
     </v-card-title>
 
