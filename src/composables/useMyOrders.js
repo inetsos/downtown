@@ -1,13 +1,23 @@
 // src/composables/useMyOrders.js
+// src/composables/useMyOrders.js
 import { ref } from 'vue'
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  collectionGroup
+} from 'firebase/firestore'
 import { db } from '@/firebase'
 
-export function useMyOrders(userId) {
+export function useMyOrders() {
   const orders = ref([])
 
   // 전체 업체의 주문 가져오기
-  const fetchAllOrders = async () => {
+  const fetchAllOrders = async (userId) => {
+    if (!userId) return
+
     const companiesSnap = await getDocs(collection(db, 'companies'))
     const allOrders = []
 
@@ -26,7 +36,7 @@ export function useMyOrders(userId) {
           id: doc.id,
           ...doc.data(),
           companyId,
-          companyName: companyDoc.data().name || '', // 이름 추가 (옵션)
+          companyName: companyDoc.data().name || '',
         })
       })
     }
@@ -35,7 +45,9 @@ export function useMyOrders(userId) {
   }
 
   // 특정 업체의 주문만 가져오기
-  const fetchOrders = async (companyId) => {
+  const fetchOrders = async (userId, companyId) => {
+    if (!userId || !companyId) return
+
     const ordersRef = collection(db, 'companies', companyId, 'orders')
     const q = query(
       ordersRef,

@@ -364,31 +364,16 @@ const markAsPendingHandler = async (orderId) => {
     flex-wrap: nowrap;
   }
 }
-.order-grid {
-  display: block;
-}
 
-@media (min-width: 960px) {
-  .order-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    align-items: stretch; /* 카드 높이 맞춤 */
-  }
+.order-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+  gap: 24px; /* 카드 사이 간격 */
 }
 
 .order-card {
+  /* 각 카드가 최대 너비 내에서 잘 보이도록 */
   width: 100%;
-  height: 100%;  /* 그리드 셀 높이 100% */
-  display: flex;
-  flex-direction: column; /* 내부 요소가 세로로 쌓임 */
 }
-
-.order-card > .v-card {
-  flex: 1 1 auto; /* flex-grow, flex-shrink, flex-basis */
-  display: flex;
-  flex-direction: column;
-}
-
 
 </style>
