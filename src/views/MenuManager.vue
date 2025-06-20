@@ -116,11 +116,12 @@
         <template v-for="(menuList, category) in groupedMenus" :key="category">
           <v-list-subheader class="text-h6 font-weight-bold">{{ category }}</v-list-subheader>
 
-          <!-- 드래그 가능한 리스트 -->
-           <draggable
+            <!-- 드래그 가능한 리스트 -->           
+            <draggable
               v-model="groupedMenus[category]"
               item-key="id"
               :group="{ name: 'menus' }"
+              handle=".drag-handle"
               @end="() => onSort(category)"
             >
               <template #item="{ element: menu, index }">
@@ -129,6 +130,7 @@
                     <v-avatar size="160" rounded class="mb-3">
                       <v-img :src="menu.imageUrl" />
                     </v-avatar>
+                    <v-icon class="drag-handle mb-2" icon="mdi-drag" size="24" />
 
                     <div class="font-weight-bold mb-1">{{ menu.name }}</div>
                     <div v-if="menu.description" class="text-grey-darken-1 mb-1">
@@ -166,11 +168,25 @@
         </template>
       </v-list>
     </v-card>
+
+    <v-fab-transition>
+      <v-btn
+        v-if="showScrollTop"
+        icon
+        color="primary"
+        class="position-fixed"
+        style="bottom: 24px; right: 24px; z-index: 1000;"
+        @click="scrollToTop"
+      >
+        <v-icon>mdi-arrow-up</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </v-container>
+  
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMenus } from '@/composables/useMenus'
 import draggable from 'vuedraggable'
@@ -338,7 +354,22 @@ const goToMenu = () => {
   router.push({ name: 'MenuList', params: { companyId }, query: { companyName } })
 }
 
+const showScrollTop = ref(false)
+
+const onScroll = () => {
+  showScrollTop.value = window.scrollY > 200
+}
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
+})
+
 onMounted(async () => {
   await Promise.all([getCategories(), getToppings(), getOptions(), fetchMenus()])
+  window.addEventListener('scroll', onScroll)
 })
 </script>
