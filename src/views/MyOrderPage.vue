@@ -9,8 +9,20 @@
 
       <v-divider />
 
+      <!-- 로딩 중 -->
+      <v-row v-if="isLoading" dense>
+        <v-col cols="12" sm="6" md="4" v-for="n in 6" :key="n">
+          <v-skeleton-loader
+            type="card"
+            class="mb-4"
+            elevation="2"
+            boilerplate
+          />
+        </v-col>
+      </v-row>
+
       <v-alert
-        v-if="!groupedOrders || Object.keys(groupedOrders).length === 0"
+        v-if="!isLoading && (!groupedOrders || Object.keys(groupedOrders).length === 0)"
         type="info"
         class="ma-4"
       >
@@ -111,14 +123,15 @@ import { format } from 'date-fns'
 
 const authStore = useAuthStore()
 const route = useRoute()
-const userId = authStore.user?.uid
+//const userId = authStore.user?.uid
 
 const companyId = computed(() => route.query.companyId || null)
 const companyName = computed(() => route.query.companyName || null)
 
-const { orders, fetchOrders, fetchAllOrders } = useMyOrders(userId)
+const { orders, fetchOrders, fetchAllOrders } = useMyOrders()
 
 const showScrollTop = ref(false)
+//const userId = computed(() => authStore.user?.uid)
 
 const onScroll = () => {
   showScrollTop.value = window.scrollY > 200
@@ -136,14 +149,22 @@ onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
 })
 
+const isLoading = ref(true)
+
 watch(
-  companyId,
-  async (id) => {
-    if (!userId) return
-    if (id) {
-      await fetchOrders(id)
-    } else {
-      await fetchAllOrders()
+  () => authStore.user,
+  async (user) => {
+    if (!user) return
+    isLoading.value = true
+    const id = companyId.value
+    try {
+      if (id) {
+        await fetchOrders(user.uid, id)
+      } else {
+        await fetchAllOrders(user.uid)
+      }
+    } finally {
+      isLoading.value = false
     }
   },
   { immediate: true }
