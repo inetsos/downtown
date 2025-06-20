@@ -129,10 +129,15 @@
                   <v-list-item :data-id="menu.id" class="d-flex flex-column align-center text-center pa-4">
                     <v-avatar size="160" rounded class="mb-3">
                       <v-img :src="menu.imageUrl" />
-                    </v-avatar>
-                    <v-icon class="drag-handle mb-2" icon="mdi-drag" size="24" />
+                    </v-avatar>                    
 
-                    <div class="font-weight-bold mb-1">{{ menu.name }}</div>
+                    <div class="font-weight-bold mb-1">
+                      {{ menu.name }}
+                      <v-icon class="drag-handle mb-1" icon="mdi-drag" size="24" />
+                      <v-btn icon size="x-small" class="mb-1" variant="plain" @click="openInfo(menu)">
+                        <v-icon icon="mdi-help-circle" />
+                      </v-btn>
+                    </div>
                     <div v-if="menu.description" class="text-grey-darken-1 mb-1">
                       {{ menu.description }}
                     </div>
@@ -168,6 +173,22 @@
         </template>
       </v-list>
     </v-card>
+
+    <v-dialog v-model="infoDialog" max-width="400">
+      <v-card>
+        <v-card-title class="text-h6 font-weight-bold">드래그 핸들 </v-card-title>
+        <v-card-text>
+          <div>
+            <v-icon icon="mdi-drag" />
+            이 아이콘을 누른 채 드래그하면 메뉴의 위치를 바꿀 수 있습니다.
+          </div>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="primary" text @click="infoDialog = false">닫기</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
     <v-fab-transition>
       <v-btn
@@ -247,6 +268,15 @@ const onSort = async (category) => {
   await updateMenuOrder(sortedMenus)  // composable 함수 호출
   await fetchMenus()  // 변경 반영 위해 다시 불러오기 (필요시)
 }
+
+const infoDialog = ref(false)
+const selectedMenu = ref(null)
+
+const openInfo = (menu) => {
+  selectedMenu.value = menu
+  infoDialog.value = true
+}
+
 
 const onImageChange = (event) => {
   const files = event.target.files;
