@@ -117,7 +117,10 @@ watch(() => route.query.companyId, (newId) => {
 const goToDashboard = () => {
   router.push({
     name: 'OperationsDashboard',
-    query: { companyId: companyId.value, companyName: companyName.value },
+    query: { 
+      companyId: companyId.value, 
+      companyName: companyName.value 
+    },
   })
 }
 

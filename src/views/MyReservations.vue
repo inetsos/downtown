@@ -3,7 +3,20 @@
   <v-container max-width="800" class="mx-auto py-6">
     <h2 class="text-h5 font-weight-bold mb-6">내 예약 목록</h2>
 
-    <v-alert v-if="!Object.keys(groupedReservations).length" type="info" class="mb-6">
+    <v-skeleton-loader
+      v-if="isLoading"
+      type="card, list-item, list-item, list-item"
+      v-for="n in 3"
+      :key="n"
+      class="mb-6"
+      elevation="1"
+    />
+
+    <v-alert
+      v-else-if="!Object.keys(groupedReservations).length"
+      type="info"
+      class="mb-6"
+    >
       예약 내역이 없습니다.
     </v-alert>
 
@@ -86,10 +99,14 @@ const reservations = ref([])
 const cancelDialog = ref(false)
 const selectedReservation = ref(null)
 
+const isLoading = ref(true)
+
 const fetchReservations = async () => {
   const userId = authStore.user?.uid
   if (!userId) return
+   isLoading.value = true
   reservations.value = await reservationStore.fetchReservationsByUser(userId)
+  isLoading.value = false
 }
 
 const groupedReservations = computed(() => {

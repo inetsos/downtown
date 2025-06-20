@@ -62,7 +62,7 @@
             <v-btn
               v-if="authStore.user?.uid === company?.ownerId && company?.category === '카페'"
               color="teal-darken-2"
-              @click="goToDashboard(company.id)"
+              @click="goToDashboard()"
             >
               운영 대시보드
             </v-btn>

@@ -32,28 +32,27 @@
               <v-avatar size="160" rounded class="mb-3">
                 <v-img :src="menu.imageUrl" />
               </v-avatar>
-
-              <v-list-item-content style="min-width: 0;">
-                <div class="font-weight-bold mb-1">{{ menu.name }}</div>
-                <div v-if="menu.description" class="text-grey-darken-1 mb-1">
-                  {{ menu.description }}
-                </div>
-                <div class="mb-1">가격: {{ Number(menu.price).toLocaleString() }}원</div>
-                <div class="mb-1">
-                  토핑:
-                  <span v-if="menu.toppingIds?.length">
-                    {{ getToppingNames(menu.toppingIds).join(', ') || '토핑 없음' }}
-                  </span>
-                  <span v-else>없음</span>
-                </div>
-                <div>
-                  옵션:
-                  <span v-if="menu.optionIds?.length">
-                    {{ getOptionNames(menu.optionIds).join(', ') }}
-                  </span>
-                  <span v-else>없음</span>
-                </div>
-              </v-list-item-content>
+              
+              <div class="font-weight-bold mb-1">{{ menu.name }}</div>
+              <div v-if="menu.description" class="text-grey-darken-1 mb-1">
+                {{ menu.description }}
+              </div>
+              <div class="mb-1">가격: {{ Number(menu.price).toLocaleString() }}원</div>
+              <div class="mb-1">
+                토핑:
+                <span v-if="menu.toppingIds?.length">
+                  {{ getToppingNames(menu.toppingIds).join(', ') || '토핑 없음' }}
+                </span>
+                <span v-else>없음</span>
+              </div>
+              <div>
+                옵션:
+                <span v-if="menu.optionIds?.length">
+                  {{ getOptionNames(menu.optionIds).join(', ') }}
+                </span>
+                <span v-else>없음</span>
+              </div>
+              
             </v-list-item>
 
             <v-divider v-if="index < menuList.length - 1" />
@@ -144,6 +143,11 @@ import {
 } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMenus } from '@/composables/useMenus'
+
+const props = defineProps({
+  companyId: String,
+  companyName: String
+})
 
 const route = useRoute()
 const router = useRouter()

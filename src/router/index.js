@@ -9,7 +9,7 @@ const routes = [
   { path: '/', name: 'home', component: Home },
   { path: '/register', name: 'register', component: Register },
   { path: '/profile', name: 'profile', component: Profile },
-  { path: '/login', component: Login },
+  { path: '/login', name: 'login', component: Login },
   {
     path: '/register-company',
     name: 'RegisterCompany',
@@ -120,12 +120,20 @@ const routes = [
   {
     path: '/admin/dashboard',
     name: 'OperationsDashboard',
-    component: () => import('@/views/OperationsDashboard.vue')  
+    component: () => import('@/views/OperationsDashboard.vue'),
+    // props: route => ({
+    //   companyId: route.query.companyId,
+    //   companyName: route.query.companyName || ''
+    // })  
   },
   {
     path: '/admin/solsout',
     name: 'SoldOutManager',
-    component: () => import('@/views/SoldOutManager.vue') 
+    component: () => import('@/views/SoldOutManager.vue'),
+    props: route => ({
+      companyId: route.query.companyId,
+      companyName: route.query.companyName || ''
+    })
   },
   {
     path: '/admin/order-manager',
@@ -152,7 +160,6 @@ const routes = [
     name: 'SalesAnalysis',
     component: () => import('@/views/SalesAnalysis.vue')
   },
-  ,
   {
     path: '/hourly-sales',
     name: 'HourlySalesAnalysis',

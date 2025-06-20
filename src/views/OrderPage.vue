@@ -56,8 +56,26 @@
 
       <v-divider class="my-2" />
 
-      <!-- 메뉴 카드 리스트 -->
-      <v-row dense class="px-2" justify="center">
+      <!-- 로딩 중: 스켈레톤 카드 -->
+      <v-row v-if="isLoading" dense class="px-2" justify="center">
+        <v-col
+          v-for="n in 3"
+          :key="n"
+          cols="12"
+          class="d-flex justify-center"
+        >
+          <v-skeleton-loader
+            type="image, text, text, text"
+            max-width="600"
+            height="420"
+            class="mx-auto my-4"
+            elevation="1"
+          />
+        </v-col>
+      </v-row>
+
+      <!-- 로딩 완료 후 메뉴 카드 렌더링 -->
+      <v-row v-else dense class="px-2" justify="center">  
         <v-col
           v-for="menu in filteredMenus"
           :key="menu.id"
@@ -155,13 +173,13 @@
       </v-alert>
 
     </v-card>
-    <v-btn
+    <!-- <v-btn
       color="primary"
       @click="generateFakeOrdersWithStringToppingPrices(100)"
       class="mx-auto my-4 d-block"
     >
       페이크 데이터
-    </v-btn>
+    </v-btn> -->
 
   </v-container>
   

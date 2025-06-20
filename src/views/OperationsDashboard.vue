@@ -15,10 +15,17 @@
             <v-card
               class="pa-4 d-flex flex-column align-center justify-center"
               hover
-              :to="!link.action && link.route ? link.route : undefined"
+              v-bind="!link.action && link.route ? { to: link.route } : {}"
               @click="link.action ? link.action() : null"
               style="cursor: pointer;"
             >
+            <!-- <v-card
+              class="pa-4 d-flex flex-column align-center justify-center"
+              hover
+              :to="!link.action && link.route ? link.route : undefined"
+              @click="link.action ? link.action() : null"
+              style="cursor: pointer;"
+            > -->
               <v-icon :icon="link.icon" size="48" color="primary" class="mb-3" />
               <div class="text-subtitle-1 font-weight-medium">{{ link.title }}</div>
               <div class="text-body-2 text-grey-darken-1">{{ link.description }}</div>
@@ -27,31 +34,32 @@
         </v-row>
       </v-card-text>
     </v-card>
-  </v-container>
 
-  <v-fab-transition>
-    <v-btn
-      v-if="showScrollTop"
-      icon
-      color="primary"
-      class="position-fixed"
-      style="bottom: 24px; right: 24px; z-index: 1000;"
-      @click="scrollToTop"
-    >
-      <v-icon>mdi-arrow-up</v-icon>
-    </v-btn>
-  </v-fab-transition>
+    <v-fab-transition>
+      <v-btn
+        v-if="showScrollTop"
+        icon
+        color="primary"
+        class="position-fixed"
+        style="bottom: 24px; right: 24px; z-index: 1000;"
+        @click="scrollToTop"
+      >
+        <v-icon>mdi-arrow-up</v-icon>
+      </v-btn>
+    </v-fab-transition>
+
+  </v-container>  
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()
 
-const companyId = route.query.companyId
-const companyName = route.query.companyName || ''
+const companyId = computed(() => route.query.companyId || '')
+const companyName = computed(() => route.query.companyName || '')
 
 const showScrollTop = ref(false)
 
@@ -72,21 +80,21 @@ onBeforeUnmount(() => {
 })
 
 const goToMenuList = () => {
-  if (!companyId || !companyName) {
+  if (!companyId.value || !companyName.value) {
     console.error('Missing companyId or companyName')
     alert('회사 정보를 찾을 수 없습니다.')
     return
   }
-
+  
   router.push({
     name: 'MenuList',
-    params: { companyId },
-    query: { companyName }
+    params: { companyId: companyId.value },
+    query: { companyName: companyName.value }
   })
 }
 
 const goToSoldOutManager = () => {
-  if (!companyId || !companyName) {
+  if (!companyId.value || !companyName.value) {
     console.error('Missing companyId or companyName')
     alert('회사 정보를 찾을 수 없습니다.')
     return
@@ -94,12 +102,15 @@ const goToSoldOutManager = () => {
 
   router.push({
     name: 'SoldOutManager',
-    query: { companyId, companyName }
+    query: { 
+      companyId:companyId.value, 
+      companyName:companyName.value 
+    }
   })
 }
 
 const goToOrderManager = () => {
-  if (!companyId || !companyName) {
+  if (!companyId.value || !companyName.value) {
     console.error('Missing companyId or companyName')
     alert('회사 정보를 찾을 수 없습니다.')
     return
@@ -107,13 +118,16 @@ const goToOrderManager = () => {
 
   router.push({
     name: 'OrderManager',
-    query: { companyId, companyName }
+    query: { 
+      companyId:companyId.value, 
+      companyName:companyName.value 
+    }
   })
 }
 
 // ... 기존 코드 위에 추가
 const goToSalesAnalysis = () => {
-  if (!companyId || !companyName) {
+  if (!companyId.value || !companyName.value) {
     console.error('Missing companyId or companyName')
     alert('회사 정보를 찾을 수 없습니다.')
     return
@@ -121,12 +135,15 @@ const goToSalesAnalysis = () => {
   
   router.push({
     name: 'SalesAnalysis',
-    query: { companyId, companyName }
+    query: { 
+      companyId:companyId.value, 
+      companyName:companyName.value 
+    }
   })
 }
 
 const goToHourlySalesAnalysis = () => {
-  if (!companyId || !companyName) {
+  if (!companyId.value || !companyName.value) {
     console.error('Missing companyId or companyName')
     alert('회사 정보를 찾을 수 없습니다.')
     return
@@ -134,12 +151,15 @@ const goToHourlySalesAnalysis = () => {
   
   router.push({
     name: 'HourlySalesAnalysis',
-    query: { companyId, companyName }
+    query: { 
+      companyId:companyId.value, 
+      companyName:companyName.value 
+    }
   })
 }
 
 const goToProductSalesReport = () => {
-  if (!companyId || !companyName) {
+  if (!companyId.value || !companyName.value) {
     console.error('Missing companyId or companyName')
     alert('회사 정보를 찾을 수 없습니다.')
     return
@@ -147,7 +167,10 @@ const goToProductSalesReport = () => {
 
   router.push({
     name: 'ProductSalesReport',
-    query: { companyId, companyName }
+    query: { 
+      companyId:companyId.value, 
+      companyName:companyName.value 
+    }
   })
 }
 

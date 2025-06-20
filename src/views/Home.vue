@@ -27,7 +27,23 @@
       </v-chip-group>
     </div>
 
-    <v-row dense>
+    <v-row dense v-if="isLoading">
+      <v-col
+        v-for="n in 6"
+        :key="n"
+        cols="12"
+        sm="6"
+        md="4"
+      >
+        <v-skeleton-loader
+          type="card"
+          class="mb-3"
+          elevation="2"
+        />
+      </v-col>
+    </v-row>
+
+    <v-row dense v-else>
       <v-col
         v-for="company in filteredCompanies"
         :key="company.id"
@@ -150,6 +166,8 @@ const isLoggedIn = computed(() => authStore.isLoggedIn)
 
 const selectedCategory = ref('전체')
 const categories = ['배달음식', '카페', '소매업', '서비스업', '교육', '병원', '기타']
+
+const isLoading = computed(() => companyStore.isLoading)
 
 const showScrollTop = ref(false)
 

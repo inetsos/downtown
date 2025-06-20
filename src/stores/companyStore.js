@@ -75,13 +75,18 @@ export const useCompanyStore = defineStore('company', () => {
     })
   }
 
+  const isLoading = ref(false)
   // 🔹 업체 목록
   const fetchAllCompanies = async () => {
-    const snapshot = await getDocs(collection(db, 'companies'))
-    companies.value = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }))
+    isLoading.value = true
+    try {
+      const snapshot = await getDocs(collection(db, 'companies'))
+      companies.value = snapshot.docs.map(doc => ({ 
+        id: doc.id, 
+        ...doc.data() }))
+    } finally {
+      isLoading.value = false
+    }
   }
 
   // 🔹 업체 삭제
@@ -115,6 +120,7 @@ export const useCompanyStore = defineStore('company', () => {
   return {
     companies,
     company,
+    isLoading,
     addCompany,
     fetchCompany,
     fetchMyCompanies,
