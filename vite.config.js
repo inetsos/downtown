@@ -1,13 +1,42 @@
-// vite.config.js
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
 import path from 'path'
+import { VitePWA } from 'vite-plugin-pwa' // ✅ 올바른 패키지명
 
 export default defineConfig({
   plugins: [
     vue(),
     vuetify({ autoImport: true }),
+    VitePWA({ // ✅ PWA 설정 추가
+      registerType: 'autoUpdate',
+      includeAssets: [
+        'favicon.ico',
+        'robots.txt',
+        'apple-touch-icon.png'
+      ],
+      manifest: {
+        name: 'Downtown Life',
+        short_name: 'Downtown',
+        description: '우리 동네',
+        theme_color: '#1867C0', // Vuetify 기본 테마 색상
+        background_color: '#ffffff',
+        display: 'standalone',
+        start_url: '/',
+        icons: [
+          {
+            src: '/pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: '/pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
+      }
+    })
   ],
   server: {
     proxy: {
@@ -24,7 +53,7 @@ export default defineConfig({
     },
   },
   build: {
-    chunkSizeWarningLimit: 1500, // 경고 임계값 상향(옵션)
+    chunkSizeWarningLimit: 1500,
     rollupOptions: {
       output: {
         manualChunks(id) {

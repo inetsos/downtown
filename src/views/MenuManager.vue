@@ -9,7 +9,7 @@
         <v-spacer />
         <!-- 메뉴로 이동 버튼 -->
         <v-btn variant="text" class="mt-4" color="primary" @click="goToMenu">
-          메뉴로 가기
+          메뉴
         </v-btn>
       </v-card-title>
 
@@ -132,11 +132,11 @@
                     </v-avatar>                    
 
                     <div class="font-weight-bold mb-1">
-                      {{ menu.name }}
-                      <v-icon class="drag-handle mb-1" icon="mdi-drag" size="24" />
+                      {{ menu.name }}                      
                       <v-btn icon size="x-small" class="mb-1" variant="plain" @click="openInfo(menu)">
                         <v-icon icon="mdi-help-circle" />
                       </v-btn>
+                      <v-icon class="drag-handle mb-1" icon="mdi-drag" size="24" />
                     </div>
                     <div v-if="menu.description" class="text-grey-darken-1 mb-1">
                       {{ menu.description }}
