@@ -8,16 +8,27 @@
       <v-toolbar-title>{{ name }} 위치</v-toolbar-title>
     </v-app-bar>
 
-    <div ref="mapElement" style="width: 100%; height: 400px;"></div>
+    <div ref="mapElement" style="width: 100%; height: 360px;"></div>
 
-    <v-alert type="info" class="mt-4 mb-2" dense>
-      주소로 상점 위치를 찾는 경우 실제 위치와 차이가 날 수 있습니다.
-    </v-alert>
+    <v-row class="mt-1 mb-3">
+      <v-col cols="auto">
+        <v-btn color="primary" @click="search">
+          상호로 위치 검색
+        </v-btn>
+      </v-col>
+      <v-col cols="auto">
+        <v-btn
+          icon
+          variant="text"
+          color="primary"
+          @click="showDialog = true"
+          aria-label="도움말"
+        >
+          <v-icon size="24" class="mb-3">mdi-help-circle-outline</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
 
-
-    <v-btn color="primary" class="mb-3" block @click="search">
-      상호로 위치 검색
-    </v-btn>
     <v-divider class="my-4" />
 
     <div v-if="results.length">
@@ -37,9 +48,25 @@
         </v-list-item>
       </v-list>
     </div>
-  </v-container>
-</template>
 
+    
+  <!-- 다이얼로그 팝업 -->
+  <v-dialog v-model="showDialog" max-width="400">
+    <v-card>
+      <v-card-title class="text-h6 font-weight-bold">상호 위치 검색 안내</v-card-title>
+      <v-card-text>
+        <p>주소로 네이버 지도 위에 위치를 나타내면 실제 위치가 차이가 나는 경우가 있습니다.</p>
+        <p>상호로 위치를 검색하면 보다 정확한 위치를 나타냅니다. 검색 결과는 네이버 로컬 API를 기반으로 합니다.</p>
+      </v-card-text>
+      <v-card-actions class="justify-end">
+        <v-btn text @click="showDialog = false">닫기</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+  </v-container>
+
+</template>
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
@@ -54,6 +81,8 @@ const address = decodeURIComponent(route.query.address || '')
 
 const dong = ref('')
 const results = ref([])
+
+const showDialog = ref(false)
 
 let map = null
 let marker = null
