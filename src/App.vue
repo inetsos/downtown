@@ -28,6 +28,15 @@
           <span class="text-body-1 mr-1">{{ isLoggedIn ? '로그아웃' : '로그인' }}</span>
           <v-icon>{{ isLoggedIn ? 'mdi-logout' : 'mdi-login' }}</v-icon>
         </v-btn>
+        <v-btn
+          v-if="showInstallButton"
+          @click="installApp"
+          color="secondary"
+          prepend-icon="mdi-download"
+        >
+          앱 설치
+        </v-btn>
+
       </v-toolbar-items>
     </v-app-bar>
 
@@ -63,10 +72,15 @@
           </v-list-item>
         </template>
 
+        <v-list-item v-if="showInstallButton" @click="installApp">
+          <v-list-item-title>앱 설치</v-list-item-title>
+        </v-list-item>
+
         <v-list-item @click="handleAuthClick">
           <!-- <v-list-item-title>{{ isLoggedIn ? '로그아웃' : '로그인' }}</v-list-item-title> -->
           <v-icon class="ml-2">{{ isLoggedIn ? 'mdi-logout' : 'mdi-login' }}</v-icon>
         </v-list-item>
+        
       </v-list>
     </v-navigation-drawer>
 
@@ -78,7 +92,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 
@@ -86,6 +100,28 @@ const drawer = ref(false)
 const router = useRouter()
 const authStore = useAuthStore()
 const isLoggedIn = computed(() => authStore.isLoggedIn)
+
+const deferredPrompt = ref(null)
+const showInstallButton = ref(false)
+
+onMounted(() => {
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault()
+    deferredPrompt.value = e
+    showInstallButton.value = true
+  })
+})
+
+const installApp = async () => {
+  if (!deferredPrompt.value) return
+  deferredPrompt.value.prompt()
+  const { outcome } = await deferredPrompt.value.userChoice
+  if (outcome === 'accepted') {
+    console.log('사용자가 설치함')
+  }
+  deferredPrompt.value = null
+  showInstallButton.value = false
+}
 
 const goHome = () => {
   router.push('/')

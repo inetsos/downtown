@@ -82,6 +82,7 @@ const address = decodeURIComponent(route.query.address || '')
 const dong = ref('')
 const results = ref([])
 
+const isLoading = ref(false)
 const showDialog = ref(false)
 
 let map = null
@@ -91,12 +92,18 @@ let infoWindow = null
 const search = async () => {
   // functions 기능 있음 -> firebase.json 참고.
   // localhost에서는 동작하지 않음, 20250619
-  const encoded = encodeURIComponent(dong.value + ' ' + name)
-  const res = await fetch(`/naver-api/search/local.json?query=${encoded}`)
-  const data = await res.json()
-  console.log(data)
-
-  results.value = data.items || []
+  isLoading.value = true
+  results.value = []
+  try {
+    const encoded = encodeURIComponent(dong.value + ' ' + name)
+    const res = await fetch(`/naver-api/search/local.json?query=${encoded}`)
+    const data = await res.json()
+    results.value = data.items || []
+  } catch (error) {
+    alert('검색 중 오류가 발생했습니다.')
+  } finally {
+    isLoading.value = false
+  }
 }
 
 // 주소 → 좌표 변환 함수
@@ -235,6 +242,16 @@ const moveToLocation = (item) => {
       }
     }, 0)
   }
+
+  // 스크롤 이동 추가
+  if (mapElement.value) {
+    console.log("sos")
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // if (mapElement.value) {
+  //   mapElement.value.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  // }
 }
 
 function goBack() {

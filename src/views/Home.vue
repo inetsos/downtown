@@ -2,7 +2,7 @@
 <template>
   <v-container fluid>
     <div class="text-center">
-      <strong>사이드 프로젝트 웹 서비스 테스트용으로<br/> 실제 서비스는 되지 않습니다.</strong>
+      <strong>Vue3 + Firebase 사이드 프로젝트 웹 서비스<br/> 테스트용으로 실제 서비스는 되지 않습니다.</strong>
     </div>
     <br/>
     <div class="my-3 px-2">

@@ -564,6 +564,15 @@ Firestore 데이터를 기반으로 오늘, 이번주, 이번달, 올해와 그 
 5. [Firebase Functions] → Custom Token 생성 (선택 사항)  
 6. [클라이언트] Firebase 로그인  
   
+### 37. Vue3 + Firebase 프로젝트 '우리 동네' - PWA 설정 추가
+
+PWA(Progressive Web App)를 설정하는 과정은 웹 앱에 앱처럼 설치 가능한 기능과 오프라인 동작 기능을 추가하는 일입니다.  
+
+![홈 화면에 설치](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbXOl9e%2FbtsOMeiii06%2FoMsLLN5V2jcwtjvNgRJdv1%2Fimg.png)
+  
+![홈 화면에 설치 후 바탕화면](https://blog.kakaocdn.net/dna/cveK4d/btsOLtmKWRM/AAAAAAAAAAAAAAAAAAAAANIon29J9pRMz6l6j_GLTmTf3pmkKwMLFTsq5YLtWrzY/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1750658399&allow_ip=&allow_referer=&signature=vXeZmUV89p7LiFk7LXjve%2F45Ty8%3D)
+  
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할

@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
 import path from 'path'
-import { VitePWA } from 'vite-plugin-pwa' // ✅ 올바른 패키지명
+import { VitePWA } from 'vite-plugin-pwa' 
 
 export default defineConfig({
   plugins: [
