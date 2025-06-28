@@ -19,13 +19,6 @@
               @click="link.action ? link.action() : null"
               style="cursor: pointer;"
             >
-            <!-- <v-card
-              class="pa-4 d-flex flex-column align-center justify-center"
-              hover
-              :to="!link.action && link.route ? link.route : undefined"
-              @click="link.action ? link.action() : null"
-              style="cursor: pointer;"
-            > -->
               <v-icon :icon="link.icon" size="48" color="primary" class="mb-3" />
               <div class="text-subtitle-1 font-weight-medium">{{ link.title }}</div>
               <div class="text-body-2 text-grey-darken-1">{{ link.description }}</div>
@@ -222,7 +215,6 @@ const dashboardLinks = ref([
     description: '상품 단위의 상세 매출 정보',
     icon: 'mdi-chart-bar',
     action: goToProductSalesReport
-  }
-  
+  },
 ])
 </script>

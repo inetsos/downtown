@@ -151,6 +151,12 @@ const routes = [
     component: () => import('@/views/MyPage.vue')
   },
   {
+    path: '/my-coupons',
+    name: 'MyCoupons',
+    component: () => import('@/views/MyCoupons.vue'),
+    meta: { requiresAuth: true }, // 로그인 필요 시
+  },
+  {
     path: '/guest-order',
     name: 'GuestOrder',
     component: () => import('@/views/GuestOrder.vue')

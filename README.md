@@ -564,7 +564,7 @@ Firestore 데이터를 기반으로 오늘, 이번주, 이번달, 올해와 그 
 5. [Firebase Functions] → Custom Token 생성 (선택 사항)  
 6. [클라이언트] Firebase 로그인  
   
-### 37. Vue3 + Firebase 프로젝트 '우리 동네' - PWA 설정 추가
+### 38. Vue3 + Firebase 프로젝트 '우리 동네' - PWA 설정 추가
 
 PWA(Progressive Web App)를 설정하는 과정은 웹 앱에 앱처럼 설치 가능한 기능과 오프라인 동작 기능을 추가하는 일입니다.  
 
@@ -572,6 +572,23 @@ PWA(Progressive Web App)를 설정하는 과정은 웹 앱에 앱처럼 설치 �
   
 ![홈 화면에 설치 후 바탕화면](https://blog.kakaocdn.net/dna/cveK4d/btsOLtmKWRM/AAAAAAAAAAAAAAAAAAAAANIon29J9pRMz6l6j_GLTmTf3pmkKwMLFTsq5YLtWrzY/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1750658399&allow_ip=&allow_referer=&signature=vXeZmUV89p7LiFk7LXjve%2F45Ty8%3D)
   
+  
+### 39. Vue3 + Firebase 프로젝트 '우리 동네' - 쿠폰 관리 시스템
+
+주문 결제를 할 때 장바구니에서 사용할 수 있는 쿠폰의 목록을 보입니다.  
+주문 총금액 10,000원당 1,000원 할인 쿠폰을 발행하는 것이니  
+쿠폰의 목록에는 1,000원 할인 쿠폰 여러장이 보입니다.  
+이들 쿠폰 중 한장 또는 여러장을 선택하여 할인된 금액으로 결제할 수 있습니다.  
+  
+결제를 하면 할인을 뺀 최종 결제 금액과 발급한 쿠폰의 수를 비교하여   
+새로 쿠폰을 발급해야 한다면 1,000원 할인 쿠폰을 발급합니다.  
+  
+마이페이지에서 내 쿠폰을 조회할 수 있습니다.  
+내 쿠폰에는 쿠폰이 발급된 날짜와 사용날짜 그리고 사용 가능 여부를 확인할 수 있습니다.  
+  
+![할인 쿠폰 사용](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FblQgge%2FbtsOWl8xuoC%2FAAAAAAAAAAAAAAAAAAAAAMIWrae9vnebG6IWSeseQkdu1NowKyUTI0Mppui3kbnu%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1751295599%26allow_ip%3D%26allow_referer%3D%26signature%3D5nWEC31ugberCLAJD6hMlye7TsU%253D)
+
+![내 쿠폰 보기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FpGzCr%2FbtsOWd34sya%2FAAAAAAAAAAAAAAAAAAAAACNshlCGFZh6gy5hR4yteLyzV6oYzgVhD_LLWqtba6oT%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1751295599%26allow_ip%3D%26allow_referer%3D%26signature%3DWLrH9cpdAsyLs9jsAEJTR1%252BrHUI%253D)
   
 ---
 

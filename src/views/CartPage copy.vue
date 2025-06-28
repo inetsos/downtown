@@ -1,4 +1,3 @@
-<!-- src/views/CartPage.vue -->
 <template>
   <v-container>
     <v-card>
@@ -12,7 +11,9 @@
         <v-row>
           <v-col v-for="(item, index) in cartItems" :key="index" cols="12">
             <v-card class="pa-2 d-flex flex-column align-center" elevation="1" rounded="lg">
-              <div class="font-weight-bold text-subtitle-1 mb-1">[{{ item.categoryName }}] {{ item.name }}</div>
+              <v-img :src="item.imageUrl" cover width="220" height="220" class="rounded-lg mb-2" />
+              <div class="font-weight-bold text-subtitle-1 mb-1">[ {{ item.categoryName }} ]</div>
+              <div class="font-weight-bold text-subtitle-1 mb-1">{{ item.name }}</div>
               <div class="text-body-2 text-grey-darken-1 mb-1">옵션: {{ item.option?.name || '없음' }}</div>
               <div class="text-body-2 mb-2">토핑: {{ item.toppings?.length ? item.toppings.map(t => t.name).join(', ') : '없음' }}</div>
 
@@ -38,36 +39,27 @@
         <v-divider class="my-4" />
 
         <!-- 쿠폰 선택 영역 (회원만) -->
-        <v-row dense no-gutters class="mt-1 mb-1">
+        <v-row dense no-gutters>
           <v-col
             cols="12"
             md="6"
-            class="py-0 my-0"
+            class="py-0"
             v-for="coupon in availableCoupons"
             :key="coupon.id"
           >
             <v-checkbox
               v-model="selectedCouponIds"
               :value="coupon.id"
+              :label="`할인 ${coupon.value}원 - 발급일: ${formatDate(coupon.issuedAt)}`"
               :disabled="loading"
               density="compact"
-              style="height: 32px;"
-            >
-              <template #label>
-                <span>
-                  <strong class="text-primary">
-                    {{ coupon.value.toLocaleString() }}원 할인 쿠폰
-                  </strong>
-                  <span class="text-grey-darken-1">
-                     - 발급일: {{ formatDate(coupon.issuedAt) }}
-                    </span>
-                </span>
-              </template>
-            </v-checkbox>
+              class="my-0 py-0"
+            />
           </v-col>
         </v-row>
 
-        <div class="text-right font-weight-bold text-h6 mt-2">
+
+        <div class="text-right font-weight-bold text-h6">
           총 합계: {{ totalAmount.toLocaleString() }}원<br />
           할인 합계: {{ discountAmount.toLocaleString() }}원<br />
           최종 결제 금액: {{ totalAfterDiscount.toLocaleString() }}원

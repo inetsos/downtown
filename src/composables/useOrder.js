@@ -14,11 +14,14 @@ import {
   runTransaction,
   updateDoc,
 } from 'firebase/firestore'
+import { useCoupons } from './useCoupons'
 
 export function useOrder() {
   const loading = ref(false)
   const error = ref(null)
   const orders = ref([])
+
+  const { issueCouponsByTotalSpent } = useCoupons()
 
   /**
    * 회사(companyId) 하위 orders 서브컬렉션에 주문 저장 (자동 증가 주문번호 포함)
@@ -54,6 +57,12 @@ export function useOrder() {
         const newOrderDocRef = doc(ordersColRef)
         transaction.set(newOrderDocRef, payload)
       })
+
+      // 쿠폰 발행: 주문 생성 후 누적 주문액 기준으로 쿠폰 자동 발급
+      console.log(orderData.userId, orderData.isGuest);
+      if (orderData.userId && !orderData.isGuest) {
+        await issueCouponsByTotalSpent(orderData.userId, companyId, orderData.companyName)
+      }
 
       loading.value = false
       return newOrderNumber
