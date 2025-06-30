@@ -18,9 +18,6 @@
           <v-btn text to="/my-companies" tag="router-link">
             <v-icon start>mdi-store</v-icon> 매장보기
           </v-btn>
-          <v-btn text to="/profile" tag="router-link">
-            <v-icon start>mdi-account-circle</v-icon> 프로필
-          </v-btn>
         </template>
         <template v-else>
           <v-btn text to="/register" tag="router-link">
@@ -67,10 +64,6 @@
           <v-list-item to="/my-companies" tag="router-link" @click="drawer = false">
             <template #prepend><v-icon class="mr-2">mdi-store</v-icon></template>
             <v-list-item-title>매장보기</v-list-item-title>
-          </v-list-item>
-          <v-list-item to="/profile" tag="router-link" @click="drawer = false">
-            <template #prepend><v-icon class="mr-2">mdi-account-circle</v-icon></template>
-            <v-list-item-title>프로필</v-list-item-title>
           </v-list-item>
         </template>
 
