@@ -169,9 +169,11 @@ const goToMap = (company) => {
   router.push({
     path: '/map',
     query: {
-      address: company.address,
-      name: company.name,
-    },
+      name: encodeURIComponent(company.name),
+      address: encodeURIComponent(company.address),
+      latitude: company.latitude,
+      longitude: company.longitude,
+    }
   })
 }
 

@@ -24,6 +24,10 @@
           <v-btn text to="/register" tag="router-link">회원가입</v-btn>
         </template>
 
+        <v-btn icon to="/nearby-companies" tag="router-link" :title="'가까운 상점 찾기'">
+          <v-icon>mdi-map-marker</v-icon>
+        </v-btn>
+
         <v-btn @click="handleAuthClick" class="d-flex align-center">
           <span class="text-body-1 mr-1">{{ isLoggedIn ? '로그아웃' : '로그인' }}</span>
           <v-icon>{{ isLoggedIn ? 'mdi-logout' : 'mdi-login' }}</v-icon>
@@ -71,6 +75,12 @@
             <v-list-item-title>회원가입</v-list-item-title>
           </v-list-item>
         </template>
+
+        <v-list-item
+          to="/nearby-companies"
+          prepend-icon="mdi-map-marker"
+          value="nearby"
+        />
 
         <v-list-item v-if="showInstallButton" @click="installApp">
           <v-list-item-title>앱 설치</v-list-item-title>

@@ -590,6 +590,23 @@ PWA(Progressive Web App)를 설정하는 과정은 웹 앱에 앱처럼 설치 �
 
 ![내 쿠폰 보기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FpGzCr%2FbtsOWd34sya%2FAAAAAAAAAAAAAAAAAAAAACNshlCGFZh6gy5hR4yteLyzV6oYzgVhD_LLWqtba6oT%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1751295599%26allow_ip%3D%26allow_referer%3D%26signature%3DWLrH9cpdAsyLs9jsAEJTR1%252BrHUI%253D)
   
+
+### 40. Vue3 + Firebase 프로젝트 '우리 동네' - 웹앱에서 GPS 사용
+
+웹앱에서도 GPS를 사용할 수 있습니다.  
+  
+가까운 매장 찾기는   
+GPS로 현재 위치를 구해서  
+현재 위치의 위도, 경도와  
+등록된 매장의 위도, 경도 정보를 사용하여   
+현재 위치에서 매장까지의 거리를 계산할 수 있습니다.  
+  
+![매장 등록 정보에 위도, 경도 추가](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fbz7MUn%2FbtsOXeOYRCh%2FAAAAAAAAAAAAAAAAAAAAAExlXtq93H1FbpFjnqdYZbdajNCaQi7cGcwYW4pH_sA-%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1751295599%26allow_ip%3D%26allow_referer%3D%26signature%3DY8vpbIsQ8pTF7bb1GjWRQv6ZqIs%253D)
+
+![네이버 지도에서 위도, 경도 구하기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FDGv9C%2FbtsOWgGuI9i%2FAAAAAAAAAAAAAAAAAAAAAJKhk3qcqh5lN9ub8hKNSc7_bol3zdDdxU631bWG3uuo%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1751295599%26allow_ip%3D%26allow_referer%3D%26signature%3DbJHiZAa3CAvuXVBvenhN3ugVGsk%253D)
+
+![가까운 매장 찾기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FOliJD%2FbtsOXUbA3XP%2FAAAAAAAAAAAAAAAAAAAAAF5UaDHA8b75I3qAi699WgfBQuVsP4i-J2ca3UGaDRXV%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1751295599%26allow_ip%3D%26allow_referer%3D%26signature%3D0lTbMSoX4OqkSNuidyKEwQTtq7A%253D)
+
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할

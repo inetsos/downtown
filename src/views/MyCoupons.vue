@@ -68,8 +68,24 @@ const groupedCoupons = computed(() => {
     if (!groups[name]) groups[name] = []
     groups[name].push(coupon)
   }
+
+  // ✅ 그룹 내 정렬: 사용 가능 쿠폰 → 발급일 내림차순
+  Object.keys(groups).forEach(company => {
+    groups[company] = groups[company].sort((a, b) => {
+      // 사용 가능 여부 우선
+      const usedCompare = Number(a.used) - Number(b.used)
+      if (usedCompare !== 0) return usedCompare
+
+      // 최근 발급일 우선
+      const aTime = a.issuedAt?.seconds || new Date(a.issuedAt).getTime() / 1000
+      const bTime = b.issuedAt?.seconds || new Date(b.issuedAt).getTime() / 1000
+      return bTime - aTime
+    })
+  })
+
   return groups
 })
+
 
 onMounted(async () => {
   try {

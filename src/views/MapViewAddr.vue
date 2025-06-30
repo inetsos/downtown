@@ -1,3 +1,4 @@
+<!-- src/views/MapView.vue -->
 <template>
   <v-container>
     <v-app-bar color="primary" dark dense>
@@ -48,20 +49,23 @@
       </v-list>
     </div>
 
-    <!-- 다이얼로그 팝업 -->
-    <v-dialog v-model="showDialog" max-width="400">
-      <v-card>
-        <v-card-title class="text-h6 font-weight-bold">상호 위치 검색 안내</v-card-title>
-        <v-card-text>
-          <p>주소로 네이버 지도 위에 위치를 나타내면 실제 위치가 차이가 나는 경우가 있습니다.</p>
-          <p>상호로 위치를 검색하면 보다 정확한 위치를 나타냅니다. 검색 결과는 네이버 로컬 API를 기반으로 합니다.</p>
-        </v-card-text>
-        <v-card-actions class="justify-end">
-          <v-btn text @click="showDialog = false">닫기</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    
+  <!-- 다이얼로그 팝업 -->
+  <v-dialog v-model="showDialog" max-width="400">
+    <v-card>
+      <v-card-title class="text-h6 font-weight-bold">상호 위치 검색 안내</v-card-title>
+      <v-card-text>
+        <p>주소로 네이버 지도 위에 위치를 나타내면 실제 위치가 차이가 나는 경우가 있습니다.</p>
+        <p>상호로 위치를 검색하면 보다 정확한 위치를 나타냅니다. 검색 결과는 네이버 로컬 API를 기반으로 합니다.</p>
+      </v-card-text>
+      <v-card-actions class="justify-end">
+        <v-btn text @click="showDialog = false">닫기</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
   </v-container>
+
 </template>
 
 <script setup>
@@ -75,11 +79,9 @@ const mapElement = ref(null)
 const name = decodeURIComponent(route.query.name || '')
 const address = decodeURIComponent(route.query.address || '')
 
-const latitude = parseFloat(route.query.latitude) || null
-const longitude = parseFloat(route.query.longitude) || null
-
 const dong = ref('')
 const results = ref([])
+
 const isLoading = ref(false)
 const showDialog = ref(false)
 
@@ -88,6 +90,8 @@ let marker = null
 let infoWindow = null
 
 const search = async () => {
+  // functions 기능 있음 -> firebase.json 참고.
+  // localhost에서는 동작하지 않음, 20250619
   isLoading.value = true
   results.value = []
   try {
@@ -129,30 +133,20 @@ const initMap = async () => {
     return
   }
 
-  let position = null
-  let lat = latitude
-  let lng = longitude
-
   try {
-    if (lat === null || lng === null) {
-      // 주소를 사용해 좌표 가져오기
-      const coords = await getCoordinates(address)
-      lat = coords.latitude
-      lng = coords.longitude
-      dong.value = coords.dongName
-    }
+    const { latitude, longitude, roadAddress, jibunAddress, dongName } = await getCoordinates(address)
 
-    position = new naver.maps.LatLng(lat, lng)
+    dong.value = dongName;
 
     map = new naver.maps.Map(mapElement.value, {
-      center: position,
-      zoom: 15,
+      center: new naver.maps.LatLng(latitude, longitude),
+      zoom: 15
     })
 
     marker = new naver.maps.Marker({
-      position,
+      position: new naver.maps.LatLng(latitude, longitude),
       map,
-      title: name,
+      title: name
     })
 
     infoWindow = new naver.maps.InfoWindow({
@@ -169,14 +163,17 @@ const initMap = async () => {
             cursor:pointer;
           "
         >
-          <strong>${name}</strong>
+          <strong>${name}</strong><br/>
+          ${roadAddress || '없음'}<br/>
+          ${jibunAddress || '없음'}<br/>
           <small>(클릭하면 닫힘)</small>
         </div>
-      `,
+      `
     })
 
     infoWindow.open(map, marker)
 
+    // infoWindow 내용 클릭 시 닫기
     setTimeout(() => {
       const el = document.getElementById('infoWindowContent')
       if (el) {
@@ -185,16 +182,18 @@ const initMap = async () => {
         })
       }
     }, 0)
+
   } catch (error) {
-    alert('지도 초기화 실패: ' + error.message)
+    alert(error.message)
   }
 }
 
+// 검색 결과 클릭 시 지도 이동 및 마커 표시
 const moveToLocation = (item) => {
   if (!map) return
 
-  const lat = parseFloat(item.mapy / 10000000)
-  const lng = parseFloat(item.mapx / 10000000)
+  const lat = parseFloat(item.mapy/10000000)
+  const lng = parseFloat(item.mapx/10000000)
 
   const position = new naver.maps.LatLng(lat, lng)
   map.setCenter(position)
@@ -207,24 +206,24 @@ const moveToLocation = (item) => {
     marker = new naver.maps.Marker({
       position,
       map,
-      title: item.title,
+      title: item.title
     })
   }
 
   if (infoWindow) {
     infoWindow.setContent(`
       <div 
-        id="infoWindowContent" 
-        style="
-          padding:10px;
-          min-width:200px;
-          max-width:90vw;
-          box-sizing:border-box;
-          word-break:break-word;
-          line-height:150%;
-          cursor:pointer;
-        "
-      >
+          id="infoWindowContent" 
+          style="
+            padding:10px;
+            min-width:200px;
+            max-width:90vw;
+            box-sizing:border-box;
+            word-break:break-word;
+            line-height:150%;
+            cursor:pointer;
+          "
+        >
         <strong>${item.title}</strong><br/>
         주소: ${item.roadAddress || item.address}<br/>
         전화번호: ${item.telephone || '없음'}<br/>
@@ -233,6 +232,7 @@ const moveToLocation = (item) => {
     `)
     infoWindow.open(map, marker)
 
+    // infoWindow 내용 클릭 시 닫기
     setTimeout(() => {
       const el = document.getElementById('infoWindowContent')
       if (el) {
@@ -245,8 +245,13 @@ const moveToLocation = (item) => {
 
   // 스크롤 이동 추가
   if (mapElement.value) {
+    console.log("sos")
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  // if (mapElement.value) {
+  //   mapElement.value.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  // }
 }
 
 function goBack() {

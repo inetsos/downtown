@@ -185,6 +185,16 @@ const routes = [
     path: '/naver-callback',
     name: 'NaverCallback',
     component: () => import('@/views/NaverCallback.vue'),
+  },
+  {
+    path: '/map-pick-location',
+    name: 'MapPickLocation',
+    component: () => import('@/views/MapPickLocation.vue'),
+  },
+  {
+    path: '/nearby-companies',
+    name: 'NearbyCompanies',
+    component: () => import('@/views/NearbyCompanies.vue'),
   }
 
 ]
