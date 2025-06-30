@@ -141,6 +141,11 @@ const routes = [
     component: () => import('@/views/OrderManager.vue') 
   },
   {
+      path: '/admin/qr-generator',
+      name: 'QrGenerator',
+      component: () => import('@/views/QrGenerator.vue')
+    },
+  {
     path: '/my-orders',
     name: 'MyOrderPage',
     component: () => import('@/views/MyOrderPage.vue')
@@ -195,6 +200,11 @@ const routes = [
     path: '/nearby-companies',
     name: 'NearbyCompanies',
     component: () => import('@/views/NearbyCompanies.vue'),
+  },
+  {
+    path: '/qr-scanner',
+    name: 'QrScanner',
+    component: () => import('@/views/QrScanner.vue'),
   }
 
 ]

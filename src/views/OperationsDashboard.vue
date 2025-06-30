@@ -167,6 +167,22 @@ const goToProductSalesReport = () => {
   })
 }
 
+const goToQrGenerator = () => {
+  if (!companyId.value || !companyName.value) {
+    console.error('Missing companyId or companyName')
+    alert('회사 정보를 찾을 수 없습니다.')
+    return
+  }
+
+  router.push({
+    name: 'QrGenerator',
+    query: {
+      companyId: companyId.value,
+      companyName: companyName.value
+    }
+  })
+}
+
 const dashboardLinks = ref([
   {
     title: '메뉴 관리',
@@ -216,5 +232,12 @@ const dashboardLinks = ref([
     icon: 'mdi-chart-bar',
     action: goToProductSalesReport
   },
+  {
+    title: 'QR코드 생성',
+    description: 'URL 텍스트 기반 QR코드 생성',
+    icon: 'mdi-qrcode',
+    action: goToQrGenerator
+  }
+
 ])
 </script>

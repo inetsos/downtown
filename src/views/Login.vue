@@ -95,9 +95,14 @@ const KAKAO_REDIRECT_URI = isLocal
   : 'https://my-project-bd617.web.app/kakao-callback';
 
 const loginWithNaver = () => {
+  sessionStorage.setItem('redirect', route.query.redirect)
+  sessionStorage.setItem('companyId', route.query.companyId)
+  sessionStorage.setItem('companyName', route.query.companyName)
+
   const state = crypto.randomUUID()  // CSRF 방지용
   const url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${encodeURIComponent(NAVER_REDIRECT_URI)}&state=${state}`
   window.location.href = url
+
 }
 
 onMounted(() => {
@@ -112,10 +117,14 @@ const loginWithKakao = () => {
     return
   }
 
+  sessionStorage.setItem('redirect', route.query.redirect)
+  sessionStorage.setItem('companyId', route.query.companyId)
+  sessionStorage.setItem('companyName', route.query.companyName)
+
   window.Kakao.Auth.authorize({
     redirectUri: KAKAO_REDIRECT_URI,
     throughTalk: false // ✅ 웹 방식만 사용
-  })
+  })  
 }
 
 const login = async () => {

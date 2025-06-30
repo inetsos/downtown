@@ -10,7 +10,7 @@
 
         <!-- 익명 로그인 사용자일 때 -->
         <v-btn
-          v-if="isAnonymous"
+          v-if="isAnonymousLocal"
           variant="plain"
           color="primary"
           @click="goToGuestOrder"
@@ -247,6 +247,8 @@ const selectedOption = ref({})
 const showScrollTop = ref(false)
 
 const isAnonymous = computed(() => authStore.user?.isAnonymous === true)
+// Qrcode 스캔으로 여기에 온 경우에 대한 대응
+const isAnonymousLocal = ref(false)
 
 // 필터링된 메뉴
 const filteredMenus = computed(() => {
@@ -356,6 +358,20 @@ const goToCart = () => {
 }
 
 onMounted(async () => {
+  // 로그인하지 않은 경우 익명 사용자 자동 로그인 처리
+  // Qrcode를 읽으면 여기로 온다.
+  if (!authStore.user) {
+    try {
+      await authStore.loginAnonymously()
+    } catch (err) {
+      console.error(err)
+      alert('비회원 로그인 중 오류가 발생했습니다.')
+      return
+    }
+  }
+
+  isAnonymousLocal.value = authStore.user?.isAnonymous === true
+
   await fetchMenus()
   await loadToppings()
   await fetchIceHotOptions()

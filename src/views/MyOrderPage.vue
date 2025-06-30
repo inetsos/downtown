@@ -141,6 +141,12 @@ const scrollToTop = () => {
 }
 
 onMounted(() => {
+  // 로그인하지 않은 경우 홈으로 리디렉션
+  if (!authStore.user) {
+    router.push('/')
+    return
+  }
+  
   window.addEventListener('scroll', onScroll)
 })
 

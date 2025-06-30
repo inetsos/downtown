@@ -19,11 +19,26 @@ onMounted(async () => {
     try {
       const { isNewUser } = await authStore.loginWithKakao(code)
 
+      const redirect = sessionStorage.getItem('redirect')
+      const companyId = sessionStorage.getItem('companyId')
+      const companyName = sessionStorage.getItem('companyName')
+
+      // 로그인 성공 후
       if (isNewUser) {
-        router.push('/profile')  // 신규 회원은 프로필 수정 페이지로 이동
+        router.push('/profile')
+      } else if (redirect === '/order' && companyId && companyName) {
+        router.push({ path: '/order', query: { companyId, companyName } })
+      } else if (redirect === '/reservation' && companyId && companyName) {
+        router.push({ path: '/reservation', query: { companyId, companyName } })
       } else {
-        router.push('/')  // 기존 회원은 홈으로 이동
+        router.push('/')
       }
+
+      // 👉 조건 분기 끝난 뒤에 클리어
+      sessionStorage.removeItem('redirect')
+      sessionStorage.removeItem('companyId')
+      sessionStorage.removeItem('companyName')
+      
     } catch (error) {
       console.error('카카오 로그인 실패:', error)
       router.push('/login')

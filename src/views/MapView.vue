@@ -133,13 +133,14 @@ const initMap = async () => {
   let lat = latitude
   let lng = longitude
 
-  try {
+  try {    
+    // 주소를 사용해 좌표 가져오기
+    // 동이름을 얻기 위해 위도와 경도가 있어도 처리를 한다.
+    const coords = await getCoordinates(address)    
+    dong.value = coords.dongName    
     if (lat === null || lng === null) {
-      // 주소를 사용해 좌표 가져오기
-      const coords = await getCoordinates(address)
       lat = coords.latitude
       lng = coords.longitude
-      dong.value = coords.dongName
     }
 
     position = new naver.maps.LatLng(lat, lng)

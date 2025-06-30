@@ -606,7 +606,17 @@ GPS로 현재 위치를 구해서
 ![네이버 지도에서 위도, 경도 구하기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FDGv9C%2FbtsOWgGuI9i%2FAAAAAAAAAAAAAAAAAAAAAJKhk3qcqh5lN9ub8hKNSc7_bol3zdDdxU631bWG3uuo%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1751295599%26allow_ip%3D%26allow_referer%3D%26signature%3DbJHiZAa3CAvuXVBvenhN3ugVGsk%253D)
 
 ![가까운 매장 찾기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FOliJD%2FbtsOXUbA3XP%2FAAAAAAAAAAAAAAAAAAAAAF5UaDHA8b75I3qAi699WgfBQuVsP4i-J2ca3UGaDRXV%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1751295599%26allow_ip%3D%26allow_referer%3D%26signature%3D0lTbMSoX4OqkSNuidyKEwQTtq7A%253D)
+  
 
+### 41. Vue3 + Firebase 프로젝트 '우리 동네' - QR 코드 온라인 주문
+  
+각 매장의 온라인 주문 URL을 QR코드로 만들어 비치를 하면  
+고객은 QR 코드를 스캔하여 온라인 주문 페이지에 접속하여 주문할 수 있습니다.  
+테이크아웃 커피 매장에서는 QR 코드가 음료 주문 키오스크를 대신할 수도 있습니다.  
+  
+![앱에서 QR 코드 생성](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbnkMEQ%2FbtsOYUJI2HS%2FAAAAAAAAAAAAAAAAAAAAAEhe91fuflfRtGzNuRoIlz5uBP5FnCA7aaALBcsNar4o%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1751295599%26allow_ip%3D%26allow_referer%3D%26signature%3DHH0XSQsKfFOZcib6y24nSr%252Bn7Ug%253D)
+  
+    
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할

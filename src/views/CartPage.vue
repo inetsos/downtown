@@ -268,6 +268,12 @@ const calcItemPrice = (item) => {
 const showScrollTop = ref(false)
 
 onMounted(async () => {
+  // 로그인하지 않은 경우 홈으로 리디렉션
+  if (!authStore.user) {
+    router.push('/')
+    return
+  }
+  
   const saved = localStorage.getItem('cart')
   cartItems.value = saved ? JSON.parse(saved).map(item => ({
     ...item,

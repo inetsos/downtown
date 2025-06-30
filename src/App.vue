@@ -24,8 +24,12 @@
           <v-btn text to="/register" tag="router-link">회원가입</v-btn>
         </template>
 
-        <v-btn icon to="/nearby-companies" tag="router-link" :title="'가까운 상점 찾기'">
+        <v-btn icon to="/nearby-companies" tag="router-link" :title="'가까운 매장 찾기'">
           <v-icon>mdi-map-marker</v-icon>
+        </v-btn>
+
+        <v-btn icon to="/qr-scanner" tag="router-link" :title="'QR 스캔'">
+          <v-icon>mdi-qrcode-scan</v-icon>
         </v-btn>
 
         <v-btn @click="handleAuthClick" class="d-flex align-center">
@@ -76,11 +80,16 @@
           </v-list-item>
         </template>
 
+        <!-- 가까운 매장 찾기 -->
         <v-list-item
           to="/nearby-companies"
           prepend-icon="mdi-map-marker"
           value="nearby"
         />
+
+        <v-list-item to="/qr-scanner" tag="router-link" @click="drawer = false">
+          <v-list-item-title>QR 스캔</v-list-item-title>
+        </v-list-item>
 
         <v-list-item v-if="showInstallButton" @click="installApp">
           <v-list-item-title>앱 설치</v-list-item-title>
