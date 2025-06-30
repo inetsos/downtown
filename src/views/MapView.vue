@@ -28,6 +28,14 @@
       </v-col>
     </v-row>
 
+    <!-- 로딩 중임을 상단에 표시 -->
+    <v-progress-linear
+      v-if="isLoading"
+      indeterminate
+      color="primary"
+      class="mb-2"
+      height="4"
+    />
     <v-divider class="my-4" />
 
     <div v-if="results.length">

@@ -2,7 +2,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="400">
     <template #activator="{ props }">
-      <v-btn v-bind="props" class="mt-4" color="primary" prepend-icon="mdi-qrcode-scan">
+      <v-btn v-bind="props" class="ml-4 mt-4" color="primary" prepend-icon="mdi-qrcode-scan">
         QR 스캔
       </v-btn>
     </template>

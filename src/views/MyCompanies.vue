@@ -2,7 +2,14 @@
 <template>
   <v-container> 
     <v-card class="pa-4 mx-auto" max-width="1200"> 
-      <v-card-title class="pa-0 mb-4">내 업체 목록</v-card-title>
+      <v-card-title class="pa-0 mb-4 d-flex justify-space-between align-center">
+        내 매장 보기
+        <v-btn color="primary" size="small" @click="goToRegister">
+          <v-icon start>mdi-store-plus</v-icon>
+          매장 등록
+        </v-btn>
+      </v-card-title>
+
 
       <v-row dense>
         <v-col
@@ -90,6 +97,10 @@ import { useCompanyStore } from '@/stores/companyStore'
 
 const companyStore = useCompanyStore()
 const router = useRouter()
+
+const goToRegister = () => {
+  router.push('/register-company')
+}
 
 const goToEdit = (id) => {
   router.push(`/edit-company/${id}`)
