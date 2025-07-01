@@ -169,9 +169,11 @@ export const useAuthStore = defineStore('auth', () => {
       const kakaoUid = `kakao:${kakaoUser.id}`
 
       // 3. Firebase Functions에 카카오 AccessToken 보내서 커스텀 토큰 받기
-      const customTokenRes = await axios.post('https://asia-northeast3-my-project-bd617.cloudfunctions.net/kakaoLogin', {
-        accessToken: access_token,
-      });
+      const customTokenRes = await axios.post(
+        //'https://asia-northeast3-my-project-bd617.cloudfunctions.net/kakaoLogin', 
+        'https://kakaologin-m65i6rbula-du.a.run.app',
+        { accessToken: access_token}
+      );
 
       const customToken = customTokenRes.data.token;
 
@@ -212,7 +214,8 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       // Firebase Functions로 code, state 전송
       const customTokenRes = await axios.post(
-        'https://asia-northeast3-my-project-bd617.cloudfunctions.net/naverLogin',
+        //'https://asia-northeast3-my-project-bd617.cloudfunctions.net/naverLogin',
+        'https://naverlogin-m65i6rbula-du.a.run.app',
         { code: authCode, state }
       );
 

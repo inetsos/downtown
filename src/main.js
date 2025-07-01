@@ -7,8 +7,28 @@ import { createPinia } from 'pinia'
 import router from './router'
 import '@mdi/font/css/materialdesignicons.css'
 import { useAuthStore } from './stores/authStore'
+import { logEvent } from '@/utils/logger'
 
 const app = createApp(App)
+
+app.config.errorHandler = (err, vm, info) => {
+  logEvent('error', 'Vue 전역 에러', {
+    message: err.message,
+    stack: err.stack,
+    component: info,
+  })
+}
+
+window.onerror = (msg, src, line, col, err) => {
+  logEvent('error', 'JS 전역 에러', {
+    message: msg,
+    source: src,
+    line,
+    col,
+    stack: err?.stack,
+  })
+}
+
 app.use(vuetify)
 app.use(createPinia())
 app.use(router)

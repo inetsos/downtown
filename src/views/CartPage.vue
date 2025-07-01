@@ -126,6 +126,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 import { useOrder } from '@/composables/useOrder'
 import { useCoupons } from '@/composables/useCoupons'
+import { logEvent } from '@/utils/logger'
 
 const router = useRouter()
 const route = useRoute()
@@ -191,6 +192,19 @@ const proceedToOrder = async () => {
 
   if (isAnonymous.value) isGuest.value = true
 
+  // 로그: 주문 시도
+  logEvent('info', '주문하기 버튼 클릭', {
+    userId: authStore.user?.uid || 'guest',
+    isGuest: isAnonymous.value,
+    cartItemCount: cartItems.value.length,
+    totalAmount: totalAmount.value,
+    discountAmount: discountAmount.value,
+    finalAmount: totalAfterDiscount.value,
+    companyId: route.query.companyId || null,
+    path: route.fullPath,
+    timestamp: new Date().toISOString()
+  })
+  
   const orderData = {
     userId: authStore.user?.uid || 'guest',
     userName: authStore.profile?.name || guestName.value || 'guest',

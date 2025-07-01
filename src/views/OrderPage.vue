@@ -205,6 +205,7 @@ import { useMenus } from '@/composables/useMenus'
 import { useToppingManagement } from '@/composables/useToppingManagement'
 import { useIceHotManager } from '@/composables/useIceHotManager'
 import { useAuthStore } from '@/stores/authStore'
+import { logEvent } from '@/utils/logger'
 
 const authStore = useAuthStore()
 
@@ -363,11 +364,35 @@ onMounted(async () => {
   if (!authStore.user) {
     try {
       await authStore.loginAnonymously()
+
+      // ✅ 로그 추가
+      logEvent('info', 'OrderPage 진입', {
+        userId: authStore.user?.uid || 'guest',
+        isGuest: isAnonymousLocal.value,
+        entryByQr: true, // QR 진입 여부 추정
+        companyId,
+        companyName,
+        path: decodeURIComponent(route.fullPath),
+        timestamp: new Date().toISOString(),
+      })
+
     } catch (err) {
       console.error(err)
       alert('비회원 로그인 중 오류가 발생했습니다.')
       return
     }
+  }
+  else
+  {    
+    logEvent('info', 'OrderPage 진입', {
+      userId: authStore.user?.uid || 'guest',
+      isGuest: isAnonymousLocal.value,
+      entryByQr: false, // QR 진입 여부 추정
+      companyId,
+      companyName,
+      path: decodeURIComponent(route.fullPath),
+      timestamp: new Date().toISOString(),
+    })    
   }
 
   isAnonymousLocal.value = authStore.user?.isAnonymous === true

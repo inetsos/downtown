@@ -28,6 +28,7 @@ const NAVER_CLIENT_ID = defineSecret("NAVER_CLIENT_ID");
 const NAVER_CLIENT_SECRET = defineSecret("NAVER_CLIENT_SECRET");
 
 admin.initializeApp();
+const db = admin.firestore()
 
 exports.naverLogin = onRequest({ 
   region: "asia-northeast3",
@@ -107,6 +108,7 @@ exports.naverLogin = onRequest({
 // 상호로 검색
 exports.naverLocalSearch = onRequest(
   {
+    region: "asia-northeast3",
     secrets: [NAVER_CLIENT_ID, NAVER_CLIENT_SECRET],
   },
   async (req, res) => {
@@ -168,3 +170,24 @@ exports.kakaoLogin = onRequest({
     }
   });
 });
+
+// -- 시스템 운영 로그 저장
+//exports.logEvent = onRequest(async (req, res) => {
+exports.logEvent = onRequest({
+  region: "asia-northeast3"  // 서울 리전 
+}, async (req, res) => {
+  cors(req, res, async () => {
+    try {
+      const log = req.body
+      log.createdAt = admin.firestore.FieldValue.serverTimestamp()
+
+      await db.collection('logs').add(log)
+
+      res.status(200).send('Logged')
+    } catch (e) {
+      console.error('로그 저장 실패:', e)
+      res.status(500).send('Internal Server Error')
+    }
+  })
+})
+

@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
+import { useAuthStore } from '@/stores/authStore'
+import { logEvent } from '@/utils/logger'
 
 const routes = [
   { path: '/', name: 'home', component: Home },
@@ -205,6 +207,15 @@ const routes = [
     path: '/qr-scanner',
     name: 'QrScanner',
     component: () => import('@/views/QrScanner.vue'),
+  },
+  {
+    path: '/admin/logs',
+    name: 'AdminLogs',
+    component: () => import('@/views/AdminLogs.vue'),
+    meta: {
+      requiresAuth: true, // 필요 시 인증 요구
+      role: 'admin'       // 필요 시 관리자만 접근 허용
+    }
   }
 
 ]
@@ -216,6 +227,17 @@ const router = createRouter({
     // 항상 최상단으로 스크롤
     return { top: 0 }
   }
+})
+
+router.afterEach((to, from) => {
+  const authStore = useAuthStore()
+
+  logEvent('info', '페이지 진입', {
+    path: decodeURIComponent(to.fullPath),
+    from: decodeURIComponent(from.fullPath),
+    userId: authStore.user?.uid || 'guest',
+    timestamp: new Date().toISOString(),
+  })
 })
 
 export default router

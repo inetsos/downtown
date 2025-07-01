@@ -617,6 +617,14 @@ GPS로 현재 위치를 구해서
 ![앱에서 QR 코드 생성](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbnkMEQ%2FbtsOYUJI2HS%2FAAAAAAAAAAAAAAAAAAAAAEhe91fuflfRtGzNuRoIlz5uBP5FnCA7aaALBcsNar4o%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1751295599%26allow_ip%3D%26allow_referer%3D%26signature%3DHH0XSQsKfFOZcib6y24nSr%252Bn7Ug%253D)
   
     
+### 42. Vue3 + Firebase 프로젝트 '우리 동네' - 시스템 운영 로그의 중요성
+  
+웹 서비스에 있어서 시스템 로그(system log)는 단순한 기록이 아니라,  
+서비스의 건강 상태를 보여주는 청진기이자, 문제 해결을 위한 블랙박스입니다.   
+  
+시스템 운영에서 로그는 정말 핵심 자산으로  
+운영 안정성과 문제 해결, 서비스 개선을 위한 거의 모든 활동에 필수적이라 할 수 있죠.  
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할
