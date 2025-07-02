@@ -1,3 +1,4 @@
+// src/composables/useLogger.js
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { logEvent } from '@/utils/logger'

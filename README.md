@@ -625,6 +625,31 @@ GPS로 현재 위치를 구해서
 시스템 운영에서 로그는 정말 핵심 자산으로  
 운영 안정성과 문제 해결, 서비스 개선을 위한 거의 모든 활동에 필수적이라 할 수 있죠.  
   
+
+### 43. Vue 3 프로젝트 지역 커뮤니티 웹앱 ‘우리 동네’ - 로그 남기기
+
+지역 커뮤니티 웹앱 '우리 동네' 서비스에서는   
+아래 두 가지 의도로 로그를 삽입하였습니다.  
+  
+- 문제 원인 분석을 위하여 전역 에러 핸들러 설정  
+  
+이 로그의 목적은 운영상 에러가 발생하면  
+에러의 원인을 신속하게 발견하여 처리하기 위함입니다.  
+
+- 핵심 기능인 주문 관련 페이지 진입과 버튼 클릭 로그 남기기  
+  
+이 로그의 목적은 온라인 주문 관련하여   
+웹/앱에서 발생하는 사용자의 활동 기록(log) 을 수집하고 분석하여,  
+고객의 이동 경로, 사용 패턴, 선호도, 이탈 원인 등을 파악하고자 하는 것입니다.  
+  
+그리고 로그를 남겼으면 로그를 조회할 수 있어야 합니다.  
+로그 조회 기능을 추가하였습니다.  
+  
+![우리 동네 시스템 로그 보기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FebCmt4%2FbtsO2qIbmQU%2FAAAAAAAAAAAAAAAAAAAAAKJaEDpFnhaW8uofxaqTsaCh5UbGxj-0mQ5avP0aO60B%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1753973999%26allow_ip%3D%26allow_referer%3D%26signature%3DBtmxd1FOJk0%252BCw9JIOCvl6b7EFs%253D)
+
+![우리 동네 시스템 로그 상세 보기](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FB7Ke9%2FbtsO1Wgx9Jd%2FAAAAAAAAAAAAAAAAAAAAAJLZDkGUAcoejMP90ZjSVJ9mZGAetzzX0BOmW1cmhgJy%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1753973999%26allow_ip%3D%26allow_referer%3D%26signature%3DZ7E3E5aijTWEdfyk3G78j04ezF4%253D)
+  
+  
 ---
 
 ### 🧑‍🤝‍🧑 사용자 역할

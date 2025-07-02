@@ -130,6 +130,10 @@ import { logEvent } from '@/utils/logger'
 
 const router = useRouter()
 const route = useRoute()
+
+const companyId = route.query.companyId
+const companyName = route.query.companyName
+
 const authStore = useAuthStore()
 
 const cartItems = ref([])
@@ -174,7 +178,6 @@ const proceedToOrder = async () => {
     return
   }
 
-  const companyId = route.query.companyId
   if (!companyId) {
     alert('회사 ID가 없습니다.')
     return
@@ -200,7 +203,8 @@ const proceedToOrder = async () => {
     totalAmount: totalAmount.value,
     discountAmount: discountAmount.value,
     finalAmount: totalAfterDiscount.value,
-    companyId: route.query.companyId || null,
+    companyId,
+    companyName,
     path: route.fullPath,
     timestamp: new Date().toISOString()
   })
@@ -210,7 +214,7 @@ const proceedToOrder = async () => {
     userName: authStore.profile?.name || guestName.value || 'guest',
     userPhone: guestPhone.value || null,
     isGuest: isGuest.value,
-    companyName: route.query.companyName || null,
+    companyName,
     items: cartItems.value.map(item => ({
       categoryId: item.categoryId,
       categoryName: item.categoryName,
@@ -254,8 +258,8 @@ const goToMenu = () => {
   router.push({
     path: '/order',
     query: {
-      companyId: route.query.companyId,
-      companyName: route.query.companyName,
+      companyId,
+      companyName,
       username: authStore.profile?.name || 'guest',
       returnToCart: true
     }
@@ -296,7 +300,7 @@ onMounted(async () => {
 
   if (isMember.value) {
     try {
-      availableCoupons.value = await fetchAvailableCoupons(authStore.user.uid, route.query.companyId)
+      availableCoupons.value = await fetchAvailableCoupons(authStore.user.uid, companyId)
     } catch (err) {
       console.error('쿠폰 불러오기 실패:', err)
     }

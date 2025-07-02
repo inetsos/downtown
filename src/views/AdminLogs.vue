@@ -1,7 +1,18 @@
+<!-- src/views/AdminLogs.vue -->
 <template>
   <v-container>
     <v-card>
-      <v-card-title class="text-h6">📋 시스템 로그</v-card-title>
+      <!-- 운영 대시보드로 돌아가기 버튼 -->
+      <div class="text-end mb-4 mr-2">
+        <span
+          class="text-primary text-subtitle-2 cursor-pointer"
+          @click="goToDashboard"
+        >
+          운영 대시보드
+        </span>
+      </div>
+
+      <v-card-title class="text-h6">📋 {{ companyName }} 시스템 로그</v-card-title>
 
       <v-card-text>
         <!-- 날짜 선택 -->
@@ -82,6 +93,7 @@
             <tr>
               <th>시간</th>
               <th>레벨</th>
+              <th>매장</th>
               <th>메시지</th>
               <th>사용자</th>
               <th>추가 정보</th>
@@ -91,6 +103,7 @@
             <tr v-for="(log, index) in filteredLogs" :key="index">
               <td>{{ formatDate(log.createdAt) }}</td>
               <td>{{ log.level }}</td>
+              <td>{{ log.data?.companyName }}</td>
               <td>{{ log.message }}</td>
               <td>{{ log.data?.userId }}</td>
               <td>
@@ -146,6 +159,13 @@ import 'vue-json-pretty/lib/styles.css'
 
 import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver'
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
+const router = useRouter()
+
+const companyId = route.query.companyId ?? ''
+const companyName = route.query.companyName || ''
 
 const logs = ref([])
 const loading = ref(false)
@@ -160,6 +180,13 @@ const endDate = ref('')
 const level = ref('')
 const keyword = ref('')
 const userId = ref('')
+
+const goToDashboard = () => {
+  router.push({
+    name: 'OperationsDashboard',
+    query: { companyId, companyName }
+  })
+}
 
 // 날짜 포맷 함수
 const formatDate = (ts) => {
@@ -197,7 +224,13 @@ const loadLogs = async () => {
 
     const q = query(logsRef, ...conditions, orderBy('createdAt', 'desc'))
     const snapshot = await getDocs(q)
-    logs.value = snapshot.docs.map(doc => doc.data())
+
+    logs.value = snapshot.docs
+      .map(doc => doc.data())
+      .filter(log => {
+        const company = log.data?.companyName || ''
+        return company === '' || company === companyName
+      })
   } catch (e) {
     error.value = '로그를 불러오는 중 오류가 발생했습니다.'
     console.error(e)
@@ -228,6 +261,7 @@ const exportToExcel = async () => {
   sheet.columns = [
     { header: '시간', key: 'createdAt', width: 20 },
     { header: '레벨', key: 'level', width: 10 },
+    { header: '매장', key: 'companyName', width: 20 },
     { header: '메시지', key: 'message', width: 50 },
     { header: '사용자', key: 'userId', width: 20 },
     { header: '추가 정보', key: 'extra', width: 50 }
@@ -237,6 +271,7 @@ const exportToExcel = async () => {
     sheet.addRow({
       createdAt: formatDate(log.createdAt),
       level: log.level,
+      company: log.data?.companyName || '',
       message: log.message,
       userId: log.data?.userId || '',
       extra: JSON.stringify(log.data || {}, null, 2)

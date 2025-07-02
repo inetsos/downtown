@@ -277,6 +277,17 @@ const goToMyOrders = () => {
   })
 }
 
+const goToCart = () => {
+  router.push({
+    path: '/cart',
+    query: {
+      companyId: route.query.companyId,
+      companyName: route.query.companyName
+    }
+  })
+}
+
+
 watch(filteredMenus, (newMenus) => {
   newMenus.forEach(menu => {
     // 토핑 초기화
@@ -324,13 +335,29 @@ const addToCart = (menu) => {
 
   const toppingsSelectedIds = selectedToppings.value[menu.id] || []
   const optionSelectedId = selectedOption.value[menu.id]
-
+  
   // 옵션이 2개 이상인데 선택하지 않은 경우
   const optionsForMenu = filteredOptions(menu)
   if (optionsForMenu.length >= 2 && !optionSelectedId) {
     alert('옵션을 선택해주세요.')
     return
   }
+
+  // 로그: 주문 시도
+  logEvent('info', '담기 버튼 클릭', {
+    companyId,
+    companyName,
+    userId: authStore.user?.uid || 'guest',
+    isGuest: isAnonymous.value,
+    categoryId: selectedCategoryId.value,
+    categoryName: selectedCategoryName.value,
+    menuId: menu.id,
+    name: menu.name,
+    price: menu.price,
+    toppings: toppings.value.filter(t => toppingsSelectedIds.includes(t.id)),
+    option: options.value.find(o => o.id === optionSelectedId) || null,
+    timestamp: new Date().toISOString()
+  })
 
   const selectedData = {
     categoryId: selectedCategoryId.value,
@@ -348,16 +375,6 @@ const addToCart = (menu) => {
   localStorage.setItem('cart', JSON.stringify(cart))
 }
 
-const goToCart = () => {
-  router.push({
-    path: '/cart',
-    query: {
-      companyId: route.query.companyId,
-      companyName: route.query.companyName
-    }
-  })
-}
-
 onMounted(async () => {
   // 로그인하지 않은 경우 익명 사용자 자동 로그인 처리
   // Qrcode를 읽으면 여기로 온다.
@@ -365,8 +382,10 @@ onMounted(async () => {
     try {
       await authStore.loginAnonymously()
 
+      isAnonymousLocal.value = authStore.user?.isAnonymous === true
+
       // ✅ 로그 추가
-      logEvent('info', 'OrderPage 진입', {
+      logEvent('info', 'OrderPage 진입 (QR 코드)', {
         userId: authStore.user?.uid || 'guest',
         isGuest: isAnonymousLocal.value,
         entryByQr: true, // QR 진입 여부 추정
@@ -384,6 +403,8 @@ onMounted(async () => {
   }
   else
   {    
+    isAnonymousLocal.value = authStore.user?.isAnonymous === true
+    
     logEvent('info', 'OrderPage 진입', {
       userId: authStore.user?.uid || 'guest',
       isGuest: isAnonymousLocal.value,
@@ -394,8 +415,6 @@ onMounted(async () => {
       timestamp: new Date().toISOString(),
     })    
   }
-
-  isAnonymousLocal.value = authStore.user?.isAnonymous === true
 
   await fetchMenus()
   await loadToppings()

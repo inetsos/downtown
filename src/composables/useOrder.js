@@ -59,7 +59,7 @@ export function useOrder() {
       })
 
       // 쿠폰 발행: 주문 생성 후 누적 주문액 기준으로 쿠폰 자동 발급
-      console.log(orderData.userId, orderData.isGuest);
+      //console.log(orderData.userId, orderData.isGuest);
       if (orderData.userId && !orderData.isGuest) {
         await issueCouponsByTotalSpent(orderData.userId, companyId, orderData.companyName)
       }

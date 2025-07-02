@@ -229,15 +229,16 @@ const router = createRouter({
   }
 })
 
-router.afterEach((to, from) => {
-  const authStore = useAuthStore()
+// 실제 요구가 있을 떄 검토한다.
+// router.afterEach((to, from) => {
+//   const authStore = useAuthStore()
 
-  logEvent('info', '페이지 진입', {
-    path: decodeURIComponent(to.fullPath),
-    from: decodeURIComponent(from.fullPath),
-    userId: authStore.user?.uid || 'guest',
-    timestamp: new Date().toISOString(),
-  })
-})
+//   logEvent('info', '페이지 진입', {
+//     path: decodeURIComponent(to.fullPath),
+//     from: decodeURIComponent(from.fullPath),
+//     userId: authStore.user?.uid || 'guest',
+//     timestamp: new Date().toISOString(),
+//   })
+// })
 
 export default router
